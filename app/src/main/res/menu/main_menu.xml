@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/MenuMain_Prihlasit"
+        android:title="Přihásit"
+        android:icon="@drawable/logged_out"/>
+
+    <item android:id="@+id/MenuMain_Odhlasit"
+        android:title="Odhlásit"
+        android:visible="false"
+        android:icon="@drawable/logged_in"/>
+
+    <item android:id="@+id/MenuMain_Znamky"
+        android:title="Známky"
+        android:icon="@drawable/mark"/>
+
+    <item android:id="@+id/MenuMain_Rozvrh"
+        android:title="Rozvrh"
+        android:icon="@drawable/rozvrh"/>
+
+    <item android:id="@+id/MenuMain_Prichody"
+        android:title="Příchody"
+        android:icon="@drawable/omluvenky"/>
+
+    <item android:id="@+id/MenuMain_Omluvenky"
+        android:title="Omluvenky"
+        android:icon="@drawable/omluvenky"/>
+
+    <item android:id="@+id/MenuMain_Suplarch"
+        android:title="Suplování"
+        android:icon="@drawable/suplarch"/>
+
+    <item android:id="@+id/MenuMain_Premium"
+        android:title="Upgrade na premium"
+        android:visible="false"
+        android:icon="@drawable/premium"/>
+</menu>

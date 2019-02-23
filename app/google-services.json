@@ -1,0 +1,95 @@
+{
+  "project_info": {
+    "project_number": "758312081254",
+    "firebase_url": "https://jecnakvkapse.firebaseio.com",
+    "project_id": "jecnakvkapse",
+    "storage_bucket": "jecnakvkapse.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758312081254:android:1218ee2c0d3ea5eb",
+        "android_client_info": {
+          "package_name": "cz.johnyapps.jecnakvkapse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "758312081254-ii4v4kbsil1nb5p4ik5qm8fumbkn24aa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cz.johnyapps.jecnakvkapse",
+            "certificate_hash": "e4b3e39688506a2183f6d2d17ec1652cc12f486f"
+          }
+        },
+        {
+          "client_id": "758312081254-dmt1nkt4uhckskuuigq1gpm84thguj2k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cz.johnyapps.jecnakvkapse",
+            "certificate_hash": "71e438225f0d0e28f80acf8e7edc54d8c967977d"
+          }
+        },
+        {
+          "client_id": "758312081254-ditv0prpjqs62umcifef66gpn29t81pm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh1lf-Axy1Lback6XqducBMf5DE5uIiko"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "758312081254-ditv0prpjqs62umcifef66gpn29t81pm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758312081254:android:433186b5f89a212c",
+        "android_client_info": {
+          "package_name": "cz.jonnyapps.jecnakvkapse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "758312081254-ditv0prpjqs62umcifef66gpn29t81pm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh1lf-Axy1Lback6XqducBMf5DE5uIiko"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      },
+      "admob_app_id": "ca-app-pub-1057046269547048~5690415079"
+    }
+  ],
+  "configuration_version": "1"
+}
