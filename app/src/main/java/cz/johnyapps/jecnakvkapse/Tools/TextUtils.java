@@ -5,7 +5,7 @@ import android.text.Html;
 import android.text.Spanned;
 
 /**
- * Slouží k formátování textu
+ * Slouží k formátování textu.
  */
 public class TextUtils {
     /**

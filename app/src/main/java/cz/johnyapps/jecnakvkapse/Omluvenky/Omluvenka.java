@@ -15,7 +15,7 @@ public class Omluvenka {
     /**
      * Inicializace
      * @param datum Datum
-     * @param hodin Počet hodin
+     * @param hodin Počet hodin (Převede se na Spanned)
      */
     Omluvenka(String datum, String hodin) {
         TextUtils utils = new TextUtils();
