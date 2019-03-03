@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogLogin;
+import cz.johnyapps.jecnakvkapse.Dialogs.DialogOdhlasit;
 import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Omluvenky;
 import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Prichody;
 import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Rozvrh;
@@ -69,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Setup_Menu();
 
-        //fragment_selected = prefs.getInt("main_fragment_selected", R.id.MenuMain_Znamky);
         fragment_selected = R.id.MenuMain_Znamky;
 
         AutoLogIn();
@@ -111,9 +111,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             case R.id.MenuMain_Odhlasit: {
-                prefs.edit().remove("pass").apply();
-                user.setLogged(false);
-                Toast.makeText(context, "Odhášeno", Toast.LENGTH_SHORT).show();
+                DialogOdhlasit odhlasit = new DialogOdhlasit(context);
+                odhlasit.get().show();
                 return true;
             }
 

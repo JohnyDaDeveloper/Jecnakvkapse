@@ -1,7 +1,6 @@
 package cz.johnyapps.jecnakvkapse.Fragments.Main;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,7 +18,6 @@ import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Score.MarkConvertor;
 import cz.johnyapps.jecnakvkapse.Score.Score;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
-import cz.johnyapps.jecnakvkapse.Tools.OfflineMode;
 
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování odkazů na suplování
@@ -27,7 +25,6 @@ import cz.johnyapps.jecnakvkapse.Tools.OfflineMode;
 public class MainFragment_Znamky extends Fragment {
     private Context context;
     private User user;
-    private OfflineMode offlineMode;
 
     private RecyclerView recyclerView;
 
@@ -48,7 +45,6 @@ public class MainFragment_Znamky extends Fragment {
     private void initialize() {
         this.context = getContext();
         this.user = User.getUser();
-        this.offlineMode = new OfflineMode(context);
     }
 
     /**
@@ -96,7 +92,6 @@ public class MainFragment_Znamky extends Fragment {
                         MarkConvertor markConvertor = new MarkConvertor();
                         Score score = markConvertor.convert(result);
 
-                        offlineMode.write(result, "znamky", score.getDatum());
                         user.setScore(score);
 
                         displayMarks();
