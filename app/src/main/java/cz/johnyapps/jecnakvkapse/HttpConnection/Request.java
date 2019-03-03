@@ -41,6 +41,14 @@ public class Request {
     }
 
     /**
+     * Specifikuje období
+     * @param obdobi    Období
+     */
+    public void addObdobi(String obdobi) {
+        dotaz += "?" + obdobi;
+    }
+
+    /**
      * Vrátí dotaz
      * @return String dotaz
      */

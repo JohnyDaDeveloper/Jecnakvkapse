@@ -12,11 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Locale;
 
 import cz.johnyapps.jecnakvkapse.Adapters.PrichodyRecyclerAdapter;
+import cz.johnyapps.jecnakvkapse.Dialogs.DialogChangePeriod;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
 import cz.johnyapps.jecnakvkapse.Prichody.Prichody;
 import cz.johnyapps.jecnakvkapse.Prichody.PrichodyConvertor;
@@ -33,8 +32,6 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
     private User user;
 
     private RecyclerView recyclerView;
-
-    private String datum;
 
     /**
      * Nastaví content view a supustí {@link #initialize()}
@@ -56,7 +53,7 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
     }
 
     /**
-     * Nastaví layout a načte hlaví views. Spustí nastavení datumu {@link #Setup_Date()}.
+     * Nastaví layout a načte hlaví views.
      * @param inflater              Inflater
      * @param container             Container
      * @param savedInstanceState    Uložená instance
@@ -71,15 +68,18 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
 
         button.setOnClickListener(this);
 
-        Setup_Date();
         return view;
     }
 
+    /**
+     * Stará se o kliknutí na view
+     * @param view  View
+     */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.MainFragmentPrichody_button: {
-                changeDate();
+                zmenitObdobi();
                 break;
             }
 
@@ -87,18 +87,19 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
         }
     }
 
-    private void changeDate() {
-
-    }
-
     /**
-     * Nastaví aktuální datum (Slouží pro měnění zobrazeného časového období).
+     * Zobrazí dialog na změnu období
      */
-    private void Setup_Date() {
-        SimpleDateFormat format = new SimpleDateFormat("MM.yyyy", locale);
-        Calendar calendar = Calendar.getInstance();
+    private void zmenitObdobi() {
+        DialogChangePeriod dialogChangePeriod = new DialogChangePeriod(context) {
+            @Override
+            public void zobrazit(String obdobi) {
+                super.zobrazit(obdobi);
 
-        datum = format.format(calendar.getTime());
+                prichody(obdobi);
+            }
+        };
+        dialogChangePeriod.getMesice().show();
     }
 
     /**
@@ -117,7 +118,7 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
      * @see StahniPrichody
      * @see PrichodyConvertor
      */
-    private void prichody() {
+    private void prichody(@Nullable String obdobi) {
         StahniPrichody stahniPrichody = new StahniPrichody(context) {
             @Override
             public void onResult(String result) {
@@ -135,12 +136,12 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
             }
         };
 
-        stahniPrichody.stahni();
+        stahniPrichody.stahni(obdobi);
     }
 
     /**
      * Pokud jsou příchody staženy, zobrazí je, pokud ne, stáhne je
-     * @see #prichody()
+     * @see #prichody(String)
      * @see PrichodyRecyclerAdapter
      * @see Prichody
      */
@@ -152,7 +153,7 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(adapter);
         } else {
-            prichody();
+            prichody(null);
         }
     }
 }

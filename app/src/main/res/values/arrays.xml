@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pololeti">
+        <item>1. pololetí</item>
+        <item>2. pololetí</item>
+    </string-array>
+
+    <string-array name="mesice">
+        <item>Září</item>
+        <item>Říjen</item>
+        <item>Listopad</item>
+        <item>Prosinec</item>
+        <item>Leden</item>
+        <item>Únor</item>
+        <item>Březen</item>
+        <item>Duben</item>
+        <item>Květen</item>
+        <item>Červen</item>
+        <item>Červenec</item>
+        <item>Srpen</item>
+    </string-array>
+</resources>
