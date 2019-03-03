@@ -51,9 +51,8 @@ public class SuplarchFindLink {
     private SuplarchLink convertEvent(Element event) {
         Element nazev = event.selectFirst("div[class$=name]").selectFirst("h2").selectFirst("a");
         String strNazev = nazev.html();
-        String[] parts = strNazev.split(" ");
 
-        if (parts[0].equals("Suplování")) {
+        if (strNazev.contains("Suplování")) {
             String link = convertSuplovani(event);
 
             return new SuplarchLink(strNazev, link);
