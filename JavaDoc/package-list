@@ -8,6 +8,7 @@ cz.johnyapps.jecnakvkapse.Fragments.Main
 cz.johnyapps.jecnakvkapse.HttpConnection
 cz.johnyapps.jecnakvkapse.Omluvenky
 cz.johnyapps.jecnakvkapse.Prichody
+cz.johnyapps.jecnakvkapse.Profil
 cz.johnyapps.jecnakvkapse.Rozvrh
 cz.johnyapps.jecnakvkapse.Score
 cz.johnyapps.jecnakvkapse.Singletons
