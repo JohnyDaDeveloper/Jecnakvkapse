@@ -2,6 +2,7 @@ package cz.johnyapps.jecnakvkapse.Singletons;
 
 import cz.johnyapps.jecnakvkapse.Omluvenky.Omluvnak;
 import cz.johnyapps.jecnakvkapse.Prichody.Prichody;
+import cz.johnyapps.jecnakvkapse.Profil.Profil;
 import cz.johnyapps.jecnakvkapse.Rozvrh.Rozvrh;
 import cz.johnyapps.jecnakvkapse.Score.Score;
 import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchHolder;
@@ -21,11 +22,13 @@ public class User {
     }
 
     private String sessionId;
+    private String login;
 
     private Score score;
     private Rozvrh rozvrh;
     private Omluvnak omluvnak;
     private Prichody prichody;
+    private Profil profil;
 
     private SuplarchHolder suplarchHolder;
 
@@ -39,6 +42,7 @@ public class User {
      */
     private User() {
         sessionId = "";
+        login = "";
 
         loggedListener = null;
         logged = false;
@@ -61,6 +65,22 @@ public class User {
      */
     public String getSessionId() {
         return sessionId;
+    }
+
+    /**
+     * Nastaví login
+     * @param login Login
+     */
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    /**
+     * Vrátí login
+     * @return  Login
+     */
+    public String getLogin() {
+        return login;
     }
 
     /**
@@ -125,6 +145,22 @@ public class User {
      */
     public Prichody getPrichody() {
         return prichody;
+    }
+
+    /**
+     * Nastavuje profil
+     * @param profil    {@link Profil}
+     */
+    public void setProfil(Profil profil) {
+        this.profil = profil;
+    }
+
+    /**
+     * Vrátí profil
+     * @return  {@link Profil}
+     */
+    public Profil getProfil() {
+        return profil;
     }
 
     /**
