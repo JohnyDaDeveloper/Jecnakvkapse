@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Locale;
-
 import cz.johnyapps.jecnakvkapse.Adapters.PrichodyRecyclerAdapter;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogChangePeriod;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
@@ -28,7 +26,6 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
  */
 public class MainFragment_Prichody extends Fragment implements View.OnClickListener {
     private Context context;
-    private Locale locale;
     private User user;
 
     private RecyclerView recyclerView;
@@ -48,7 +45,6 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
      */
     private void initialize() {
         context = getContext();
-        locale = new Locale("cs", "CZ");
         user = User.getUser();
     }
 
@@ -97,6 +93,13 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
                 super.zobrazit(obdobi);
 
                 prichody(obdobi);
+            }
+
+            @Override
+            public void aktualni() {
+                super.aktualni();
+
+                prichody(null);
             }
         };
         dialogChangePeriod.getMesice().show();

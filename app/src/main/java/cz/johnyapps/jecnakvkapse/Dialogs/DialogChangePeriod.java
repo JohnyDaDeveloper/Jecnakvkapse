@@ -14,12 +14,19 @@ import java.util.Locale;
 
 import cz.johnyapps.jecnakvkapse.R;
 
+/**
+ * Dialog sloužící ke změně zobrazeného období
+ */
 public class DialogChangePeriod {
     private Context context;
     private LayoutInflater inflater;
 
     private String typ;
 
+    /**
+     * Inicializace
+     * @param context   Context
+     */
     protected DialogChangePeriod(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -27,16 +34,28 @@ public class DialogChangePeriod {
         typ = "pololeti";
     }
 
+    /**
+     * Vrátí dialog pro změnu roku a pololetí
+     * @return  Dialog
+     */
     public AlertDialog getPololeti() {
         typ = "pololeti";
         return get();
     }
 
+    /**
+     * Vrátí dialog pro změnu roku a měsíce
+     * @return  Dialog
+     */
     public AlertDialog getMesice() {
         typ = "mesice";
         return get();
     }
 
+    /**
+     * Vytvoří dialog podle specifikací z {@link #getPololeti()} nebo {@link #getMesice()}
+     * @return  Dialog
+     */
     private AlertDialog get() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Výběr období")
@@ -63,6 +82,10 @@ public class DialogChangePeriod {
         return builder.create();
     }
 
+    /**
+     * Zprocesuje výsledek vybírání a vrátí data která stačí přidat do requestu pomocí {@link cz.johnyapps.jecnakvkapse.HttpConnection.Request#addObdobi(String)}
+     * @param dialog    Dialog ze kterého bere data
+     */
     private void processResult(AlertDialog dialog) {
         Spinner rok = dialog.findViewById(R.id.DialogPeriodChange_spinnerRok);
         Spinner pololeti = dialog.findViewById(R.id.DialogPeriodChange_spinnerPololeti);
@@ -89,14 +112,25 @@ public class DialogChangePeriod {
         }
     }
 
+    /**
+     * Spustí akci po zmáčknutí tlačítka "Zobrazit"
+     * @param obdobi    Zformátovaná data přes {@link #processResult(AlertDialog)}
+     */
     public void zobrazit(String obdobi) {
 
     }
 
+    /**
+     * Spustí akci po zmáčknutí tlačítka "Aktuální"
+     */
     public void aktualni() {
 
     }
 
+    /**
+     * Nastaví dialog view
+     * @return  View
+     */
     private View Setup_dialogView() {
         View view = inflater.inflate(R.layout.dialog_period_change, null, false);
         Spinner rok = view.findViewById(R.id.DialogPeriodChange_spinnerRok);
@@ -121,6 +155,10 @@ public class DialogChangePeriod {
         return view;
     }
 
+    /**
+     * Rozhodne zda je první pololetí (=0) nebo druhé (=1)
+     * @return  Číslo pololetí
+     */
     private int pololeti() {
         Locale locale = new Locale("cs", "CZ");
         Calendar calendar = Calendar.getInstance();
@@ -135,6 +173,10 @@ public class DialogChangePeriod {
         }
     }
 
+    /**
+     * Vrátí 4 školní roky. Od aktuálního zpět do historie
+     * @return  Roky
+     */
     private CharSequence[] getRoky() {
         Locale locale = new Locale("cs", "CZ");
         Calendar calendar = Calendar.getInstance();
@@ -158,6 +200,10 @@ public class DialogChangePeriod {
         return roky;
     }
 
+    /**
+     * Vrátí číslo aktuálního měsíce
+     * @return  Číslo měsíce
+     */
     private int getMesic() {
         Locale locale = new Locale("cs", "CZ");
         Calendar calendar = Calendar.getInstance(locale);
