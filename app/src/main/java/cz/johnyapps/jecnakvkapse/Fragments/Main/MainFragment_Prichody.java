@@ -60,11 +60,22 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_prichody, container, false);
         recyclerView = view.findViewById(R.id.MainFragmentPrichody_recycler);
-        FloatingActionButton button = view.findViewById(R.id.MainFragmentPrichody_button);
 
+        FloatingActionButton button = view.findViewById(R.id.MainFragmentPrichody_button);
         button.setOnClickListener(this);
 
         return view;
+    }
+
+    /**
+     * Zobrazí příchody
+     * @see #displayPrichody()
+     */
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        displayPrichody();
     }
 
     /**
@@ -106,18 +117,8 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
     }
 
     /**
-     * Zobrazí příchody
-     * @see #displayPrichody()
-     */
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        displayPrichody();
-    }
-
-    /**
      * Stáhne příchody
+     * @param obdobi    Období pro které se stáhnou data
      * @see StahniPrichody
      * @see PrichodyConvertor
      */

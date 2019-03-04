@@ -3,6 +3,7 @@ package cz.johnyapps.jecnakvkapse.Dialogs;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,8 @@ import cz.johnyapps.jecnakvkapse.R;
  * Dialog sloužící ke změně zobrazeného období
  */
 public class DialogChangePeriod {
+    private static final String TAG = "DialogChangePeriod";
+
     private Context context;
     private LayoutInflater inflater;
 
@@ -94,7 +97,7 @@ public class DialogChangePeriod {
         int intRok = Integer.parseInt(strRok.split("/")[0]);
         intRok -= 2008;
 
-        if (typ.equals("roky")) {
+        if (typ.equals("pololeti")) {
             int halfId = 22;
             if (pololeti.getSelectedItemPosition() != 1) {
                 halfId = 21;
@@ -117,7 +120,7 @@ public class DialogChangePeriod {
      * @param obdobi    Zformátovaná data přes {@link #processResult(AlertDialog)}
      */
     public void zobrazit(String obdobi) {
-
+        Log.i("DialogChangePeriod", obdobi);
     }
 
     /**
@@ -140,7 +143,7 @@ public class DialogChangePeriod {
         rokAdapter.setDropDownViewResource(R.layout.item_spinner);
         rok.setAdapter(rokAdapter);
 
-        if (typ.equals("roky")) {
+        if (typ.equals("pololeti")) {
             ArrayAdapter<CharSequence> pololetiAdapter = ArrayAdapter.createFromResource(context, R.array.pololeti, R.layout.item_spinner);
             pololetiAdapter.setDropDownViewResource(R.layout.item_spinner);
             pololeti.setAdapter(pololetiAdapter);
