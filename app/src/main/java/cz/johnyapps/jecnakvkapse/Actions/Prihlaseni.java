@@ -3,8 +3,6 @@ package cz.johnyapps.jecnakvkapse.Actions;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -17,16 +15,11 @@ import cz.johnyapps.jecnakvkapse.Profil.ProfilConvertor;
 import cz.johnyapps.jecnakvkapse.Profil.StahniProfil;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 
-import static android.content.Context.MODE_PRIVATE;
-
 /**
  * Slouží k obstarání sessionID
  */
 public class Prihlaseni {
-    private static final String TAG = "Login";
-
     private Context context;
-    private SharedPreferences prefs;
     private User user;
 
     /**
@@ -35,7 +28,6 @@ public class Prihlaseni {
      */
     protected Prihlaseni(Context context) {
         this.context = context;
-        prefs = context.getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
         user = User.getUser();
     }
 
@@ -87,6 +79,10 @@ public class Prihlaseni {
                     user.setProfil(profilConvertor.convert(result));
 
                     Prihlaseni.this.onResult();
+                }
+
+                if (result.equals("ERROR")) {
+                    user.setLogged(false);
                 }
             }
         };

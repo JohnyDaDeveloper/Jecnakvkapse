@@ -3,9 +3,6 @@ package cz.johnyapps.jecnakvkapse.HttpConnection;
 import android.content.Context;
 import android.util.Log;
 
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogError;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 
@@ -41,8 +38,6 @@ public class ResultErrorProcess {
             case "ERROR": {
                 Log.w(TAG, "Connection Error");
 
-                User.getUser().setLogged(false);
-
                 dialogError.get("Chyba připojení").show();
                 return false;
             }
@@ -73,7 +68,7 @@ public class ResultErrorProcess {
 
             User.getUser().setLogged(false);
 
-            dialogError.get("Chyba přihlášení. Neplatné jméno nebo heslo.").show();
+            dialogError.get("Chyba přihlášení: Neplatné jméno nebo heslo.").show();
             return false;
         }
 

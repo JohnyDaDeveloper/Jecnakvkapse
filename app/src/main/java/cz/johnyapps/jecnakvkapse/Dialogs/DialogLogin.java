@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import cz.johnyapps.jecnakvkapse.R;
 
@@ -39,6 +38,13 @@ public class DialogLogin {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.dialog_login, null, false);
 
+        String login = prefs.getString("login", "NEULOZENO");
+
+        if (login != null && !login.equals("NEULOZENO")) {
+            EditText edtName = view.findViewById(R.id.DialogLogIn_edtName);
+            edtName.setText(login);
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Přihlášení")
                 .setView(view)
@@ -55,42 +61,12 @@ public class DialogLogin {
                         login = login.replaceAll(" ", "");
 
 
-                        if (handleCommand(login)) {
-                            login(login, edtPass.getText().toString(), checkBox.isChecked());
-                        }
+                        login(login, edtPass.getText().toString(), checkBox.isChecked());
                     }
                 })
                 .setCancelable(false);
 
         return builder.create();
-    }
-
-    /**
-     * Zpracovává přikazy (Užitečné pro debug. Běžný uživatel by je neměl znát.)
-     * @param str   String na zpracování
-     * @return      True - není příkaz, False - je příkaz
-     */
-    private boolean handleCommand(String str) {
-        switch (str) {
-            case "setPremium": {
-                updateStatus();
-                return false;
-            }
-
-            default: return true;
-        }
-    }
-
-    /**
-     * {@link #handleCommand(String)} zaznamenal přikaz "setPremium" -> Změní status
-     */
-    private void updateStatus() {
-        boolean status = prefs.getBoolean("premium", false);
-        status = !status;
-
-        prefs.edit().putBoolean("premium", status).apply();
-
-        Toast.makeText(context, "Premium status: " + status, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -101,6 +77,7 @@ public class DialogLogin {
      * @see #get()
      */
     public void login(String login, String pass, boolean remember) {
+        prefs.edit().putString("login", login).apply();
         if (remember) prefs.edit().putString("pass", pass).apply();
     }
 }

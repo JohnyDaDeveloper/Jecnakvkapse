@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogLogin;
@@ -212,9 +211,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void login(String login, String pass, boolean remember) {
                 super.login(login, pass, remember);
-
-                prefs.edit().putString("login", login).apply();
-
                 MainActivity.this.login(login, pass);
             }
         };

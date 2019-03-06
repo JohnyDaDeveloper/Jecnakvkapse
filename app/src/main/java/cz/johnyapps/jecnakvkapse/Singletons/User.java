@@ -35,8 +35,6 @@ public class User {
     private LoggedListener loggedListener;
     private boolean logged;
 
-    private boolean premium;
-
     /**
      * Inicializace
      */
@@ -46,8 +44,6 @@ public class User {
 
         loggedListener = null;
         logged = false;
-
-        premium = false;
     }
 
     /**
@@ -187,7 +183,7 @@ public class User {
         this.logged = logged;
 
         if (!logged) {
-            sessionId = "";
+            setSessionId("");
         }
 
         loggedListener.onLoggedChange(logged);
