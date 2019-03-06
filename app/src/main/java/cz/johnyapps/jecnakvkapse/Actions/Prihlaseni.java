@@ -12,6 +12,7 @@ import cz.johnyapps.jecnakvkapse.Dialogs.DialogLoading;
 import cz.johnyapps.jecnakvkapse.HttpConnection.Connection;
 import cz.johnyapps.jecnakvkapse.HttpConnection.Data;
 import cz.johnyapps.jecnakvkapse.HttpConnection.Request;
+import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
 import cz.johnyapps.jecnakvkapse.Profil.ProfilConvertor;
 import cz.johnyapps.jecnakvkapse.Profil.StahniProfil;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
@@ -62,10 +63,9 @@ public class Prihlaseni {
             public void nextAction(String result) {
                 super.nextAction(result);
 
-                stahniProfil();
-
                 User.getUser().setLogged(true);
-                onResult();
+
+                stahniProfil();
             }
         };
 
@@ -81,8 +81,13 @@ public class Prihlaseni {
             public void onResult(String result) {
                 super.onResult(result);
 
-                ProfilConvertor profilConvertor = new ProfilConvertor();
-                user.setProfil(profilConvertor.convert(result));
+                ResultErrorProcess process = new ResultErrorProcess(context);
+                if (process.process(result)) {
+                    ProfilConvertor profilConvertor = new ProfilConvertor();
+                    user.setProfil(profilConvertor.convert(result));
+
+                    Prihlaseni.this.onResult();
+                }
             }
         };
         stahniProfil.stahni();

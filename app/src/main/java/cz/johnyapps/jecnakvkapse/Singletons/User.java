@@ -185,6 +185,11 @@ public class User {
      */
     public void setLogged(boolean logged) {
         this.logged = logged;
+
+        if (!logged) {
+            sessionId = "";
+        }
+
         loggedListener.onLoggedChange(logged);
     }
 

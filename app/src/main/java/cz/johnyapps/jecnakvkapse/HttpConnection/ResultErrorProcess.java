@@ -3,6 +3,9 @@ package cz.johnyapps.jecnakvkapse.HttpConnection;
 import android.content.Context;
 import android.util.Log;
 
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogError;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 
@@ -38,6 +41,8 @@ public class ResultErrorProcess {
             case "ERROR": {
                 Log.w(TAG, "Connection Error");
 
+                User.getUser().setLogged(false);
+
                 dialogError.get("Chyba připojení").show();
                 return false;
             }
@@ -52,7 +57,6 @@ public class ResultErrorProcess {
             case "": {
                 Log.w(TAG, "Login Error");
 
-                //prefs.edit().remove("pass").apply();
                 User.getUser().setLogged(false);
 
                 dialogError.get("Chyba přihlášení: Neplatné jméno nebo heslo").show();
@@ -64,24 +68,14 @@ public class ResultErrorProcess {
             }
         }
 
-        /*try {
-            Document doc = new Document(result);
-            Element title = doc.selectFirst("title");
+        if (result.contains("Přihlášení se nezdařilo")) {
+            Log.w(TAG, "Chyba přihlášení");
 
-            if (title.html().contains("nezdařilo")) {
-                Log.w(TAG, "Chyba přihlášení");
+            User.getUser().setLogged(false);
 
-                prefs.edit().remove("pass").apply();
-
-                dialogError.get("Chyba přihlášení. Neplatné jméno nebo heslo.").show();
-                return false;
-            }
-        } catch (Exception e) {
-            Log.w(TAG, "Špatný vstup");
-
-            dialogError.get("Chyba připojení").show();
+            dialogError.get("Chyba přihlášení. Neplatné jméno nebo heslo.").show();
             return false;
-        }*/
+        }
 
         return true;
     }
