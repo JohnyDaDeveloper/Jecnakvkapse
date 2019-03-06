@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class Subject {
     private String name;
+    private String zaverecna;
     private ArrayList<Mark> marks;
 
     /**
@@ -15,6 +16,7 @@ public class Subject {
      */
     Subject(String name) {
         this.name = name;
+        this.zaverecna = "";
         this.marks = new ArrayList<>();
     }
 
@@ -24,6 +26,22 @@ public class Subject {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Nastaví závěrečnou známku
+     * @param zaverecna Závěrečná známka
+     */
+    void setZaverecna(String zaverecna) {
+        this.zaverecna = zaverecna;
+    }
+
+    /**
+     * Vrátí závěrečnou známku
+     * @return  Závěrečná známka
+     */
+    public String getZaverecna() {
+        return zaverecna;
     }
 
     /**

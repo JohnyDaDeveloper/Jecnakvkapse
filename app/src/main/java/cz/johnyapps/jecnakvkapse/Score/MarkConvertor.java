@@ -27,6 +27,7 @@ public class MarkConvertor {
      * @return      Známky
      * @see Score
      * @see #convertRow(Elements, String)
+     * @see #convertZaverecna(Element)
      */
     public Score convert(String data) {
         Document doc = Jsoup.parse(data);
@@ -41,7 +42,11 @@ public class MarkConvertor {
             Elements strongs = row.select("strong");
 
             if (strongs.size() == 0) {
-                subjects.add(convertRow(row.selectFirst("td").select("a"), name));
+                Subject subject = convertRow(row.selectFirst("td").select("a"), name);
+                Element zaverecna = row.select("td").get(1);
+
+                subject.setZaverecna(convertZaverecna(zaverecna));
+                subjects.add(subject);
             } else {
                 Elements elements = row.getAllElements();
                 elements.remove(elements.size() - 1);
@@ -52,15 +57,22 @@ public class MarkConvertor {
 
                 for (Element element : elements) {
                     if (element.tagName().equals("strong")) {
-                        if (element.html().equals("Teorie:")) flag = false;
+                        if (element.html().contains("Teorie")) flag = false;
                     } else if (element.tagName().equals("a")) {
                         if (flag) cviceni.add(element);
                         else teorie.add(element);
                     }
                 }
 
-                subjects.add(convertRow(cviceni, name + " - Cvičení"));
-                subjects.add(convertRow(teorie, name + " - Teorie"));
+                Element zaver = row.select("td").get(1);
+
+                Subject subCvic = convertRow(cviceni, name + " - Cvičení");
+                subCvic.setZaverecna(convertZaverecna(zaver));
+                subjects.add(subCvic);
+
+                Subject subTeor = convertRow(teorie, name + " - Teorie");
+                subTeor.setZaverecna(convertZaverecna(zaver));
+                subjects.add(subTeor);
             }
         }
 
@@ -103,5 +115,19 @@ public class MarkConvertor {
         boolean small = score.hasClass("scoreSmall");
 
         return new Mark(strEmp, strVal, score.attr("title"), small);
+    }
+
+    /**
+     * Konvertuje element zaver na string s hodnotou závěrné známky
+     * @param zaver Element se závěrnou známkou
+     * @return      String se závěrnou známkou
+     */
+    private String convertZaverecna(Element zaver) {
+        if (!zaver.html().isEmpty()) {
+            System.out.println("XAXAX: " + zaver.html());
+            return zaver.selectFirst("a").html();
+        }
+
+        return "";
     }
 }

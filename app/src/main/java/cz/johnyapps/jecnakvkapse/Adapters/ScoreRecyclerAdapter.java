@@ -1,5 +1,6 @@
 package cz.johnyapps.jecnakvkapse.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -65,13 +66,14 @@ public class ScoreRecyclerAdapter extends RecyclerView.Adapter {
      * @param position  Pozice
      * @see CustomViewHolder
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Subject subject = getItem(position);
 
         CustomViewHolder customHolder = (CustomViewHolder) holder;
 
-        customHolder.textView.setText(subject.getName());
+        customHolder.textView.setText(subject.getName() + " " + subject.getZaverecna());
 
         MarksGridAdapter adapter = new MarksGridAdapter(context, subject.getMarks());
         customHolder.gridView.setAdapter(adapter);
@@ -87,7 +89,7 @@ public class ScoreRecyclerAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = inflater.inflate(R.layout.item_line, parent, false);
+        View itemView = inflater.inflate(R.layout.item_score, parent, false);
         return new CustomViewHolder(itemView);
     }
 
@@ -100,7 +102,7 @@ public class ScoreRecyclerAdapter extends RecyclerView.Adapter {
 
         /**
          * Inicializace
-         * @param view  View {@link cz.johnyapps.jecnakvkapse.R.layout#item_line}
+         * @param view  View {@link cz.johnyapps.jecnakvkapse.R.layout#item_score}
          */
         CustomViewHolder(View view) {
             super(view);
