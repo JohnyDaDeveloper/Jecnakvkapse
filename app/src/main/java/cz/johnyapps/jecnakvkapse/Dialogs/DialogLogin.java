@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import cz.johnyapps.jecnakvkapse.R;
-import cz.johnyapps.jecnakvkapse.Singletons.User;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -22,7 +21,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class DialogLogin {
     private Context context;
     private SharedPreferences prefs;
-    private User user;
 
     /**
      * Inicializace
@@ -31,7 +29,6 @@ public class DialogLogin {
     protected DialogLogin(Context context) {
         this.context = context;
         prefs = context.getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
-        user = User.getUser();
     }
 
     /**
@@ -92,7 +89,6 @@ public class DialogLogin {
         status = !status;
 
         prefs.edit().putBoolean("premium", status).apply();
-        user.setPremium(status);
 
         Toast.makeText(context, "Premium status: " + status, Toast.LENGTH_SHORT).show();
     }

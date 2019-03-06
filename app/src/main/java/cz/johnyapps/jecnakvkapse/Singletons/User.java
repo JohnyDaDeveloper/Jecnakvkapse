@@ -207,20 +207,4 @@ public class User {
     public interface LoggedListener {
         void onLoggedChange(boolean logged);
     }
-
-    /**
-     * Nastaví premium status
-     * @param status Status
-     */
-    public void setPremium(boolean status) {
-        premium = status;
-    }
-
-    /**
-     * Vrátí premium status
-     * @return  True - premium, Flase - není premium
-     */
-    public boolean isPremium() {
-        return premium;
-    }
 }

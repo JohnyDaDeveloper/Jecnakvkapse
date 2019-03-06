@@ -94,19 +94,9 @@ public class Prihlaseni {
     }
 
     /**
-     * Načte Premium status z paměti zařízení
-     */
-    private void loadStatus() {
-        boolean status = prefs.getBoolean("premium", false);
-        user.setPremium(status);
-
-        Log.i(TAG, "premium = " + status);
-    }
-
-    /**
      * Spustí se po přihlášení {@link #prihlas(String, String)}
      */
     public void onResult() {
-        loadStatus();
+
     }
 }
