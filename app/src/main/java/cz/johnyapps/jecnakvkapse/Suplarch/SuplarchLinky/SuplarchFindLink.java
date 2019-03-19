@@ -29,7 +29,7 @@ public class SuplarchFindLink {
      */
     public ArrayList<SuplarchLink> convert(String data) {
         Document doc = Jsoup.parse(data);
-        Elements table = doc.selectFirst("main").select("div[class$=event]");;
+        Elements table = doc.selectFirst("main").select("div[class$=event]");
 
         ArrayList<SuplarchLink> links = new ArrayList<>();
 
@@ -44,30 +44,28 @@ public class SuplarchFindLink {
     }
 
     /**
-     * Prozkoumá HTML element s událostí. Pokud najde suplování pošle ho ke konvertování do {@link #convertSuplovani(Element)}.
+     * Prozkoumá HTML element s událostí a hledá suplování
      * @param event HTML element s událostí
      * @return      Pokud je událost suplování, vrátí {@link SuplarchLink}. Pokud událost není suplování, vrátí null.
      */
     private SuplarchLink convertEvent(Element event) {
         Element nazev = event.selectFirst("div[class$=name]").selectFirst("h2").selectFirst("a");
+        Element files = event.selectFirst("ul[class$=files]");
         String strNazev = nazev.html();
 
-        if (strNazev.contains("Suplování")) {
-            String link = convertSuplovani(event);
+        if (files != null) {
+            Elements links = files.select("a[class$=file]");
 
-            return new SuplarchLink(strNazev, link);
+            for (Element link : links) {
+                String supl = link.attr("href");
+                String[] parts = supl.split("/");
+
+                if (parts[parts.length - 1].toLowerCase().contains("supl")) {
+                    return new SuplarchLink(strNazev, supl);
+                }
+            }
         }
 
         return null;
-    }
-
-    /**
-     * Najde v HTML elementu odkaz na suplování
-     * @param event HTML element se suplováním
-     * @return      Odkaz na suplování ve Stringu.
-     */
-    private String convertSuplovani(Element event) {
-        Element link = event.selectFirst("ul[class$=files]").selectFirst("li").selectFirst("a[class$=file]");
-        return link.attr("href");
     }
 }

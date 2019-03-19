@@ -124,7 +124,6 @@ public class MarkConvertor {
      */
     private String convertZaverecna(Element zaver) {
         if (!zaver.html().isEmpty()) {
-            System.out.println("XAXAX: " + zaver.html());
             return zaver.selectFirst("a").html();
         }
 

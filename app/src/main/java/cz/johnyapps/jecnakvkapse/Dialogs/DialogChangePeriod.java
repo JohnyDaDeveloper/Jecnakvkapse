@@ -19,8 +19,6 @@ import cz.johnyapps.jecnakvkapse.R;
  * Dialog sloužící ke změně zobrazeného období
  */
 public class DialogChangePeriod {
-    private static final String TAG = "DialogChangePeriod";
-
     private Context context;
     private LayoutInflater inflater;
 
