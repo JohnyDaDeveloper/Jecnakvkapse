@@ -8,7 +8,7 @@
         android:id="@+id/SuplarchLink_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/TitleText"
+        style="@style/Suplarch_Title"
         android:text="Title"
         tools:ignore="HardcodedText" />
 

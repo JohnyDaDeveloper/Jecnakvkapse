@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Ječňák v kapse</string>
+
+    <string name="menu_prihlasit">Přihásit</string>
+    <string name="menu_odhlasit">Odhlásit</string>
+    <string name="menu_znamky">Známky</string>
+    <string name="menu_rozvrh">Rozvrh</string>
+    <string name="menu_prichody">Příchody</string>
+    <string name="menu_omluvenky">Omluvenky</string>
+    <string name="menu_suplovani">Suplování</string>
+    <string name="menu_nastaveni">Nastavení</string>
+
+    <string name="settings_fragment_first_title">Hlavní okno</string>
 </resources>

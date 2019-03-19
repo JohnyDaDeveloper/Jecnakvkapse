@@ -1,6 +1,7 @@
 package cz.johnyapps.jecnakvkapse.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Setup_Menu();
 
-        fragment_selected = R.id.MenuMain_Znamky;
+        fragment_selected = prefs.getInt("main_fragment", R.id.MenuMain_Znamky);
 
         AutoLogIn();
     }
@@ -115,6 +116,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             }
 
+            case R.id.MenuMain_Nastaveni: {
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+            }
+
             default: {
                 if (item.getItemId() != fragment_selected) {
                     SwitchFragments(item.getItemId());
@@ -145,35 +151,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.MenuMain_Znamky: {
-                prefs.edit().putInt("main_fragment_selected", R.id.MenuMain_Znamky).apply();
                 MainFragment_Znamky fragment = new MainFragment_Znamky();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
             case R.id.MenuMain_Rozvrh: {
-                prefs.edit().putInt("main_fragment_selected", R.id.MenuMain_Rozvrh).apply();
                 MainFragment_Rozvrh fragment = new MainFragment_Rozvrh();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
             case R.id.MenuMain_Prichody: {
-                prefs.edit().putInt("main_fragment_selected", R.id.MenuMain_Prichody).apply();
                 MainFragment_Prichody fragment = new MainFragment_Prichody();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
             case R.id.MenuMain_Omluvenky: {
-                prefs.edit().putInt("main_fragment_selected", R.id.MenuMain_Omluvenky).apply();
                 MainFragment_Omluvenky fragment = new MainFragment_Omluvenky();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
             case R.id.MenuMain_Suplarch: {
-                prefs.edit().putInt("main_fragment_selected", R.id.MenuMain_Suplarch).apply();
                 MainFragment_Suplarch fragment = new MainFragment_Suplarch();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
