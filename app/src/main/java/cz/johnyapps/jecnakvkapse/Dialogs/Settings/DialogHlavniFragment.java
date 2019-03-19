@@ -12,17 +12,30 @@ import cz.johnyapps.jecnakvkapse.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * Slouží k vybírání hlavního okna v nastavení
+ * @see cz.johnyapps.jecnakvkapse.Activities.SettingsActivity
+ */
 public class DialogHlavniFragment {
     private Context context;
     private SharedPreferences prefs;
     private TextView subText;
 
+    /**
+     * Inicializace
+     * @param context   Context
+     * @param subText   Textové pole pod nadpisem v nastavení
+     */
     public DialogHlavniFragment(Context context, TextView subText) {
         this.context = context;
         prefs = context.getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
         this.subText = subText;
     }
 
+    /**
+     * Vytvoří nastavovací dialog
+     * @return  Dialog
+     */
     public AlertDialog get() {
         String[] strChoices = context.getResources().getStringArray(R.array.FragmentsMain_String);
         int chosen = prefs.getInt("main_fragment_pos", 0);
@@ -46,6 +59,10 @@ public class DialogHlavniFragment {
         return builder.create();
     }
 
+    /**
+     * Změní uložené okno
+     * @param which Pozice v poli oken
+     */
     private void change(int which) {
         String[] strChoices = context.getResources().getStringArray(R.array.FragmentsMain_String);
         TypedArray intChoices = context.getResources().obtainTypedArray(R.array.FragmentsMain_Frags);

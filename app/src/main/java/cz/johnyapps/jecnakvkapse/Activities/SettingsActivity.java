@@ -10,9 +10,13 @@ import android.widget.TextView;
 import cz.johnyapps.jecnakvkapse.Dialogs.Settings.DialogHlavniFragment;
 import cz.johnyapps.jecnakvkapse.R;
 
+/**
+ * Aktivita sloužící k nastavování aplikace
+ */
 public class SettingsActivity extends AppCompatActivity {
     private Context context;
     private SharedPreferences prefs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,9 @@ public class SettingsActivity extends AppCompatActivity {
         initialize();
     }
 
+    /**
+     * Inicializace
+     */
     private void initialize() {
         context = this;
         prefs = getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
@@ -29,6 +36,10 @@ public class SettingsActivity extends AppCompatActivity {
         Setup_HlavniFragment();
     }
 
+    /**
+     * Vytvoření a nastavení volby hlavního okna
+     * @see DialogHlavniFragment
+     */
     private void Setup_HlavniFragment() {
         String[] frags = context.getResources().getStringArray(R.array.FragmentsMain_String);
         int pos = prefs.getInt("main_fragment_pos", 0);
@@ -48,6 +59,10 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Po kliknutí na šipku v horním rohu vrátí uživatele zpět do předchozí aktivity
+     * @param view  Šipka
+     */
     public void back(View view) {
         finish();
     }
