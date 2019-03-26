@@ -1,13 +1,56 @@
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/light_colorAccent</item>
+
+        <item name="color_background">@color/light_color_background</item>
+        <item name="color_textTitle">@color/light_color_textTitle</item>
+        <item name="color_textMain">@color/light_color_textMain</item>
+        <item name="color_textSub">@color/light_color_textSub</item>
+
+        <item name="android:textViewStyle">@style/TextView</item>
+        <item name="alertDialogTheme">@style/MyCustomDialog</item>
     </style>
 
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/dark_colorAccent</item>
+
+        <item name="color_background">@color/dark_color_background</item>
+        <item name="color_textTitle">@color/dark_color_textTitle</item>
+        <item name="color_textMain">@color/dark_color_textMain</item>
+        <item name="color_textSub">@color/dark_color_textSub</item>
+
+        <item name="android:textViewStyle">@style/TextView</item>
+        <item name="alertDialogTheme">@style/MyCustomDialog</item>
+    </style>
+
+    <style name="TextView">
+        <item name="android:textColor">?attr/color_textMain</item>
+    </style>
+
+    <style name="LinkText" parent="android:Widget.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <!-- AlertDialog -->
+    <style name="MyCustomDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorBackground">#000000</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <!-- Suplarch -->
     <style name="Suplarch_Title" parent="android:Widget.TextView">
         <item name="android:textSize">17sp</item>
-        <item name="android:textColor">@color/color_textMain</item>
+        <item name="android:textColor">?attr/color_textMain</item>
         <item name="android:textStyle">bold</item>
 
         <item name="android:layout_marginStart">15dp</item>
@@ -16,25 +59,16 @@
         <item name="android:layout_marginBottom">5dp</item>
     </style>
 
-    <style name="LinkText" parent="android:Widget.TextView">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/colorAccent</item>
-
-        <item name="android:layout_marginStart">10dp</item>
-        <item name="android:layout_marginEnd">10dp</item>
-        <item name="android:layout_marginTop">0dp</item>
-        <item name="android:layout_marginBottom">5dp</item>
-    </style>
-
+    <!-- Settings -->
     <style name="Settings_Title" parent="android:Widget.TextView">
-        <item name="android:textColor">@color/color_textMain</item>
+        <item name="android:textColor">?attr/color_textMain</item>
         <item name="android:textSize">17sp</item>
 
         <item name="android:layout_margin">5dp</item>
     </style>
 
     <style name="Settings_Subtext" parent="android:Widget.TextView">
-        <item name="android:textColor">@color/color_textSub</item>
+        <item name="android:textColor">?attr/color_textSub</item>
         <item name="android:textSize">15sp</item>
 
         <item name="android:layout_marginStart">10dp</item>
@@ -43,6 +77,7 @@
         <item name="android:layout_marginBottom">5dp</item>
     </style>
 
+    <!-- Title -->
     <style name="Title">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -57,7 +92,7 @@
 
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/color_textTitle</item>
+        <item name="android:textColor">?attr/color_textTitle</item>
         <item name="android:text">@string/app_name</item>
 
         <item name="android:lines">1</item>

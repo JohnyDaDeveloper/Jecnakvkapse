@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.SettingsActivity">
+    tools:context=".Activities.SettingsActivity"
+    android:background="?attr/color_background">
 
     <RelativeLayout
         android:id="@+id/Settings_title"
@@ -27,6 +28,12 @@
     <include
         android:id="@+id/Settings_HlavniFragment"
         layout="@layout/settings_fragment_first"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <include
+        android:id="@+id/Settings_Theme"
+        layout="@layout/settings_theme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

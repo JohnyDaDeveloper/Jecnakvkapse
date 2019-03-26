@@ -11,4 +11,7 @@
     <string name="menu_nastaveni">Nastavení</string>
 
     <string name="settings_fragment_first_title">Hlavní okno</string>
+
+    <string name="settings_theme_title">Tmavý motiv</string>
+    <string name="settings_theme_experimental">Experimentální</string>
 </resources>

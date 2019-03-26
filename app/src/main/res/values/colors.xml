@@ -2,11 +2,24 @@
 <resources>
     <color name="colorPrimary">#63ccff</color>
     <color name="colorPrimaryDark">#0094dd</color>
-    <color name="colorAccent">#0094dd</color>
-
-    <color name="color_textTitle">#FFFFFF</color>
-    <color name="color_textMain">#000000</color>
-    <color name="color_textSub">#888888</color>
 
     <color name="colorDivider">#999999</color>
+
+    <!-- Light -->
+    <color name="light_colorAccent">#0094dd</color>
+
+    <color name="light_color_textTitle">#FFFFFF</color>
+    <color name="light_color_textMain">#000000</color>
+    <color name="light_color_textSub">#888888</color>
+
+    <color name="light_color_background">#EEEEEE</color>
+
+    <!-- Dark -->
+    <color name="dark_colorAccent">#F44336</color>
+
+    <color name="dark_color_textTitle">#FFFFFF</color>
+    <color name="dark_color_textMain">#FFFFFF</color>
+    <color name="dark_color_textSub">#AAAAAA</color>
+
+    <color name="dark_color_background">#333333</color>
 </resources>

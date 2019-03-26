@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Default_style">
+        <attr name="color_background" format="color" />
+        <attr name="color_textTitle" format="color" />
+        <attr name="color_textMain" format="color" />
+        <attr name="color_textSub" format="color" />
+    </declare-styleable>
+</resources>

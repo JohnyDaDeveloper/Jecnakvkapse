@@ -23,6 +23,7 @@ import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Suplarch;
 import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Znamky;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
+import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
 
 /**
  * Hlavní aktivita. Otevře se při spuštění app.
@@ -43,6 +44,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context = this;
+
+        ThemeManager themeManager = new ThemeManager(context);
+        themeManager.loadTheme();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -61,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * Načte globální proměnné, reklamu, menu {@link #Setup_Menu()}, fragment a spustí {@link #AutoLogIn()}
      */
     private void initialize() {
-        context = this;
         prefs = getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
         user = User.getUser();
 

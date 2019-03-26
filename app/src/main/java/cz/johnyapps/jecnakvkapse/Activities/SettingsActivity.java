@@ -1,14 +1,17 @@
 package cz.johnyapps.jecnakvkapse.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import cz.johnyapps.jecnakvkapse.Dialogs.Settings.DialogHlavniFragment;
 import cz.johnyapps.jecnakvkapse.R;
+import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
 
 /**
  * Aktivita sloužící k nastavování aplikace
@@ -20,6 +23,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context = this;
+
+        ThemeManager themeManager = new ThemeManager(context);
+        themeManager.loadTheme();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -30,14 +38,14 @@ public class SettingsActivity extends AppCompatActivity {
      * Inicializace
      */
     private void initialize() {
-        context = this;
         prefs = getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
 
         Setup_HlavniFragment();
+        Setup_Theme();
     }
 
     /**
-     * Vytvoření a nastavení volby hlavního okna
+     * Nastavení volby hlavního okna
      * @see DialogHlavniFragment
      */
     private void Setup_HlavniFragment() {
@@ -60,10 +68,52 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     /**
+     * Nastavení volby módu
+     */
+    private void Setup_Theme() {
+        String theme = prefs.getString("theme", "light");
+
+        if (theme != null) {
+            boolean dark = theme.equals("dark");
+            Switch sw = findViewById(R.id.Theme_title);
+
+            if (dark) {
+                sw.setChecked(true);
+            } else {
+                sw.setChecked(false);
+            }
+
+            sw.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Switch sw = (Switch) v;
+
+                    if (sw.isChecked()) {
+                        prefs.edit().putString("theme", "dark").apply();
+                        restart();
+                    } else {
+                        prefs.edit().putString("theme", "light").apply();
+                        restart();
+                    }
+                }
+            });
+        }
+    }
+
+    /**
      * Po kliknutí na šipku v horním rohu vrátí uživatele zpět do předchozí aktivity
      * @param view  Šipka
      */
     public void back(View view) {
+        finish();
+    }
+
+    /**
+     * Restartuje aktivitu
+     */
+    public void restart() {
+        Intent intent = new Intent(this, this.getClass());
+        startActivity(intent);
         finish();
     }
 }
