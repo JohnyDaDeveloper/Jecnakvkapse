@@ -79,6 +79,8 @@ public class Prihlaseni {
                     user.setProfil(profilConvertor.convert(result));
 
                     Prihlaseni.this.onResult();
+                } else {
+                    error();
                 }
 
                 if (result.equals("ERROR")) {
@@ -93,6 +95,10 @@ public class Prihlaseni {
      * Spustí se po přihlášení {@link #prihlas(String, String)}
      */
     public void onResult() {
+
+    }
+
+    public void error() {
 
     }
 }

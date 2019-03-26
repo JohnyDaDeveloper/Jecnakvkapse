@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /**
-     * Přihlásí uživatele
+     * Přihlásí uživatele a načte fragment přes {@link #SwitchFragments(int)}
      * @param login Login
      * @param pass  Heslo
      */
@@ -235,6 +235,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onResult() {
                 super.onResult();
                 SwitchFragments(fragment_selected);
+            }
+
+            @Override
+            public void error() {
+                super.error();
+
+                if (fragment_selected == R.id.MenuMain_Rozvrh) {
+                    SwitchFragments(fragment_selected);
+                }
             }
         };
 

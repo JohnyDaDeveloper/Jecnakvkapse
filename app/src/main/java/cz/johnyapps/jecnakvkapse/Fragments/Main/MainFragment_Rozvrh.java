@@ -80,7 +80,7 @@ public class MainFragment_Rozvrh extends Fragment {
     }
 
     /**
-     * Stáhne rozvrh
+     * Stáhne rozvrh. Pokud stahování selže, pokusí se načíst rozvrh z paměti zařízení.
      * @see StahniRozvrh
      * @see RozvrhConventor
      */
@@ -92,15 +92,26 @@ public class MainFragment_Rozvrh extends Fragment {
             public void onResult(String result) {
                 super.onResult(result);
                 ResultErrorProcess error = new ResultErrorProcess(context);
+                RozvrhConventor conventor = new RozvrhConventor();
 
                 if (error.process(result)) {
-                    RozvrhConventor conventor = new RozvrhConventor();
                     Rozvrh rozvrh = conventor.convert(result);
 
                     offlineMode.write(result, "rozvrh", rozvrh.getDatum());
                     user.setRozvrh(rozvrh);
 
                     displayRozvrh();
+                } else {
+                    String[] rozvrhStr = offlineMode.read("rozvrh");
+
+                    System.out.println("XAXAX: " + rozvrhStr[0]);
+
+                    if (!rozvrhStr[0].equals("ERROR")) {
+                        Rozvrh rozvrh = conventor.convert(rozvrhStr[0]);
+                        user.setRozvrh(rozvrh);
+
+                        displayRozvrh();
+                    }
                 }
 
                 progressBar.setVisibility(View.GONE);
@@ -111,31 +122,21 @@ public class MainFragment_Rozvrh extends Fragment {
     }
 
     /**
-     * Pokud je rozvrh stažen, zobrazí se, pokud ne, stáhne se. Pokud je zařízení offline tak se místo stahování načte z paměti.
+     * Pokud je rozvrh stažen, zobrazí se, pokud ne, zavolá se {@link #rozvrh()}
      * @see #rozvrh()
      * @see RozvrhAdaper
      * @see Rozvrh
      * @see RozvrhConventor
      */
     public void displayRozvrh() {
+        System.out.println("XAXAX");
         Rozvrh rozvrh = user.getRozvrh();
 
         if (rozvrh != null) {
             RozvrhAdaper rozvrhAdaper = new RozvrhAdaper(context, rozvrh);
             rozvrhAdaper.adapt(rozvrhLayout);
         } else {
-            String[] rozvrhStr = offlineMode.read("rozvrh");
-
-            if (!rozvrhStr[0].equals("ERROR")) {
-                RozvrhConventor conventor = new RozvrhConventor();
-                Rozvrh rozvrhOffline = conventor.convert(rozvrhStr[0]);
-                user.setRozvrh(rozvrhOffline);
-
-                displayRozvrh();
-                rozvrh();
-            } else {
-                rozvrh();
-            }
+            rozvrh();
         }
     }
 }
