@@ -41,7 +41,7 @@ public class DialogHlavniFragment {
         int chosen = prefs.getInt("main_fragment_pos", 0);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Hlavní fragment")
+        builder.setTitle("Hlavní okno")
                 .setSingleChoiceItems(strChoices, chosen, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
