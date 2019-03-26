@@ -1,7 +1,7 @@
 package cz.johnyapps.jecnakvkapse.Actions;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 
 import java.util.ArrayList;

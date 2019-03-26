@@ -19,7 +19,6 @@ import cz.johnyapps.jecnakvkapse.Omluvenky.OmluvenkyConvertor;
 import cz.johnyapps.jecnakvkapse.Omluvenky.Omluvnak;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
-import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
 
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování omluvenek
@@ -36,15 +35,7 @@ public class MainFragment_Omluvenky extends Fragment {
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        this.context = getContext();
-
-        if (context != null) {
-            ThemeManager themeManager = new ThemeManager(context);
-            themeManager.loadTheme();
-        }
-
         super.onCreate(savedInstanceState);
-
         initialize();
     }
 
@@ -52,6 +43,7 @@ public class MainFragment_Omluvenky extends Fragment {
      * Načte globální proměnné
      */
     private void initialize() {
+        this.context = getContext();
         this.user = User.getUser();
     }
 

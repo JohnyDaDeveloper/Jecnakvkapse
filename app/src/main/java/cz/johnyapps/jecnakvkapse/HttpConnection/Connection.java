@@ -1,6 +1,6 @@
 package cz.johnyapps.jecnakvkapse.HttpConnection;
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 

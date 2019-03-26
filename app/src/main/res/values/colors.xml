@@ -12,7 +12,8 @@
     <color name="light_color_textMain">#000000</color>
     <color name="light_color_textSub">#888888</color>
 
-    <color name="light_color_background">#EEEEEE</color>
+    <color name="light_color_background">#F5F5F5</color>
+    <color name="light_color_background_darker">#EEEEEE</color>
 
     <!-- Dark -->
     <color name="dark_colorAccent">#F44336</color>
@@ -22,4 +23,5 @@
     <color name="dark_color_textSub">#AAAAAA</color>
 
     <color name="dark_color_background">#333333</color>
+    <color name="dark_color_background_darker">#111111</color>
 </resources>

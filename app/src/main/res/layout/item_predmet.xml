@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="0dp"
-    android:background="#FFFFFF"
+    android:background="?attr/color_background"
     android:layout_weight="2">
 
     <TextView
@@ -57,5 +57,5 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#eeeeee" />
+        android:background="?attr/color_background_darker" />
 </RelativeLayout>
