@@ -12,6 +12,9 @@
 
     <string name="settings_fragment_first_title">Hlavní okno</string>
 
-    <string name="settings_theme_title">Tmavý motiv</string>
+    <string name="settings_theme_title">Motiv</string>
     <string name="settings_theme_experimental">Experimentální. Vyžaduje restart aplikace.</string>
+    <string name="settings_theme_light">Světlý motiv</string>
+    <string name="settings_theme_dark">Tmavý motiv</string>
+    <string name="settings_theme_pink">Růžový motiv</string>
 </resources>

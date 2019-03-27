@@ -17,24 +17,24 @@ public class ThemeManager {
     }
 
     public void loadTheme() {
-        String theme = prefs.getString("theme", "light");
+        int theme = prefs.getInt("selected_theme", R.id.SettingsTheme_light);
 
-        if (theme != null) {
-            switch (theme) {
-                case "dark": {
-                    context.setTheme(R.style.DarkTheme);
-                    break;
-                }
 
-                case "pink": {
-                    context.setTheme(R.style.PinkTheme);
-                    break;
-                }
 
-                default: {
-                    context.setTheme(R.style.LightTheme);
-                    break;
-                }
+        switch (theme) {
+            case R.id.SettingsTheme_dark: {
+                context.setTheme(R.style.DarkTheme);
+                break;
+            }
+
+            case R.id.SettingsTheme_pink: {
+                context.setTheme(R.style.PinkTheme);
+                break;
+            }
+
+            default: {
+                context.setTheme(R.style.LightTheme);
+                break;
             }
         }
     }

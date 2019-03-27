@@ -1,7 +1,6 @@
 package cz.johnyapps.jecnakvkapse.Adapters;
 
 import android.content.SharedPreferences;
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
@@ -118,8 +117,8 @@ public class MarksGridAdapter extends BaseAdapter {
                 public boolean onLongClick(View v) {
                     Mark mark = (Mark) v.getTag();
                     if (mark.getValue().equals("5")) {
-                        prefs.edit().putString("theme", "pink").apply();
-                        Toast.makeText(context, "Růžové téma nastaveno. Restartujte aplikaci.", Toast.LENGTH_LONG).show();
+                        prefs.edit().putBoolean("enable_pink", true).apply();
+                        Toast.makeText(context, "Růžové téma povoleno", Toast.LENGTH_LONG).show();
                     }
 
                     return false;

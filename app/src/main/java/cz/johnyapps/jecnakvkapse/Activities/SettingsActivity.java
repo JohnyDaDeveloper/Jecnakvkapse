@@ -6,7 +6,8 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Switch;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import cz.johnyapps.jecnakvkapse.Dialogs.Settings.DialogHlavniFragment;
@@ -68,35 +69,73 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     /**
-     * Nastavení volby módu
+     * Nastavení volby motivu
      */
     private void Setup_Theme() {
-        String theme = prefs.getString("theme", "light");
+        int theme = prefs.getInt("selected_theme", R.id.SettingsTheme_light);
+        boolean pink = prefs.getBoolean("enable_pink", false);
 
-        if (theme != null) {
-            boolean dark = theme.equals("dark");
-            Switch sw = findViewById(R.id.Theme_title);
+        if (pink) {
+            RadioButton button = findViewById(R.id.SettingsTheme_pink);
+            button.setVisibility(View.VISIBLE);
+        }
 
-            if (dark) {
-                sw.setChecked(true);
-            } else {
-                sw.setChecked(false);
-            }
+        RadioGroup radioGroup = findViewById(R.id.SettingsTheme_themes);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int theme = prefs.getInt("selected_theme", R.id.SettingsTheme_light);
 
-            sw.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Switch sw = (Switch) v;
+                switch (checkedId) {
+                    case R.id.SettingsTheme_dark: {
+                        if (theme != R.id.SettingsTheme_dark) {
+                            prefs.edit().putInt("selected_theme", R.id.SettingsTheme_dark).apply();
+                            restart();
+                        }
 
-                    if (sw.isChecked()) {
-                        prefs.edit().putString("theme", "dark").apply();
-                        restart();
-                    } else {
-                        prefs.edit().putString("theme", "light").apply();
-                        restart();
+                        break;
+                    }
+
+                    case R.id.SettingsTheme_pink: {
+                        if (theme != R.id.SettingsTheme_pink) {
+                            prefs.edit().putInt("selected_theme", R.id.SettingsTheme_pink).apply();
+                            restart();
+                        }
+
+                        break;
+                    }
+
+                    default: {
+                        if (theme != R.id.SettingsTheme_light) {
+                            prefs.edit().putInt("selected_theme", R.id.SettingsTheme_light).apply();
+                            restart();
+
+                        }
+
+                        break;
                     }
                 }
-            });
+            }
+        });
+
+        switch (theme) {
+            case R.id.SettingsTheme_dark: {
+                RadioButton button = findViewById(R.id.SettingsTheme_dark);
+                button.setChecked(true);
+                break;
+            }
+
+            case R.id.SettingsTheme_pink: {
+                RadioButton button = findViewById(R.id.SettingsTheme_pink);
+                button.setChecked(true);
+                break;
+            }
+
+            default: {
+                RadioButton button = findViewById(R.id.SettingsTheme_light);
+                button.setChecked(true);
+                break;
+            }
         }
     }
 
@@ -109,10 +148,10 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     /**
-     * Restartuje aktivitu
+     * Restartuje aplikaci
      */
     public void restart() {
-        Intent intent = new Intent(this, this.getClass());
+        Intent intent = new Intent(context, context.getClass());
         startActivity(intent);
         finish();
     }
