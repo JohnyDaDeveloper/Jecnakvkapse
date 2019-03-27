@@ -2,6 +2,8 @@
 <resources>
     <color name="colorDivider">#999999</color>
 
+    <color name="color_dialogMark_titleText">#000000</color>
+
     <!-- Light -->
     <color name="light_colorPrimary">#63ccff</color>
     <color name="light_colorPrimaryDark">#0094dd</color>

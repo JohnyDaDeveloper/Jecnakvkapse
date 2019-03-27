@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import cz.johnyapps.jecnakvkapse.Dialogs.DialogMarkBuilder;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Score.Mark;
 
@@ -137,15 +138,17 @@ public class MarksGridAdapter extends BaseAdapter {
                         title += " Velká";
                     }
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    DialogMarkBuilder builder = new DialogMarkBuilder(context);
                     builder.setTitle(title)
-                            .setMessage(mark.getTitle())
+                            .setHeaderColor(mark.getColor())
                             .setNegativeButton("Zavřít", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
+                                    dialog.dismiss();
                                 }
-                            }).create().show();
+                            })
+                            .setMessage(mark.getTitle())
+                            .create().show();
                 }
             });
         }

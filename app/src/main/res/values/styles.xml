@@ -87,6 +87,17 @@
         <item name="android:background">@color/pink_color_background</item>
     </style>
 
+    <style name="CustomDialog_TitleText" parent="android:Widget.TextView">
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/color_dialogMark_titleText</item>
+    </style>
+
     <!-- Views -->
     <style name="TextView">
         <item name="android:textColor">?attr/color_textMain</item>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/DialogMark_header"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="2dp"
+    android:translationZ="2dp">
+
+    <TextView
+        android:id="@+id/DialogMark_title"
+        style="@style/CustomDialog_TitleText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
