@@ -33,5 +33,9 @@
         android:title="@string/menu_nastaveni"
         android:icon="@drawable/settings"/>
 
+    <item android:id="@+id/MenuMain_OAplikaci"
+        android:title="@string/menu_o_aplikaci"
+        android:icon="@drawable/about"/>
+
     <!-- Nové fragmenty přidávej i do pole 'FragmentsMain' v 'arrays.xml' -->
 </menu>

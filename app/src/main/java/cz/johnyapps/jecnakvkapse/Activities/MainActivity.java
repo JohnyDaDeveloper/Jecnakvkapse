@@ -112,18 +112,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.MenuMain_Prihlasit: {
                 Dialog_LogIn();
-                return true;
+                break;
             }
 
             case R.id.MenuMain_Odhlasit: {
                 DialogOdhlasit odhlasit = new DialogOdhlasit(context);
                 odhlasit.get().show();
-                return true;
+                break;
             }
 
             case R.id.MenuMain_Nastaveni: {
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
+                break;
+            }
+
+            case R.id.MenuMain_OAplikaci: {
+                Intent intent = new Intent(this, OAplikaci.class);
+                startActivity(intent);
+                break;
             }
 
             default: {

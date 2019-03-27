@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/light_colorPrimary</item>
         <item name="colorPrimaryDark">@color/light_colorPrimaryDark</item>
@@ -101,6 +101,7 @@
     <!-- Views -->
     <style name="TextView">
         <item name="android:textColor">?attr/color_textMain</item>
+        <item name="android:drawableTint" tools:targetApi="m">?attr/color_textMain</item>
     </style>
 
     <style name="EditText" parent="Widget.AppCompat.EditText">

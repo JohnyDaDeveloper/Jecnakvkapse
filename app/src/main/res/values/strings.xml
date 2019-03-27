@@ -9,6 +9,7 @@
     <string name="menu_omluvenky">Omluvenky</string>
     <string name="menu_suplovani">Suplování</string>
     <string name="menu_nastaveni">Nastavení</string>
+    <string name="menu_o_aplikaci">O aplikaci</string>
 
     <string name="settings_fragment_first_title">Hlavní okno</string>
 
@@ -17,4 +18,11 @@
     <string name="settings_theme_light">Světlý motiv</string>
     <string name="settings_theme_dark">Tmavý motiv</string>
     <string name="settings_theme_pink">Růžový motiv</string>
+    
+    <string name="oaplikaci_vyvojar_title">Vývojář</string>
+    <string name="oaplikaci_vyvojar_jmeno">Johny Da Developer</string>
+    <string name="oaplikaci_vyvojar_kontakt">johnydadeveloper@gmail.com</string>
+    <string name="oaplikaci_vyvojar_github">Github</string>
+    <string name="oaplikaci_app_title">Aplikace</string>
+    <string name="oaplikaci_app_verze">Verze</string>
 </resources>
