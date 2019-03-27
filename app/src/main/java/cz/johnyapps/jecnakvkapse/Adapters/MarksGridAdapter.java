@@ -116,9 +116,16 @@ public class MarksGridAdapter extends BaseAdapter {
                 @Override
                 public boolean onLongClick(View v) {
                     Mark mark = (Mark) v.getTag();
+                    boolean pink = prefs.getBoolean("enable_pink", false);
+
                     if (mark.getValue().equals("5")) {
-                        prefs.edit().putBoolean("enable_pink", true).apply();
-                        Toast.makeText(context, "Růžové téma povoleno", Toast.LENGTH_LONG).show();
+                        if (pink) {
+                            prefs.edit().putBoolean("enable_pink", false).apply();
+                            Toast.makeText(context, "Růžové téma zakázáno", Toast.LENGTH_LONG).show();
+                        } else {
+                            prefs.edit().putBoolean("enable_pink", true).apply();
+                            Toast.makeText(context, "Růžové téma povoleno", Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     return false;
