@@ -12,8 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:text="Menu"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:textSize="20sp"
+        style="@style/Title_Text"
         tools:ignore="HardcodedText" />
 </RelativeLayout>

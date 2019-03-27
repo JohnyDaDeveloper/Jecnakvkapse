@@ -166,6 +166,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:elevation">5dp</item>
     </style>
 
     <style name="Title_Text" parent="android:Widget.TextView">
