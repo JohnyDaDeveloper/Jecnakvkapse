@@ -63,8 +63,7 @@ public class DialogLogin {
 
                         login(login, edtPass.getText().toString(), checkBox.isChecked());
                     }
-                })
-                .setCancelable(false);
+                });
 
         return builder.create();
     }

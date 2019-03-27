@@ -15,7 +15,7 @@
         <item name="alertDialogTheme">@style/MyCustomDialog_Light</item>
     </style>
 
-    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="DarkTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/dark_colorAccent</item>
@@ -28,11 +28,17 @@
         <item name="color_textSub">@color/dark_color_textSub</item>
 
         <item name="android:textViewStyle">@style/TextView</item>
+        <item name="android:editTextStyle">@style/EditText</item>
         <item name="alertDialogTheme">@style/MyCustomDialog_Dark</item>
     </style>
 
     <style name="TextView">
         <item name="android:textColor">?attr/color_textMain</item>
+    </style>
+
+    <style name="EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">?attr/color_textMain</item>
+        <item name="android:textColorHint">?attr/color_textSub</item>
     </style>
 
     <style name="Jecnak.CardView" parent="CardView.Light">

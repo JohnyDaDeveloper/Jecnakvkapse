@@ -87,31 +87,30 @@ public class MainFragment_Rozvrh extends Fragment {
     public void rozvrh() {
         progressBar.setVisibility(View.VISIBLE);
 
+        String[] rozvrhStr = offlineMode.read("rozvrh");
+
+        if (!rozvrhStr[0].equals("ERROR")) {
+            RozvrhConventor conventor = new RozvrhConventor();
+            Rozvrh rozvrh = conventor.convert(rozvrhStr[0]);
+            user.setRozvrh(rozvrh);
+
+            displayRozvrh();
+        }
+
         StahniRozvrh stahniRozvrh = new StahniRozvrh() {
             @Override
             public void onResult(String result) {
                 super.onResult(result);
                 ResultErrorProcess error = new ResultErrorProcess(context);
-                RozvrhConventor conventor = new RozvrhConventor();
 
                 if (error.process(result)) {
+                    RozvrhConventor conventor = new RozvrhConventor();
                     Rozvrh rozvrh = conventor.convert(result);
 
                     offlineMode.write(result, "rozvrh", rozvrh.getDatum());
                     user.setRozvrh(rozvrh);
 
                     displayRozvrh();
-                } else {
-                    String[] rozvrhStr = offlineMode.read("rozvrh");
-
-                    System.out.println("XAXAX: " + rozvrhStr[0]);
-
-                    if (!rozvrhStr[0].equals("ERROR")) {
-                        Rozvrh rozvrh = conventor.convert(rozvrhStr[0]);
-                        user.setRozvrh(rozvrh);
-
-                        displayRozvrh();
-                    }
                 }
 
                 progressBar.setVisibility(View.GONE);
@@ -129,7 +128,6 @@ public class MainFragment_Rozvrh extends Fragment {
      * @see RozvrhConventor
      */
     public void displayRozvrh() {
-        System.out.println("XAXAX");
         Rozvrh rozvrh = user.getRozvrh();
 
         if (rozvrh != null) {
