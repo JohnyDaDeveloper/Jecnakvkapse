@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/LightTheme"
         tools:ignore="InnerclassSeparator">
-        <activity android:name=".Activities.OAplikaci"></activity>
+        <activity android:name=".Activities.OAplikaci" />
         <activity android:name=".Activities.SettingsActivity" />
         <activity
             android:name=".Activities.MainActivity"
@@ -38,5 +38,4 @@
                 android:resource="@xml/provider_paths" />
         </provider>
     </application>
-
 </manifest>

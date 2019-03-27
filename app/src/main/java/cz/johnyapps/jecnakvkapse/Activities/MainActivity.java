@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
+
 import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogLogin;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogOdhlasit;
@@ -24,6 +26,7 @@ import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Znamky;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Hlavní aktivita. Otevře se při spuštění app.
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Fabric.with(this, Crashlytics.getInstance());
 
         initialize();
     }
