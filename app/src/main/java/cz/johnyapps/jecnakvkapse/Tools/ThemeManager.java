@@ -26,6 +26,11 @@ public class ThemeManager {
                     break;
                 }
 
+                case "pink": {
+                    context.setTheme(R.style.PinkTheme);
+                    break;
+                }
+
                 default: {
                     context.setTheme(R.style.LightTheme);
                     break;

@@ -7,5 +7,7 @@
         <attr name="color_textTitle" format="color" />
         <attr name="color_textMain" format="color" />
         <attr name="color_textSub" format="color" />
+
+        <attr name="color_rozvrhPeriod" format="color" />
     </declare-styleable>
 </resources>

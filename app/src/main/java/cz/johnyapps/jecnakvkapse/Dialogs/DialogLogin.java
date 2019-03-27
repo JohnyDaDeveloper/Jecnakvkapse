@@ -60,7 +60,6 @@ public class DialogLogin {
                         String login = edtName.getText().toString();
                         login = login.replaceAll(" ", "");
 
-
                         login(login, edtPass.getText().toString(), checkBox.isChecked());
                     }
                 });

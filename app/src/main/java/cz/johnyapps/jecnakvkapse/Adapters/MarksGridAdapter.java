@@ -1,5 +1,6 @@
 package cz.johnyapps.jecnakvkapse.Adapters;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,17 +10,21 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Score.Mark;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Adapter pro známky - Známky v políčkách s předměty (Podadapter adapteru {@link ScoreRecyclerAdapter})
  */
 public class MarksGridAdapter extends BaseAdapter {
     private Context context;
+    private SharedPreferences prefs;
 
     private ArrayList<Mark> marks;
     private LayoutInflater inflater;
@@ -32,6 +37,7 @@ public class MarksGridAdapter extends BaseAdapter {
      */
     MarksGridAdapter(Context context, ArrayList<Mark> marks) {
         this.context = context;
+        this.prefs = context.getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
 
         this.marks = marks;
         this.inflater = (LayoutInflater.from(context));
@@ -98,15 +104,31 @@ public class MarksGridAdapter extends BaseAdapter {
      * @param view  View se známkou
      * @param mark  Známka
      */
-    private void Setup_OnClick(View view, final Mark mark) {
+    private void Setup_OnClick(View view, Mark mark) {
         if (mark.getTitle() != null) {
             if (mark.getTitle().isEmpty()) {
                 mark.setTitle("Důvod nenalezen");
             }
 
+            view.setTag(mark);
+
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Mark mark = (Mark) v.getTag();
+                    if (mark.getValue().equals("5")) {
+                        prefs.edit().putString("theme", "pink").apply();
+                        Toast.makeText(context, "Růžové téma nastaveno. Restartujte aplikaci.", Toast.LENGTH_LONG).show();
+                    }
+
+                    return false;
+                }
+            });
+
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Mark mark = (Mark) v.getTag();
                     String title = mark.getValue();
 
                     if (mark.isSmall()) {

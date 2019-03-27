@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#63ccff</color>
-    <color name="colorPrimaryDark">#0094dd</color>
-
     <color name="colorDivider">#999999</color>
 
     <!-- Light -->
+    <color name="light_colorPrimary">#63ccff</color>
+    <color name="light_colorPrimaryDark">#0094dd</color>
     <color name="light_colorAccent">#0094dd</color>
 
     <color name="light_color_textTitle">#FFFFFF</color>
@@ -15,7 +14,11 @@
     <color name="light_color_background">#F5F5F5</color>
     <color name="light_color_background_darker">#EEEEEE</color>
 
+    <color name="light_color_rozvrhPeriod">#94B9EF</color>
+
     <!-- Dark -->
+    <color name="dark_colorPrimary">#63ccff</color>
+    <color name="dark_colorPrimaryDark">#0094dd</color>
     <color name="dark_colorAccent">#F44336</color>
 
     <color name="dark_color_textTitle">#FFFFFF</color>
@@ -24,4 +27,20 @@
 
     <color name="dark_color_background">#333333</color>
     <color name="dark_color_background_darker">#111111</color>
+
+    <color name="dark_color_rozvrhPeriod">#94B9EF</color>
+
+    <!-- Pink -->
+    <color name="pink_colorPrimary">#DB0077</color>
+    <color name="pink_colorPrimaryDark">#AA005B</color>
+    <color name="pink_colorAccent">#FF2253</color>
+
+    <color name="pink_color_textTitle">#FFFFFF</color>
+    <color name="pink_color_textMain">#FF6DC7</color>
+    <color name="pink_color_textSub">#D3007C</color>
+
+    <color name="pink_color_background">#333333</color>
+    <color name="pink_color_background_darker">#111111</color>
+
+    <color name="pink_color_rozvrhPeriod">#F43698</color>
 </resources>
