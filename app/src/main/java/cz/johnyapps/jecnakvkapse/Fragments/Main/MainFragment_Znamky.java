@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.crashlytics.android.Crashlytics;
+
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogChangePeriod;
 import cz.johnyapps.jecnakvkapse.Score.StahniScore;
 import cz.johnyapps.jecnakvkapse.Adapters.ScoreRecyclerAdapter;
@@ -25,6 +27,8 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování odkazů na suplování
  */
 public class MainFragment_Znamky extends Fragment implements View.OnClickListener {
+    private static final String TAG = "MainFragment_Znamky";
+
     private Context context;
     private User user;
 
@@ -36,6 +40,8 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        Crashlytics.log(TAG + "Loading");
+
         super.onCreate(savedInstanceState);
         initialize();
     }
@@ -122,6 +128,7 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
      * @see MarkConvertor
      */
     public void marks(@Nullable String obdobi) {
+        Crashlytics.log(TAG + "Downloading");
         String sessionId = user.getSessionId();
 
         if (sessionId != null) {
@@ -132,12 +139,15 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
                     ResultErrorProcess error = new ResultErrorProcess(context);
 
                     if (error.process(result)) {
+                        Crashlytics.log(TAG + "Converting");
                         MarkConvertor markConvertor = new MarkConvertor();
                         Score score = markConvertor.convert(result);
 
                         user.setScore(score);
 
                         displayMarks();
+                    } else {
+                        Crashlytics.log(TAG + "Download error: " + result);
                     }
                 }
             };
@@ -156,6 +166,7 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
         Score score = user.getScore();
 
         if (score != null) {
+            Crashlytics.log(TAG + "Displaying");
             ScoreRecyclerAdapter adapter = new ScoreRecyclerAdapter(context, score);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(adapter);

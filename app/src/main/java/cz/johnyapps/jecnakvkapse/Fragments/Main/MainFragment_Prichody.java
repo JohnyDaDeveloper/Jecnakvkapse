@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.crashlytics.android.Crashlytics;
+
 import cz.johnyapps.jecnakvkapse.Adapters.PrichodyRecyclerAdapter;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogChangePeriod;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
@@ -25,6 +27,7 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování příchodů
  */
 public class MainFragment_Prichody extends Fragment implements View.OnClickListener {
+    private static final String TAG = "MainFragment_Prichody";
     private Context context;
     private User user;
 
@@ -36,6 +39,8 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        Crashlytics.log(TAG + "Loading");
+
         super.onCreate(savedInstanceState);
         initialize();
     }
@@ -123,6 +128,8 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
      * @see PrichodyConvertor
      */
     private void prichody(@Nullable String obdobi) {
+        Crashlytics.log(TAG + "Downloading");
+
         StahniPrichody stahniPrichody = new StahniPrichody(context) {
             @Override
             public void onResult(String result) {
@@ -131,11 +138,15 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
                 ResultErrorProcess process = new ResultErrorProcess(context);
 
                 if (process.process(result)) {
+                    Crashlytics.log(TAG + "Converting");
+
                     PrichodyConvertor prichodyConvertor = new PrichodyConvertor();
                     Prichody prichody = prichodyConvertor.convert(result);
 
                     user.setPrichody(prichody);
                     displayPrichody();
+                } else {
+                    Crashlytics.log(TAG + "Downloading error: " + result);
                 }
             }
         };
@@ -153,6 +164,7 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
         Prichody prichody = user.getPrichody();
 
         if (prichody != null) {
+            Crashlytics.log(TAG + "Displaying");
             PrichodyRecyclerAdapter adapter = new PrichodyRecyclerAdapter(context, user.getPrichody());
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(adapter);

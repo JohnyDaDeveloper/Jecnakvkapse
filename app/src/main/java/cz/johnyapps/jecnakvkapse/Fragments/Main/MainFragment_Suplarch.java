@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.ArrayList;
 
 import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchLinky.StahniSuplarchLinky;
@@ -29,6 +31,7 @@ import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchLinky.SuplarchLink;
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování odkazů na suplování
  */
 public class MainFragment_Suplarch extends Fragment {
+    private static final String TAG = "MainFragment_Suplarch";
     private static final int PERMISSION_REQUEST_CODE = 749;
 
     private Context context;
@@ -42,6 +45,8 @@ public class MainFragment_Suplarch extends Fragment {
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        Crashlytics.log(TAG + "Loading");
+
         super.onCreate(savedInstanceState);
         initialize();
     }
@@ -84,6 +89,7 @@ public class MainFragment_Suplarch extends Fragment {
      * Zeptá se na povolení (Čtení a zapisování do úlozíště)
      */
     private void askForPermissions() {
+        Crashlytics.log(TAG + "Asking for permissions");
         String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         requestPermissions(permissions, PERMISSION_REQUEST_CODE);
     }
@@ -98,11 +104,15 @@ public class MainFragment_Suplarch extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        Crashlytics.log(TAG + "Handling permission request results");
+
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE: {
                 if (processPermision(Manifest.permission.WRITE_EXTERNAL_STORAGE, permissions, grantResults) && processPermision(Manifest.permission.READ_EXTERNAL_STORAGE, permissions, grantResults)) {
+                    Crashlytics.log(TAG + "Permission \"Write external storage\" guaranteed");
                     displaySuplarchLinks();
                 } else {
+                    Crashlytics.log(TAG + "Permission \"Write external storage\" denied");
                     permissionDenied();
                 }
                 break;
@@ -127,6 +137,8 @@ public class MainFragment_Suplarch extends Fragment {
      * @return                  True - povoleno, False - zamítnuto
      */
     private boolean processPermision(String askedPermission, String[] permissions, int[] grantResult) {
+        Crashlytics.log(TAG + "Processing \"Write external storage\" permission");
+
         if (permissions.length > 0) {
             for (int i = 0; i < permissions.length; i++) {
                 if (permissions[i].equals(askedPermission)) {
@@ -144,6 +156,8 @@ public class MainFragment_Suplarch extends Fragment {
      * @see SuplarchFindLink
      */
     public void suplarch() {
+        Crashlytics.log(TAG + "Downloading \"Suplarch linky\"");
+
         StahniSuplarchLinky stahniSuplarchLinky = new StahniSuplarchLinky(context) {
             @Override
             public void onResult(String result) {
@@ -152,6 +166,7 @@ public class MainFragment_Suplarch extends Fragment {
                 ResultErrorProcess process = new ResultErrorProcess(context);
 
                 if (process.process(result)) {
+                    Crashlytics.log(TAG + "Converting \"Suplarch linky\"");
                     SuplarchFindLink suplarchFindLink = new SuplarchFindLink();
                     ArrayList<SuplarchLink> links = suplarchFindLink.convert(result);
 
@@ -161,6 +176,8 @@ public class MainFragment_Suplarch extends Fragment {
                     user.setSuplarchHolder(suplarchHolder);
 
                     displaySuplarchLinks();
+                } else {
+                    Crashlytics.log(TAG + "Downloading \"Suplarch linky\" error: " + result);
                 }
             }
         };
@@ -179,6 +196,7 @@ public class MainFragment_Suplarch extends Fragment {
         SuplarchHolder suplarchHolder = user.getSuplarchHolder();
 
         if (suplarchHolder != null) {
+            Crashlytics.log(TAG + "Displaying");
             SuplarchLinkAdapter adapter = new SuplarchLinkAdapter(context, suplarchHolder.getSuplarchLinks());
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(adapter);

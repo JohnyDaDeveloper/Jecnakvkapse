@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.ArrayList;
 
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogLoading;
@@ -40,6 +42,8 @@ public class Prihlaseni {
     public void prihlas(String user, String pass) {
         DialogLoading dialogLoading = new DialogLoading(context);
         AlertDialog dialog = dialogLoading.get("Přihlašování...");
+
+        Crashlytics.log("logging in");
 
         ArrayList<Data> data = new ArrayList<>();
         data.add(new Data("user", user));
@@ -95,10 +99,10 @@ public class Prihlaseni {
      * Spustí se po přihlášení {@link #prihlas(String, String)}
      */
     public void onResult() {
-
+        Crashlytics.log("logged in");
     }
 
     public void error() {
-
+        Crashlytics.log("login failed");
     }
 }

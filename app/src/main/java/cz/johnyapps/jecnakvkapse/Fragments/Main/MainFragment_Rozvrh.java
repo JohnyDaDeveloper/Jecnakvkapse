@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.crashlytics.android.Crashlytics;
+
 import cz.johnyapps.jecnakvkapse.Rozvrh.StahniRozvrh;
 import cz.johnyapps.jecnakvkapse.Adapters.RozvrhAdaper;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
@@ -24,6 +26,7 @@ import cz.johnyapps.jecnakvkapse.Tools.OfflineMode;
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování rozvrhu
  */
 public class MainFragment_Rozvrh extends Fragment {
+    private static final String TAG = "MainFragment_Rozvrh";
     private Context context;
     private User user;
     private OfflineMode offlineMode;
@@ -37,6 +40,8 @@ public class MainFragment_Rozvrh extends Fragment {
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        Crashlytics.log(TAG + "Loading");
+
         super.onCreate(savedInstanceState);
         initialize();
     }
@@ -85,8 +90,8 @@ public class MainFragment_Rozvrh extends Fragment {
      * @see RozvrhConventor
      */
     public void rozvrh() {
+        Crashlytics.log(TAG + "Downloading");
         progressBar.setVisibility(View.VISIBLE);
-
         String[] rozvrhStr = offlineMode.read("rozvrh");
 
         if (!rozvrhStr[0].equals("ERROR")) {
@@ -104,6 +109,7 @@ public class MainFragment_Rozvrh extends Fragment {
                 ResultErrorProcess error = new ResultErrorProcess(context);
 
                 if (error.process(result)) {
+                    Crashlytics.log(TAG + "Converting");
                     RozvrhConventor conventor = new RozvrhConventor();
                     Rozvrh rozvrh = conventor.convert(result);
 
@@ -111,6 +117,8 @@ public class MainFragment_Rozvrh extends Fragment {
                     user.setRozvrh(rozvrh);
 
                     displayRozvrh();
+                } else {
+                    Crashlytics.log(TAG + "Downloading error: " + error);
                 }
 
                 progressBar.setVisibility(View.GONE);
@@ -131,6 +139,7 @@ public class MainFragment_Rozvrh extends Fragment {
         Rozvrh rozvrh = user.getRozvrh();
 
         if (rozvrh != null) {
+            Crashlytics.log(TAG + "Displaying");
             RozvrhAdaper rozvrhAdaper = new RozvrhAdaper(context, rozvrh);
             rozvrhAdaper.adapt(rozvrhLayout);
         } else {

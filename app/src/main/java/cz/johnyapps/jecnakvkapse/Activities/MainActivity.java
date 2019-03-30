@@ -26,12 +26,13 @@ import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Znamky;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
-import io.fabric.sdk.android.Fabric;
 
 /**
  * Hlavní aktivita. Otevře se při spuštění app.
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "MainActivity: ";
+
     private Context context;
     private SharedPreferences prefs;
     private User user;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Crashlytics.log(TAG + "Loading");
+
         context = this;
 
         ThemeManager themeManager = new ThemeManager(context);
@@ -54,8 +57,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Fabric.with(this, Crashlytics.getInstance());
 
         initialize();
     }
@@ -112,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Crashlytics.log(TAG + "menu item selected (" + item.toString() + ")");
+
         drawerLayout.closeDrawers();
 
         switch (item.getItemId()) {
@@ -168,36 +171,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.MenuMain_Znamky: {
+                Crashlytics.log(TAG + "switching fragment to Znamky");
                 MainFragment_Znamky fragment = new MainFragment_Znamky();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
             case R.id.MenuMain_Rozvrh: {
+                Crashlytics.log(TAG + "switching fragment to Rozvrh");
                 MainFragment_Rozvrh fragment = new MainFragment_Rozvrh();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
             case R.id.MenuMain_Prichody: {
+                Crashlytics.log(TAG + "switching fragment to Prichody");
                 MainFragment_Prichody fragment = new MainFragment_Prichody();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
             case R.id.MenuMain_Omluvenky: {
+                Crashlytics.log(TAG + "switching fragment to Omluvenky");
                 MainFragment_Omluvenky fragment = new MainFragment_Omluvenky();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
             case R.id.MenuMain_Suplarch: {
+                Crashlytics.log(TAG + "switching fragment to Suplarch");
                 MainFragment_Suplarch fragment = new MainFragment_Suplarch();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
-            default: break;
+            default: {
+                Crashlytics.log(TAG + "fragment not found");
+                break;
+            }
         }
 
         transaction.addToBackStack(null);

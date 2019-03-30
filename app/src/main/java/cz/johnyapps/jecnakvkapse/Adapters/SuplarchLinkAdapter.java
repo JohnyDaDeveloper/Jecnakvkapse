@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.ArrayList;
 
 import cz.johnyapps.jecnakvkapse.R;
@@ -19,6 +21,8 @@ import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchLinky.SuplarchLink;
  * @see cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Suplarch
  */
 public class SuplarchLinkAdapter extends RecyclerView.Adapter {
+    private static final String TAG = "SuplarchLinkAdapter";
+
     private Context context;
     private LayoutInflater inflater;
 
@@ -65,6 +69,7 @@ public class SuplarchLinkAdapter extends RecyclerView.Adapter {
      * @see StahniSuplarch
      */
     private void downloadSuplarch(final SuplarchLink link) {
+        Crashlytics.log(TAG + "Suplarch download");
         StahniSuplarch stahniSuplarch = new StahniSuplarch(context);
         stahniSuplarch.stahni(link);
     }

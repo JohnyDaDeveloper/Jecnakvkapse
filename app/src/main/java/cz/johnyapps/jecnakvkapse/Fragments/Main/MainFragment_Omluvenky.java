@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import cz.johnyapps.jecnakvkapse.Omluvenky.StahniOmluvenky;
 import cz.johnyapps.jecnakvkapse.Adapters.OmluvenkyRecyclerAdapter;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
@@ -24,6 +26,7 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování omluvenek
  */
 public class MainFragment_Omluvenky extends Fragment {
+    private static final String TAG = "MainFragment_Omluvenky";
     private Context context;
     private User user;
 
@@ -35,6 +38,8 @@ public class MainFragment_Omluvenky extends Fragment {
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        Crashlytics.log(TAG + "Loading");
+
         super.onCreate(savedInstanceState);
         initialize();
     }
@@ -80,6 +85,8 @@ public class MainFragment_Omluvenky extends Fragment {
      * @see OmluvenkyConvertor
      */
     public void omluvenky() {
+        Crashlytics.log(TAG + "Downloading");
+
         StahniOmluvenky stahniOmluvenky = new StahniOmluvenky(context) {
             @Override
             public void onResult(String result) {
@@ -87,11 +94,14 @@ public class MainFragment_Omluvenky extends Fragment {
                 ResultErrorProcess process = new ResultErrorProcess(context);
 
                 if (process.process(result)) {
+                    Crashlytics.log(TAG + "Converting");
                     OmluvenkyConvertor omluvenkyConvertor = new OmluvenkyConvertor();
                     Omluvnak omluvnak = omluvenkyConvertor.convert(result);
 
                     user.setOmluvnak(omluvnak);
                     displayOmluvenky();
+                } else {
+                    Crashlytics.log(TAG + "Downloading error: " + result);
                 }
             }
         };
@@ -110,6 +120,7 @@ public class MainFragment_Omluvenky extends Fragment {
 
         if (omluvnak != null) {
             if (omluvnak.getOmluvenky().size() > 0) {
+                Crashlytics.log(TAG + "Displaying");
                 OmluvenkyRecyclerAdapter adapter = new OmluvenkyRecyclerAdapter(context, omluvnak);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
                 recyclerView.setAdapter(adapter);
