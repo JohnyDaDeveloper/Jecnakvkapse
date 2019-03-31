@@ -33,4 +33,32 @@ public class Period {
     public String getCas() {
         return cas;
     }
+
+    /**
+     * Vrátí začátek hodiny
+     * @return  Začátek hodiny
+     */
+    String getZacatek() {
+        String[] cas = this.cas.split(" - ");
+
+        if (cas.length == 2) {
+            return cas[0];
+        }
+
+        return "0:00";
+    }
+
+    /**
+     * Vrátí konec hodiny
+     * @return  konec hodiny
+     */
+    String getKonec() {
+        String[] cas = this.cas.split(" - ");
+
+        if (cas.length == 2) {
+            return cas[1];
+        }
+
+        return "0:00";
+    }
 }

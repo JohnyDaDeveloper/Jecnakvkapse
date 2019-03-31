@@ -27,7 +27,7 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování odkazů na suplování
  */
 public class MainFragment_Znamky extends Fragment implements View.OnClickListener {
-    private static final String TAG = "MainFragment_Znamky";
+    private static final String TAG = "MainFragment_Znamky: ";
 
     private Context context;
     private User user;

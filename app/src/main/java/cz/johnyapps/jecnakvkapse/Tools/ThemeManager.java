@@ -13,7 +13,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Stará se o načítání témat (themes). <b>Je potřeba přidat do onCreate KAŽDÉ AKTIVITY před setContentView</b>.
  */
 public class ThemeManager {
-    private static final String TAG = "ThemeManager";
+    private static final String TAG = "ThemeManager: ";
     private Context context;
     private SharedPreferences prefs;
 

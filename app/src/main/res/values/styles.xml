@@ -110,7 +110,7 @@
     </style>
 
     <style name="Jecnak.CardView" parent="CardView.Light">
-        <item name="android:translationZ">3dp</item>
+        <item name="android:translationZ">2dp</item>
 
         <item name="cardBackgroundColor">?attr/color_background</item>
 

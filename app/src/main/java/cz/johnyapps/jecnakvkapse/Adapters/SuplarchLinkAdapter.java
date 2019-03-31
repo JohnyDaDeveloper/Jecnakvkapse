@@ -21,7 +21,7 @@ import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchLinky.SuplarchLink;
  * @see cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Suplarch
  */
 public class SuplarchLinkAdapter extends RecyclerView.Adapter {
-    private static final String TAG = "SuplarchLinkAdapter";
+    private static final String TAG = "SuplarchLinkAdapter: ";
 
     private Context context;
     private LayoutInflater inflater;

@@ -26,7 +26,7 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování omluvenek
  */
 public class MainFragment_Omluvenky extends Fragment {
-    private static final String TAG = "MainFragment_Omluvenky";
+    private static final String TAG = "MainFragment_Omluvenky: ";
     private Context context;
     private User user;
 

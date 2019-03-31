@@ -1,12 +1,17 @@
 package cz.johnyapps.jecnakvkapse.Adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Rozvrh.Den;
@@ -58,13 +63,18 @@ public class RozvrhAdaper {
 
         //Creating days
         LinearLayout daysLayout = (LinearLayout) inflater.inflate(R.layout.item_dny, layout, false);
+        ArrayList<Den> dny = rozvrh.getDny();
+        int currentDay = rozvrh.getCurrentDay();
 
-        for (Den den : rozvrh.getDny()) {
-            daysLayout.addView(createDen(den));
+        for (int i = 0; i < dny.size(); i++) {
+            boolean now = currentDay == i;
+
+            Den den = dny.get(i);
+            daysLayout.addView(createDen(den, now));
         }
 
+        //Adding layouts
         layout.removeAllViews();
-
         layout.addView(periodLayout);
         layout.addView(daysLayout);
     }
@@ -91,15 +101,26 @@ public class RozvrhAdaper {
      * @param den   Den
      * @return      View se dnem
      */
-    private LinearLayout createDen(Den den) {
+    private LinearLayout createDen(Den den, boolean now) {
         LinearLayout.LayoutParams denLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         denLayoutParams.weight = 1;
 
         LinearLayout denLayout = new LinearLayout(context);
         denLayout.setLayoutParams(denLayoutParams);
 
-        for (Hodina hodina : den.getHodiny()) {
-            denLayout.addView(createHodina(hodina, denLayout));
+        if (now) {
+            ArrayList<Hodina> hodiny = den.getHodiny();
+            int currentClass = rozvrh.getCurrentClass();
+
+            for (int i = 0; i < hodiny.size(); i++) {
+                now = currentClass == i;
+                Hodina hodina = hodiny.get(i);
+                denLayout.addView(createHodina(hodina, denLayout, now));
+            }
+        } else {
+            for (Hodina hodina : den.getHodiny()) {
+                denLayout.addView(createHodina(hodina, denLayout, false));
+            }
         }
 
         return denLayout;
@@ -111,14 +132,14 @@ public class RozvrhAdaper {
      * @param parent    Parent
      * @return          View s hodinou
      */
-    private LinearLayout createHodina(final Hodina hodina, ViewGroup parent) {
+    private LinearLayout createHodina(final Hodina hodina, ViewGroup parent, boolean now) {
         LinearLayout hodinaLayout = (LinearLayout) inflater.inflate(R.layout.item_hodina, parent, false);
 
         int weight = 6;
         if (hodina.getPredmety().size() != 0) weight /= hodina.getPredmety().size();
 
         for (Predmet predmet : hodina.getPredmety()) {
-            hodinaLayout.addView(createPredmet(predmet, hodinaLayout, weight));
+            hodinaLayout.addView(createPredmet(predmet, hodinaLayout, weight, now));
         }
 
         return hodinaLayout;
@@ -131,27 +152,40 @@ public class RozvrhAdaper {
      * @param weight    Váha v Layoutu (Podle počtu skupin)
      * @return          View s předmětem
      */
-    private RelativeLayout createPredmet(Predmet predmet, ViewGroup parent, int weight) {
+    private RelativeLayout createPredmet(Predmet predmet, ViewGroup parent, int weight, boolean now) {
         LinearLayout.LayoutParams predmetLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, weight);
 
         RelativeLayout predmetLayout = (RelativeLayout) inflater.inflate(R.layout.item_predmet, parent, false);
         predmetLayout.setLayoutParams(predmetLayoutParams);
 
         TextView vyucujiciTxt = predmetLayout.findViewById(R.id.Predmet_vyucujici);
+        TextView ucebnaTxt = predmetLayout.findViewById(R.id.Predmet_ucebna);
+        TextView predmetTxt = predmetLayout.findViewById(R.id.Predmet_predmet);
+        TextView tridaTxt = predmetLayout.findViewById(R.id.Predmet_trida);
+        TextView skupinaTxt = predmetLayout.findViewById(R.id.Predmet_skupina);
+
+        if (now) {
+            int color = getColorAccent();
+
+            vyucujiciTxt.setTextColor(color);
+            ucebnaTxt.setTextColor(color);
+            predmetTxt.setTextColor(color);
+            tridaTxt.setTextColor(color);
+            skupinaTxt.setTextColor(color);
+        }
+
         if (predmet.getVyucujici() != null) {
             vyucujiciTxt.setText(predmet.getVyucujici());
         } else {
             vyucujiciTxt.setVisibility(View.INVISIBLE);
         }
 
-        TextView ucebnaTxt = predmetLayout.findViewById(R.id.Predmet_ucebna);
         if (predmet.getUcebna() != null) {
             ucebnaTxt.setText(predmet.getUcebna());
         } else {
             ucebnaTxt.setVisibility(View.INVISIBLE);
         }
 
-        TextView predmetTxt = predmetLayout.findViewById(R.id.Predmet_predmet);
         if (predmet.getNazev() != null) {
 
             predmetTxt.setText(predmet.getNazev());
@@ -159,14 +193,12 @@ public class RozvrhAdaper {
             predmetTxt.setVisibility(View.INVISIBLE);
         }
 
-        TextView tridaTxt = predmetLayout.findViewById(R.id.Predmet_trida);
         if (predmet.getTrida() != null) {
             tridaTxt.setText(predmet.getTrida());
         } else {
             tridaTxt.setVisibility(View.INVISIBLE);
         }
 
-        TextView skupinaTxt = predmetLayout.findViewById(R.id.Predmet_skupina);
         if (predmet.getSkupina() != null) {
             skupinaTxt.setText(predmet.getSkupina());
         } else {
@@ -174,5 +206,12 @@ public class RozvrhAdaper {
         }
 
         return predmetLayout;
+    }
+
+    private int getColorAccent() {
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
+        return ContextCompat.getColor(context, typedValue.resourceId);
     }
 }
