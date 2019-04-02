@@ -14,7 +14,7 @@ public class Mark {
     /**
      * Inicializace
      * @param employee  Zaměstnanec/Vyučující
-     * @param value     Hodnota
+     * @param value     Hodnota známky
      * @param title     Název
      * @param small     Malá. True - ano, Flase - ne.
      */
@@ -25,6 +25,10 @@ public class Mark {
         this.small = small;
     }
 
+    /**
+     * Inicializace
+     * @param value Hodnota známky
+     */
     Mark(String value) {
         this.value = value;
     }
