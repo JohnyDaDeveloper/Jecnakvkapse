@@ -40,8 +40,12 @@ public class Subject {
      * Vrátí závěrečnou známku
      * @return  Závěrečná známka
      */
-    public String getZaverecna() {
-        return zaverecna;
+    public Mark getZaverecna() {
+        if (zaverecna.isEmpty()) {
+            return null;
+        } else {
+            return new Mark(zaverecna);
+        }
     }
 
     /**

@@ -7,12 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import cz.johnyapps.jecnakvkapse.CustomViews.ZnamkyGridView;
 import cz.johnyapps.jecnakvkapse.R;
+import cz.johnyapps.jecnakvkapse.Score.Mark;
 import cz.johnyapps.jecnakvkapse.Score.Score;
 import cz.johnyapps.jecnakvkapse.Score.Subject;
 
@@ -73,10 +75,12 @@ public class ScoreRecyclerAdapter extends RecyclerView.Adapter {
 
         CustomViewHolder customHolder = (CustomViewHolder) holder;
 
-        customHolder.textView.setText(subject.getName() + " " + subject.getZaverecna());
+        customHolder.textView.setText(subject.getName());
 
         MarksGridAdapter adapter = new MarksGridAdapter(context, subject.getMarks());
         customHolder.gridView.setAdapter(adapter);
+
+        Setup_zaverecna(customHolder, subject.getZaverecna());
     }
 
     /**
@@ -94,11 +98,33 @@ public class ScoreRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     /**
+     * Nastaví závěrečnu známku
+     * @param customHolder  ViewHolder
+     * @param mark          Závěrečná známka
+     */
+    private void Setup_zaverecna(CustomViewHolder customHolder, Mark mark) {
+        if (mark != null) {
+            View view = inflater.inflate(R.layout.item_score_mark, customHolder.layout_bottom, false);
+
+            TextView zaverecna = view.findViewById(R.id.Mark_txtMark);
+            zaverecna.setText(mark.getValue());
+            zaverecna.setBackgroundColor(mark.getColor());
+
+            customHolder.layout_bottom.removeAllViews();
+            customHolder.layout_bottom.addView(view);
+            customHolder.layout_bottom.setVisibility(View.VISIBLE);
+        } else {
+            customHolder.layout_bottom.setVisibility(View.GONE);
+        }
+    }
+
+    /**
      * Vlastní view holder
      */
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         ZnamkyGridView gridView;
+        LinearLayout layout_bottom;
 
         /**
          * Inicializace
@@ -109,6 +135,7 @@ public class ScoreRecyclerAdapter extends RecyclerView.Adapter {
 
             textView = view.findViewById(R.id.Line_textView);
             gridView = view.findViewById(R.id.Line_grid);
+            layout_bottom = view.findViewById(R.id.Line_zaverecna);
         }
     }
 }

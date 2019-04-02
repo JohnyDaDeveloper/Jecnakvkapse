@@ -25,6 +25,10 @@ public class Mark {
         this.small = small;
     }
 
+    Mark(String value) {
+        this.value = value;
+    }
+
     /**
      * Vrací vyučujícího
      * @return  Jméno
@@ -102,6 +106,10 @@ public class Mark {
             }
 
             case "5": {
+                return Color.argb(255, 255, 48, 48);
+            }
+
+            case "5?": {
                 return Color.argb(255, 255, 48, 48);
             }
 
