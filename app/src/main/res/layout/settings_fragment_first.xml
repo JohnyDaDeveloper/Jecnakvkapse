@@ -4,20 +4,20 @@
     android:layout_height="wrap_content">
 
     <TextView
-        style="@style/Settings_Title"
+        style="@style/Text_Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/settings_fragment_first_title" />
 
     <TextView
-        style="@style/Settings_Subtext"
+        style="@style/Text_Subtext"
         android:text="@string/settings_fragment_first_subtext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <RadioGroup
         android:id="@+id/FirstFragment_selected"
-        style="@style/Settings_Subtext"
+        style="@style/Text_Subtext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

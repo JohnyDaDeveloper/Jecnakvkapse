@@ -5,20 +5,20 @@
 
     <TextView
         android:id="@+id/Theme_title"
-        style="@style/Settings_Title"
+        style="@style/Text_Title"
         android:text="@string/settings_theme_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        style="@style/Settings_Subtext"
+        style="@style/Text_Subtext"
         android:text="@string/settings_theme_experimental"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <RadioGroup
         android:id="@+id/SettingsTheme_themes"
-        style="@style/Settings_Subtext"
+        style="@style/Text_Subtext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

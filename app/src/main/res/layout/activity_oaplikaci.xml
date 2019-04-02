@@ -36,13 +36,13 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/Settings_Title"
+                style="@style/Text_Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/oaplikaci_vyvojar_title"/>
 
             <TextView
-                style="@style/Settings_Subtext"
+                style="@style/Text_Subtext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/person"
@@ -62,7 +62,7 @@
 
             <TextView
                 android:visibility="gone"
-                style="@style/Settings_Subtext"
+                style="@style/Text_Subtext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/github"
@@ -83,20 +83,46 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/Settings_Title"
+                style="@style/Text_Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/oaplikaci_app_title"/>
 
             <TextView
                 android:id="@+id/OAplikaci_appVerze"
-                style="@style/Settings_Subtext"
+                style="@style/Text_Subtext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/version"
                 android:gravity="center_vertical"
                 android:drawablePadding="5dp"
                 android:text="@string/oaplikaci_app_verze"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        style="@style/Jecnak.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Text_Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/oaplikaci_info_title"/>
+
+            <TextView
+                style="@style/Text_Subtext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:drawablePadding="5dp"
+                android:text="@string/oaplikaci_info_suplarch"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>
