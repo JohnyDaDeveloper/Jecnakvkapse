@@ -50,31 +50,31 @@ public class SettingsActivity extends AppCompatActivity {
         int selected = prefs.getInt("main_fragment", R.id.MenuMain_Znamky);
 
         switch (selected) {
-            case R.id.FirstFragment_znamky: {
+            case R.id.MenuMain_Znamky: {
                 RadioButton button = findViewById(R.id.FirstFragment_znamky);
                 button.setChecked(true);
                 break;
             }
 
-            case R.id.FirstFragment_rozvrh: {
+            case R.id.MenuMain_Rozvrh: {
                 RadioButton button = findViewById(R.id.FirstFragment_rozvrh);
                 button.setChecked(true);
                 break;
             }
 
-            case R.id.FirstFragment_prichody: {
+            case R.id.MenuMain_Prichody: {
                 RadioButton button = findViewById(R.id.FirstFragment_prichody);
                 button.setChecked(true);
                 break;
             }
 
-            case R.id.FirstFragment_omluvenky: {
+            case R.id.MenuMain_Omluvenky: {
                 RadioButton button = findViewById(R.id.FirstFragment_omluvenky);
                 button.setChecked(true);
                 break;
             }
 
-            case R.id.FirstFragment_suplovani: {
+            case R.id.MenuMain_Suplarch: {
                 RadioButton button = findViewById(R.id.FirstFragment_suplovani);
                 button.setChecked(true);
                 break;
@@ -119,7 +119,10 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     }
 
-                    default: editor.putInt("main_fragment", R.id.MenuMain_Znamky);
+                    default: {
+                        editor.putInt("main_fragment", R.id.MenuMain_Znamky);
+                        break;
+                    }
                 }
 
                 editor.apply();
