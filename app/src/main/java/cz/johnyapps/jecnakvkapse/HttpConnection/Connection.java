@@ -84,7 +84,7 @@ public class Connection extends AsyncTask<Request, Request, String> {
             connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod(r.getMethod());
             connection.setConnectTimeout(10000);
-            connection.setReadTimeout(10000);
+            connection.setReadTimeout(15000);
             connection.setDoInput(true);
             connection.setInstanceFollowRedirects(false);
             if (r.getMethod().equals("POST")) {
