@@ -143,7 +143,11 @@ public class Rozvrh {
                     }
                 }
             } else if (hodin == zh) {
-                if (minuty >= km && minuty <= zm) {
+                if (minuty >= zm && (hodin != kh || minuty <= km)) {
+                    return i;
+                }
+            } else if (hodin == kh) {
+                if (minuty <= km) {
                     return i;
                 }
             }
