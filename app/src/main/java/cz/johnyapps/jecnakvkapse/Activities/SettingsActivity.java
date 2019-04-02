@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
-import cz.johnyapps.jecnakvkapse.Dialogs.Settings.DialogHlavniFragment;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
 
@@ -47,23 +45,84 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * Nastavení volby hlavního okna
-     * @see DialogHlavniFragment
      */
     private void Setup_HlavniFragment() {
-        String[] frags = context.getResources().getStringArray(R.array.FragmentsMain_String);
-        int pos = prefs.getInt("main_fragment_pos", 0);
+        int selected = prefs.getInt("main_fragment", R.id.MenuMain_Znamky);
 
-        TextView subText = findViewById(R.id.FirstFragment_selected);
-        subText.setText(frags[pos]);
+        switch (selected) {
+            case R.id.FirstFragment_znamky: {
+                RadioButton button = findViewById(R.id.FirstFragment_znamky);
+                button.setChecked(true);
+                break;
+            }
 
-        View view = findViewById(R.id.Settings_HlavniFragment);
-        view.setOnClickListener(new View.OnClickListener() {
+            case R.id.FirstFragment_rozvrh: {
+                RadioButton button = findViewById(R.id.FirstFragment_rozvrh);
+                button.setChecked(true);
+                break;
+            }
+
+            case R.id.FirstFragment_prichody: {
+                RadioButton button = findViewById(R.id.FirstFragment_prichody);
+                button.setChecked(true);
+                break;
+            }
+
+            case R.id.FirstFragment_omluvenky: {
+                RadioButton button = findViewById(R.id.FirstFragment_omluvenky);
+                button.setChecked(true);
+                break;
+            }
+
+            case R.id.FirstFragment_suplovani: {
+                RadioButton button = findViewById(R.id.FirstFragment_suplovani);
+                button.setChecked(true);
+                break;
+            }
+
+            default: {
+                RadioButton button = findViewById(R.id.FirstFragment_znamky);
+                button.setChecked(true);
+                break;
+            }
+        }
+
+        RadioGroup group = findViewById(R.id.FirstFragment_selected);
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                TextView subText = v.findViewById(R.id.FirstFragment_selected);
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                SharedPreferences.Editor editor = prefs.edit();
 
-                DialogHlavniFragment dialog = new DialogHlavniFragment(context, subText);
-                dialog.get().show();
+                switch (checkedId) {
+                    case R.id.FirstFragment_znamky: {
+                        editor.putInt("main_fragment", R.id.MenuMain_Znamky);
+                        break;
+                    }
+
+                    case R.id.FirstFragment_rozvrh: {
+                        editor.putInt("main_fragment", R.id.MenuMain_Rozvrh);
+                        break;
+                    }
+
+                    case R.id.FirstFragment_prichody: {
+                        editor.putInt("main_fragment", R.id.MenuMain_Prichody);
+                        break;
+                    }
+
+                    case R.id.FirstFragment_omluvenky: {
+                        editor.putInt("main_fragment", R.id.MenuMain_Omluvenky);
+                        break;
+                    }
+
+                    case R.id.FirstFragment_suplovani: {
+                        editor.putInt("main_fragment", R.id.MenuMain_Suplarch);
+                        break;
+                    }
+
+                    default: editor.putInt("main_fragment", R.id.MenuMain_Znamky);
+                }
+
+                editor.apply();
             }
         });
     }

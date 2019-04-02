@@ -206,7 +206,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             default: {
-                Crashlytics.log(TAG + "fragment not found");
+                Crashlytics.log(TAG + "fragment not found. Loading default.");
+                MainFragment_Znamky fragment = new MainFragment_Znamky();
+                transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
         }

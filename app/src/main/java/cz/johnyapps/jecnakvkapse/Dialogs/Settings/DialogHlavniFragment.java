@@ -37,7 +37,7 @@ public class DialogHlavniFragment {
      * @return  Dialog
      */
     public AlertDialog get() {
-        String[] strChoices = context.getResources().getStringArray(R.array.FragmentsMain_String);
+        /*String[] strChoices = context.getResources().getStringArray(R.array.FragmentsMain_String);
         int chosen = prefs.getInt("main_fragment_pos", 0);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -56,7 +56,9 @@ public class DialogHlavniFragment {
                     }
                 });
 
-        return builder.create();
+        return builder.create();*/
+
+        return null;
     }
 
     /**
@@ -64,7 +66,7 @@ public class DialogHlavniFragment {
      * @param which Pozice v poli oken
      */
     private void change(int which) {
-        String[] strChoices = context.getResources().getStringArray(R.array.FragmentsMain_String);
+        /*String[] strChoices = context.getResources().getStringArray(R.array.FragmentsMain_String);
         TypedArray intChoices = context.getResources().obtainTypedArray(R.array.FragmentsMain_Frags);
 
         SharedPreferences.Editor editor = prefs.edit();
@@ -75,6 +77,6 @@ public class DialogHlavniFragment {
         Toast.makeText(context, "Hlavní okno nastaveno na \"" + strChoices[which] + "\"", Toast.LENGTH_LONG).show();
 
         intChoices.recycle();
-        subText.setText(strChoices[which]);
+        subText.setText(strChoices[which]);*/
     }
 }

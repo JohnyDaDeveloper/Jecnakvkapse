@@ -12,6 +12,7 @@
     <string name="menu_o_aplikaci">O aplikaci</string>
 
     <string name="settings_fragment_first_title">Hlavní okno</string>
+    <string name="settings_fragment_first_subtext">Okno které se otevře jako první při zapnutí aplikace</string>
 
     <string name="settings_theme_title">Motiv</string>
     <string name="settings_theme_experimental">Experimentální. Vyžaduje restart aplikace.</string>

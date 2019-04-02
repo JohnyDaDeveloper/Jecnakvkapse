@@ -19,21 +19,4 @@
         <item>Červenec</item>
         <item>Srpen</item>
     </string-array>
-
-    <!-- FragmentsMain_String musí odpovídat FragmentsMain_Frags -->
-    <string-array name="FragmentsMain_String">
-        <item>@string/menu_znamky</item>
-        <item>@string/menu_rozvrh</item>
-        <item>@string/menu_prichody</item>
-        <item>@string/menu_omluvenky</item>
-        <item>@string/menu_suplovani</item>
-    </string-array>
-
-    <array name="FragmentsMain_Frags">
-        <item>@id/MenuMain_Znamky</item>
-        <item>@id/MenuMain_Rozvrh</item>
-        <item>@id/MenuMain_Prichody</item>
-        <item>@id/MenuMain_Omluvenky</item>
-        <item>@id/MenuMain_Suplarch</item>
-    </array>
 </resources>
