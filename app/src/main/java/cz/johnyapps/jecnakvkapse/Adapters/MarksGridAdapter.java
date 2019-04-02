@@ -81,7 +81,7 @@ public class MarksGridAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) convertView = inflater.inflate(R.layout.item_mark, parent, false);
+        if (convertView == null) convertView = inflater.inflate(R.layout.item_score_mark, parent, false);
         Mark mark = getItem(position);
 
         TextView txtMark = convertView.findViewById(R.id.Mark_txtMark);

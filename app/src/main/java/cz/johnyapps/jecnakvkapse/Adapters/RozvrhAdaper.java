@@ -62,7 +62,7 @@ public class RozvrhAdaper {
         }
 
         //Creating days
-        LinearLayout daysLayout = (LinearLayout) inflater.inflate(R.layout.item_dny, layout, false);
+        LinearLayout daysLayout = (LinearLayout) inflater.inflate(R.layout.item_rozvrh_dny, layout, false);
         ArrayList<Den> dny = rozvrh.getDny();
         int currentDay = rozvrh.getCurrentDay();
 
@@ -86,7 +86,7 @@ public class RozvrhAdaper {
      * @return          View s časem hodiny
      */
     private View createPeriod(Period period, ViewGroup parent) {
-        View periodLayout = inflater.inflate(R.layout.item_period, parent, false);
+        View periodLayout = inflater.inflate(R.layout.item_rozvrh_period, parent, false);
         TextView hodina = periodLayout.findViewById(R.id.Period_hodina);
         TextView cas = periodLayout.findViewById(R.id.Period_cas);
 
@@ -133,7 +133,7 @@ public class RozvrhAdaper {
      * @return          View s hodinou
      */
     private LinearLayout createHodina(final Hodina hodina, ViewGroup parent, boolean now) {
-        LinearLayout hodinaLayout = (LinearLayout) inflater.inflate(R.layout.item_hodina, parent, false);
+        LinearLayout hodinaLayout = (LinearLayout) inflater.inflate(R.layout.item_rozvrh_hodina, parent, false);
 
         int weight = 6;
         if (hodina.getPredmety().size() != 0) weight /= hodina.getPredmety().size();
@@ -155,7 +155,7 @@ public class RozvrhAdaper {
     private RelativeLayout createPredmet(Predmet predmet, ViewGroup parent, int weight, boolean now) {
         LinearLayout.LayoutParams predmetLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, weight);
 
-        RelativeLayout predmetLayout = (RelativeLayout) inflater.inflate(R.layout.item_predmet, parent, false);
+        RelativeLayout predmetLayout = (RelativeLayout) inflater.inflate(R.layout.item_rozvrh_predmet, parent, false);
         predmetLayout.setLayoutParams(predmetLayoutParams);
 
         TextView vyucujiciTxt = predmetLayout.findViewById(R.id.Predmet_vyucujici);
