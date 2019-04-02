@@ -2,6 +2,8 @@ package cz.johnyapps.jecnakvkapse.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -52,5 +54,17 @@ public class OAplikaci extends AppCompatActivity {
      */
     public void back (View V) {
         finish();
+    }
+
+    /**
+     * Po kliknutí na mailovou adresu otevře mailového klienta a předvyplní údaje
+     * @param V View s adresou
+     */
+    public void posliMail(View V) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"johnydadeveloper@gmail.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Verze aplikace: " + BuildConfig.VERSION_NAME);
+        startActivity(intent);
     }
 }

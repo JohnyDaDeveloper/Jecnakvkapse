@@ -51,12 +51,13 @@
                 android:text="@string/oaplikaci_vyvojar_jmeno"/>
 
             <TextView
-                style="@style/Settings_Subtext"
+                style="@style/LinkText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/mail"
                 android:gravity="center_vertical"
                 android:drawablePadding="5dp"
+                android:onClick="posliMail"
                 android:text="@string/oaplikaci_vyvojar_kontakt"/>
 
             <TextView
