@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:textColor="?attr/color_textMain"
             android:id="@+id/Line_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
