@@ -15,8 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/LightTheme"
         tools:ignore="InnerclassSeparator">
-        <activity android:name=".Activities.OAplikaci" />
-        <activity android:name=".Activities.SettingsActivity" />
+        <activity android:name=".Activities.OAplikaci" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.SettingsActivity" android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.MainActivity"
             android:screenOrientation="portrait">
@@ -38,4 +38,5 @@
                 android:resource="@xml/provider_paths" />
         </provider>
     </application>
+
 </manifest>
