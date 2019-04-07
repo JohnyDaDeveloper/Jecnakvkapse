@@ -66,6 +66,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //super.onBackPressed();
     }
 
+    @Override
+    protected void onPause() {
+        Crashlytics.log(TAG + "onPause");
+        super.onPause();
+    }
+
     /**
      * Načte globální proměnné, reklamu, menu {@link #Setup_Menu()} a fragment
      */

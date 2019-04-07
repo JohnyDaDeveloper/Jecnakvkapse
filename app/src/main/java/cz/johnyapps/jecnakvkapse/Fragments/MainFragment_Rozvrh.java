@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 
 import com.crashlytics.android.Crashlytics;
 
+import cz.johnyapps.jecnakvkapse.Dialogs.DialogError;
 import cz.johnyapps.jecnakvkapse.Rozvrh.StahniRozvrh;
 import cz.johnyapps.jecnakvkapse.Adapters.RozvrhAdaper;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
@@ -100,32 +101,37 @@ public class MainFragment_Rozvrh extends Fragment {
             user.setRozvrh(rozvrh);
 
             displayRozvrh();
+        } else if (user.isOfflineModeEnabled()) {
+            DialogError dialogError = new DialogError(context);
+            dialogError.get("Nenalezen žádný uložený rozvrh").show();
         }
 
-        StahniRozvrh stahniRozvrh = new StahniRozvrh() {
-            @Override
-            public void onResult(String result) {
-                super.onResult(result);
-                ResultErrorProcess error = new ResultErrorProcess(context);
+        if (!user.isOfflineModeEnabled()) {
+            StahniRozvrh stahniRozvrh = new StahniRozvrh() {
+                @Override
+                public void onResult(String result) {
+                    super.onResult(result);
+                    ResultErrorProcess error = new ResultErrorProcess(context);
 
-                if (error.process(result)) {
-                    Crashlytics.log(TAG + "Converting");
-                    RozvrhConventor conventor = new RozvrhConventor();
-                    Rozvrh rozvrh = conventor.convert(result);
+                    if (error.process(result)) {
+                        Crashlytics.log(TAG + "Converting");
+                        RozvrhConventor conventor = new RozvrhConventor();
+                        Rozvrh rozvrh = conventor.convert(result);
 
-                    offlineMode.write(result, "rozvrh", rozvrh.getDatum());
-                    user.setRozvrh(rozvrh);
+                        offlineMode.write(result, "rozvrh", rozvrh.getDatum());
+                        user.setRozvrh(rozvrh);
 
-                    displayRozvrh();
-                } else {
-                    Crashlytics.log(TAG + "Downloading error: " + error);
+                        displayRozvrh();
+                    } else {
+                        Crashlytics.log(TAG + "Downloading error: " + error);
+                    }
+
+                    progressBar.setVisibility(View.GONE);
                 }
+            };
 
-                progressBar.setVisibility(View.GONE);
-            }
-        };
-
-        stahniRozvrh.stahni();
+            stahniRozvrh.stahni();
+        }
     }
 
     /**

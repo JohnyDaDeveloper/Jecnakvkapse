@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,12 +18,16 @@ import com.crashlytics.android.core.CrashlyticsCore;
 
 import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
 import cz.johnyapps.jecnakvkapse.BuildConfig;
+import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Rozvrh;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Receivers.NetworkStateReceiver;
+import cz.johnyapps.jecnakvkapse.Singletons.User;
 import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
 import io.fabric.sdk.android.Fabric;
 
 public class LoginActivity extends AppCompatActivity implements NetworkStateReceiver.ConnectivityReceiverListener {
+    private static final String TAG = "LoginActivity: ";
+
     private Context context;
     private SharedPreferences prefs;
 
@@ -34,6 +40,8 @@ public class LoginActivity extends AppCompatActivity implements NetworkStateRece
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Crashlytics.log(TAG + "Loading");
+
         this.context = this;
 
         // Set up Crashlytics, disabled for debug builds
@@ -55,6 +63,7 @@ public class LoginActivity extends AppCompatActivity implements NetworkStateRece
 
     @Override
     protected void onResume() {
+        Crashlytics.log(TAG + "onResume");
         super.onResume();
 
         networkStateReceiver = new NetworkStateReceiver();
@@ -64,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements NetworkStateRece
 
     @Override
     protected void onPause() {
+        Crashlytics.log(TAG + "onPause");
         super.onPause();
 
         unregisterReceiver(networkStateReceiver);
@@ -118,6 +128,26 @@ public class LoginActivity extends AppCompatActivity implements NetworkStateRece
                 login(login, heslo);
             }
         }
+    }
+
+    /**
+     * Po kliknutí na View spustí offline mód aplikace
+     * @param V View
+     */
+    public void offline(View V) {
+        V.setEnabled(false);
+        User.getUser().setOfflineModeEnabled(true);
+
+        View login = findViewById(R.id.LogIn_loginLayout);
+        login.setVisibility(View.GONE);
+
+        View rozvrh = findViewById(R.id.LogIn_rozvrhLayout);
+        rozvrh.setVisibility(View.VISIBLE);
+
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        MainFragment_Rozvrh mainFragment_rozvrh = new MainFragment_Rozvrh();
+        transaction.add(R.id.LogIn_rozvrhLayout, mainFragment_rozvrh).commit();
     }
 
     /**

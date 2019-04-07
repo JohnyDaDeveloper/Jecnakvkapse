@@ -35,6 +35,8 @@ public class User {
     private LoggedListener loggedListener;
     private boolean logged;
 
+    private boolean offlineModeEnabled;
+
     /**
      * Inicializace
      */
@@ -44,6 +46,8 @@ public class User {
 
         loggedListener = null;
         logged = false;
+
+        offlineModeEnabled = false;
     }
 
     /**
@@ -211,5 +215,21 @@ public class User {
      */
     public interface LoggedListener {
         void onLoggedChange(boolean logged);
+    }
+
+    /**
+     * Nastaví stav offline módu
+     * @param enabled   True - Offline mód je zapnutý; False - Vypnutý
+     */
+    public void setOfflineModeEnabled(boolean enabled) {
+        offlineModeEnabled = enabled;
+    }
+
+    /**
+     * Vrátí stav offline módu stav offline módu
+     * @return True - Offline mód je zapnutý; False - Vypnutý
+     */
+    public boolean isOfflineModeEnabled() {
+        return offlineModeEnabled;
     }
 }

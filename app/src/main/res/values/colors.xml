@@ -23,7 +23,7 @@
     <!-- Dark -->
     <color name="dark_colorPrimary">#63ccff</color>
     <color name="dark_colorPrimaryDark">#0094dd</color>
-    <color name="dark_colorAccent">#F44336</color>
+    <color name="dark_colorAccent">#EE564D</color>
 
     <color name="dark_color_button_disabled">#5E5E5E</color>
 
