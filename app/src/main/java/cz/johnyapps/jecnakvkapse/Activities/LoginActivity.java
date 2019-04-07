@@ -159,15 +159,18 @@ public class LoginActivity extends AppCompatActivity implements NetworkStateRece
         String heslo = edtHeslo.getText().toString();
         boolean pamatovat = chck.isChecked();
 
+        login = login.replaceAll(" ", "");
+
         if (login.equals("crash")) {
             Crashlytics.getInstance().crash();
         }
 
+        prefs.edit().putString("login", login).apply();
         if (pamatovat) {
             prefs.edit().putString("pass", heslo).apply();
         }
 
-        login(login, heslo);
+        login(login.toLowerCase(), heslo);
     }
 
     /**
