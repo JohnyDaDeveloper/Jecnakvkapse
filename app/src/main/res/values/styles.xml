@@ -7,6 +7,8 @@
         <item name="color_background">@color/light_color_background</item>
         <item name="color_background_darker">@color/light_color_background_darker</item>
 
+        <item name="color_button_disabled">@color/light_color_button_disabled</item>
+
         <item name="color_textTitle">@color/light_color_textTitle</item>
         <item name="color_textMain">@color/light_color_textMain</item>
         <item name="color_textSub">@color/light_color_textSub</item>
@@ -27,6 +29,8 @@
         <item name="color_background">@color/dark_color_background</item>
         <item name="color_background_darker">@color/dark_color_background_darker</item>
 
+        <item name="color_button_disabled">@color/light_color_button_disabled</item>
+
         <item name="color_textTitle">@color/dark_color_textTitle</item>
         <item name="color_textMain">@color/dark_color_textMain</item>
         <item name="color_textSub">@color/dark_color_textSub</item>
@@ -46,6 +50,8 @@
 
         <item name="color_background">@color/pink_color_background</item>
         <item name="color_background_darker">@color/pink_color_background_darker</item>
+
+        <item name="color_button_disabled">@color/light_color_button_disabled</item>
 
         <item name="color_textTitle">@color/pink_color_textTitle</item>
         <item name="color_textMain">@color/pink_color_textMain</item>
@@ -115,7 +121,8 @@
     <style name="Button" parent="Widget.AppCompat.Button">
         <item name="android:textAllCaps">false</item>
 
-        <item name="android:background">?attr/colorPrimaryDark</item>
+        <item name="android:background">@drawable/button</item>
+        <item name="android:stateListAnimator">@animator/button_animator</item>
         <item name="android:textColor">?attr/color_textTitle</item>
     </style>
 

@@ -9,6 +9,8 @@
     <color name="light_colorPrimaryDark">#0094dd</color>
     <color name="light_colorAccent">#0094dd</color>
 
+    <color name="light_color_button_disabled">#5E5E5E</color>
+
     <color name="light_color_textTitle">#FFFFFF</color>
     <color name="light_color_textMain">#000000</color>
     <color name="light_color_textSub">#888888</color>
@@ -23,6 +25,8 @@
     <color name="dark_colorPrimaryDark">#0094dd</color>
     <color name="dark_colorAccent">#F44336</color>
 
+    <color name="dark_color_button_disabled">#5E5E5E</color>
+
     <color name="dark_color_textTitle">#FFFFFF</color>
     <color name="dark_color_textMain">#FFFFFF</color>
     <color name="dark_color_textSub">#AAAAAA</color>
@@ -36,6 +40,8 @@
     <color name="pink_colorPrimary">#DB0077</color>
     <color name="pink_colorPrimaryDark">#AA005B</color>
     <color name="pink_colorAccent">#FF2253</color>
+
+    <color name="pink_color_button_disabled">#5E5E5E</color>
 
     <color name="pink_color_textTitle">#FFFFFF</color>
     <color name="pink_color_textMain">#FF6DC7</color>

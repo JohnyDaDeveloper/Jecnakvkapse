@@ -4,6 +4,8 @@
         <attr name="color_background" format="color" />
         <attr name="color_background_darker" format="color" />
 
+        <attr name="color_button_disabled" format="color" />
+
         <attr name="color_textTitle" format="color" />
         <attr name="color_textMain" format="color" />
         <attr name="color_textSub" format="color" />
