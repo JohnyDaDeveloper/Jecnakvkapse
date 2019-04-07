@@ -11,11 +11,13 @@ public class Mark {
     private String title;
     private boolean small;
 
+    private boolean rozlVel;
+
     /**
      * Inicializace
      * @param employee  Zaměstnanec/Vyučující
      * @param value     Hodnota známky
-     * @param title     Název
+     * @param title     Důvod
      * @param small     Malá. True - ano, Flase - ne.
      */
     Mark(String employee, String value, String title, boolean small) {
@@ -23,6 +25,20 @@ public class Mark {
         this.value = value;
         this.title = convertTitle(title);
         this.small = small;
+
+        rozlVel = true;
+    }
+
+    /**
+     * Inicializace
+     * @param value Hodnota známky
+     * @param title Důvod
+     */
+    Mark(String value, String title) {
+        this.value = value;
+        this.title = title;
+
+        rozlVel = true;
     }
 
     /**
@@ -31,6 +47,8 @@ public class Mark {
      */
     Mark(String value) {
         this.value = value;
+
+        rozlVel = true;
     }
 
     /**
@@ -117,9 +135,37 @@ public class Mark {
                 return Color.argb(255, 255, 48, 48);
             }
 
+            case "N": {
+                return Color.WHITE;
+            }
+
             default: {
+                if (title.toLowerCase().contains("pochvala")) {
+                    return Color.argb(255, 85, 212, 0);
+                } else if (title.toLowerCase().contains("důtka")) {
+                    return Color.argb(255, 255, 48, 48);
+                } else if (title.toLowerCase().contains("napomenutí")) {
+                    return Color.argb(255, 255, 102, 0);
+                }
+
                 return Color.WHITE;
             }
         }
+    }
+
+    /**
+     * Určuje zda se má u známky rozlišovat velikost
+     * @param rozlVel   True - ano, False - ne
+     */
+    @SuppressWarnings("SameParameterValue")
+    void rozlisovatVelikost(boolean rozlVel) {
+        this.rozlVel = rozlVel;
+    }
+
+    /**
+     * Nastaví zda se má u známky rozlišovat velikost. True - ano, False - ne
+     */
+    public boolean rozlisovatVelikost() {
+        return rozlVel;
     }
 }

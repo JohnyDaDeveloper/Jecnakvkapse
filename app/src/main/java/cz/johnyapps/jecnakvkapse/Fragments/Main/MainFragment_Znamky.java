@@ -19,7 +19,7 @@ import cz.johnyapps.jecnakvkapse.Score.StahniScore;
 import cz.johnyapps.jecnakvkapse.Adapters.ScoreRecyclerAdapter;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
 import cz.johnyapps.jecnakvkapse.R;
-import cz.johnyapps.jecnakvkapse.Score.MarkConvertor;
+import cz.johnyapps.jecnakvkapse.Score.ScoreConvertor;
 import cz.johnyapps.jecnakvkapse.Score.Score;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 
@@ -125,7 +125,7 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
      * Stáhne známky
      * @param obdobi    Období pro které se stáhnou data
      * @see StahniScore
-     * @see MarkConvertor
+     * @see ScoreConvertor
      */
     public void marks(@Nullable String obdobi) {
         Crashlytics.log(TAG + "Downloading");
@@ -140,8 +140,8 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
 
                     if (error.process(result)) {
                         Crashlytics.log(TAG + "Converting");
-                        MarkConvertor markConvertor = new MarkConvertor();
-                        Score score = markConvertor.convert(result);
+                        ScoreConvertor scoreConvertor = new ScoreConvertor();
+                        Score score = scoreConvertor.convert(result);
 
                         user.setScore(score);
 

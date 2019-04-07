@@ -52,7 +52,7 @@ public class StahniScore {
     /**
      * Spustí se při dokončení stahování
      * @param result    Výsledek
-     * @see MarkConvertor
+     * @see ScoreConvertor
      */
     public void onResult(String result) {
 

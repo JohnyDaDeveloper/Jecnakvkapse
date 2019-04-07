@@ -88,7 +88,7 @@ public class MarksGridAdapter extends BaseAdapter {
         txtMark.setText(mark.getValue());
         txtMark.setBackgroundColor(mark.getColor());
 
-        if (mark.isSmall()) {
+        if (mark.isSmall() && mark.rozlisovatVelikost()) {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) txtMark.getLayoutParams();
             params.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
             txtMark.setLayoutParams(params);
@@ -138,9 +138,9 @@ public class MarksGridAdapter extends BaseAdapter {
                     Mark mark = (Mark) v.getTag();
                     String title = mark.getValue();
 
-                    if (mark.isSmall()) {
+                    if (mark.isSmall() && mark.rozlisovatVelikost()) {
                         title += " Malá";
-                    } else {
+                    } else if (mark.rozlisovatVelikost()) {
                         title += " Velká";
                     }
 
