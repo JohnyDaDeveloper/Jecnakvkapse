@@ -16,11 +16,11 @@ import android.view.View;
 import com.crashlytics.android.Crashlytics;
 
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogOdhlasit;
-import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Omluvenky;
-import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Prichody;
-import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Rozvrh;
-import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Suplarch;
-import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Znamky;
+import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Omluvenky;
+import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Prichody;
+import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Rozvrh;
+import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Suplarch;
+import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Znamky;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;

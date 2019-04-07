@@ -1,4 +1,4 @@
-package cz.johnyapps.jecnakvkapse.Fragments.Main;
+package cz.johnyapps.jecnakvkapse.Fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
