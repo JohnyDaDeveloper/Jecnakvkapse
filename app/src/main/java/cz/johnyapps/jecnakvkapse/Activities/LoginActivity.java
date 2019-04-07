@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText edtLogin;
     private EditText edtHeslo;
+    private CheckBox chck;
     private Button btnLogin;
 
     @Override
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
         edtLogin = findViewById(R.id.LogIn_edtName);
         edtHeslo = findViewById(R.id.LogIn_edtPass);
+        chck = findViewById(R.id.LogIn_checkBox);
         btnLogin = findViewById(R.id.LogIn_buttonLogin);
 
         Setup_Login();
@@ -75,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (heslo != null && !heslo.equals("NEULOZENO")) {
             edtHeslo.setText(heslo);
+            chck.setChecked(true);
         }
     }
 
@@ -97,8 +100,6 @@ public class LoginActivity extends AppCompatActivity {
      * @param V View
      */
     public void login(View V) {
-        CheckBox chck = findViewById(R.id.LogIn_checkBox);
-
         String login = edtLogin.getText().toString();
         String heslo = edtHeslo.getText().toString();
         boolean pamatovat = chck.isChecked();
