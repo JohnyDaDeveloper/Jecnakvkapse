@@ -2,6 +2,7 @@ package cz.johnyapps.jecnakvkapse.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,12 +17,15 @@ import com.crashlytics.android.core.CrashlyticsCore;
 import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
 import cz.johnyapps.jecnakvkapse.BuildConfig;
 import cz.johnyapps.jecnakvkapse.R;
+import cz.johnyapps.jecnakvkapse.Receivers.NetworkStateReceiver;
 import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
 import io.fabric.sdk.android.Fabric;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements NetworkStateReceiver.ConnectivityReceiverListener {
     private Context context;
     private SharedPreferences prefs;
+
+    private NetworkStateReceiver networkStateReceiver;
 
     private EditText edtLogin;
     private EditText edtHeslo;
@@ -47,6 +51,27 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initialize();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        networkStateReceiver = new NetworkStateReceiver();
+        networkStateReceiver.setConnectivityReceiverListener(this);
+        registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unregisterReceiver(networkStateReceiver);
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean connected) {
+        btnLogin.setEnabled(connected);
     }
 
     /**
