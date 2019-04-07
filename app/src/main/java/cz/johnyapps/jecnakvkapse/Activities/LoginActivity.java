@@ -155,6 +155,8 @@ public class LoginActivity extends AppCompatActivity implements NetworkStateRece
      * @param V View
      */
     public void login(View V) {
+        V.setEnabled(false);
+
         String login = edtLogin.getText().toString();
         String heslo = edtHeslo.getText().toString();
         boolean pamatovat = chck.isChecked();
@@ -185,7 +187,6 @@ public class LoginActivity extends AppCompatActivity implements NetworkStateRece
             @Override
             public void onResult() {
                 super.onResult();
-
                 startMain();
             }
 
@@ -203,6 +204,8 @@ public class LoginActivity extends AppCompatActivity implements NetworkStateRece
      * Nastartuje aktivitu {@link MainActivity}
      */
     private void startMain() {
+        btnLogin.setEnabled(false);
+
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
         finish();
