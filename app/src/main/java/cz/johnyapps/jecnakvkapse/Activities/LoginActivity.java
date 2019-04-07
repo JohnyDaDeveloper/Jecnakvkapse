@@ -10,9 +10,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
+
 import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
+import cz.johnyapps.jecnakvkapse.BuildConfig;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
+import io.fabric.sdk.android.Fabric;
 
 public class LoginActivity extends AppCompatActivity {
     private Context context;
@@ -25,6 +30,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         this.context = this;
+
+        // Set up Crashlytics, disabled for debug builds
+        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build();
+
+        // Initialize Fabric with the debug-disabled crashlytics.
+        Fabric.with(this, crashlyticsKit);
 
         ThemeManager manager = new ThemeManager(context);
         manager.loadTheme();
@@ -89,6 +102,10 @@ public class LoginActivity extends AppCompatActivity {
         String login = edtLogin.getText().toString();
         String heslo = edtHeslo.getText().toString();
         boolean pamatovat = chck.isChecked();
+
+        if (login.equals("crash")) {
+            Crashlytics.getInstance().crash();
+        }
 
         if (pamatovat) {
             prefs.edit().putString("pass", heslo).apply();
