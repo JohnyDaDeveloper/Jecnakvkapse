@@ -27,7 +27,7 @@ public class ScoreConvertor {
      * @return      Známky
      * @see Score
      * @see #convertRow(Elements, String)
-     * @see #convertZaverecna(Element)
+     * @see #convertZaverecna(Element, String)
      */
     public Score convert(String data) {
         Document doc = Jsoup.parse(data);
@@ -45,7 +45,7 @@ public class ScoreConvertor {
                 Subject subject = convertRow(row.selectFirst("td").select("a"), name);
                 Element zaverecna = row.select("td").get(1);
 
-                subject.setZaverecna(convertZaverecna(zaverecna));
+                subject.setZaverecna(convertZaverecna(zaverecna, name));
                 subjects.add(subject);
             } else {
                 Elements elements = row.getAllElements();
@@ -67,11 +67,11 @@ public class ScoreConvertor {
                 Element zaver = row.select("td").get(1);
 
                 Subject subCvic = convertRow(cviceni, name + " - Cvičení");
-                subCvic.setZaverecna(convertZaverecna(zaver));
+                subCvic.setZaverecna(convertZaverecna(zaver, name + " - Cvičení"));
                 subjects.add(subCvic);
 
                 Subject subTeor = convertRow(teorie, name + " - Teorie");
-                subTeor.setZaverecna(convertZaverecna(zaver));
+                subTeor.setZaverecna(convertZaverecna(zaver, name + " - Teorie"));
                 subjects.add(subTeor);
             }
         }
@@ -152,14 +152,18 @@ public class ScoreConvertor {
 
     /**
      * Konvertuje element zaver na string s hodnotou závěrné známky
-     * @param zaver Element se závěrnou známkou
-     * @return      String se závěrnou známkou
+     * @param zaver     Element se závěrnou známkou
+     * @param predmet   Název předmětu
+     * @return          String se závěrnou známkou
      */
-    private String convertZaverecna(Element zaver) {
+    private Mark convertZaverecna(Element zaver, String predmet) {
         if (!zaver.html().isEmpty()) {
-            return zaver.selectFirst("a").html();
+            Mark mark = new Mark(zaver.selectFirst("a").html(), predmet);
+            mark.rozlisovatVelikost(false);
+
+            return mark;
         }
 
-        return "";
+        return null;
     }
 }

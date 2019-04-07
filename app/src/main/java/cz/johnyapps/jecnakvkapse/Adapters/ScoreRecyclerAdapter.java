@@ -2,6 +2,7 @@ package cz.johnyapps.jecnakvkapse.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import cz.johnyapps.jecnakvkapse.CustomViews.ZnamkyGridView;
+import cz.johnyapps.jecnakvkapse.Dialogs.DialogMarkBuilder;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Score.Mark;
 import cz.johnyapps.jecnakvkapse.Score.Score;
@@ -110,12 +113,44 @@ public class ScoreRecyclerAdapter extends RecyclerView.Adapter {
             zaverecna.setText(mark.getValue());
             zaverecna.setBackgroundColor(mark.getColor());
 
+            Setup_OnClick(view, mark);
+
             customHolder.layout_bottom.removeAllViews();
             customHolder.layout_bottom.addView(view);
             customHolder.layout_bottom.setVisibility(View.VISIBLE);
         } else {
             customHolder.layout_bottom.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * Nastavuje onClick známkám (Zobrazí dialog s dalšími informacemi)
+     * @param view  View se známkou
+     * @param mark  Známka
+     */
+    private void Setup_OnClick(View view, Mark mark) {
+        view.setTag(mark);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Mark mark = (Mark) v.getTag();
+                String title = mark.getValue();
+
+                title += " Závěrečná";
+
+                DialogMarkBuilder builder = new DialogMarkBuilder(context);
+                builder.setTitle(title)
+                        .setHeaderColor(mark.getColor())
+                        .setNegativeButton("Zavřít", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setMessage(mark.getTitle())
+                        .create().show();
+            }
+        });
     }
 
     /**
