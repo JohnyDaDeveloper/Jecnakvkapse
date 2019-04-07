@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
@@ -19,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText edtLogin;
     private EditText edtHeslo;
+    private Button btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +35,23 @@ public class LoginActivity extends AppCompatActivity {
         initialize();
     }
 
+    /**
+     * Inicializace
+     */
     private void initialize() {
         prefs = getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
 
         edtLogin = findViewById(R.id.LogIn_edtName);
         edtHeslo = findViewById(R.id.LogIn_edtPass);
+        btnLogin = findViewById(R.id.LogIn_buttonLogin);
 
         Setup_Login();
-        //AutoLogin();
+        AutoLogin();
     }
 
+    /**
+     * Nastavení přihlašování (Předvyplnění dat atd.)
+     */
     private void Setup_Login() {
         String login = prefs.getString("login", "NEULOZENO");
         String heslo = prefs.getString("pass", "NEULOZENO");
@@ -56,6 +65,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Automatické přihlášení s uloženými daty
+     */
     private void AutoLogin() {
         String login = prefs.getString("login", "NEULOZENO");
         String heslo = prefs.getString("pass", "NEULOZENO");
@@ -67,6 +79,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Po kliknutí na View spustí přihlášování
+     * @param V View
+     */
     public void login(View V) {
         CheckBox chck = findViewById(R.id.LogIn_checkBox);
 
@@ -81,7 +97,14 @@ public class LoginActivity extends AppCompatActivity {
         login(login, heslo);
     }
 
+    /**
+     * Samotné přihlašobání pomocí loginu a hesla
+     * @param login Login
+     * @param pass  Heslo
+     */
     public void login(final String login, final String pass) {
+        btnLogin.setEnabled(false);
+
         Prihlaseni prihlaseni = new Prihlaseni(context) {
             @Override
             public void onResult() {
@@ -93,15 +116,27 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void error() {
                 super.error();
+                btnLogin.setEnabled(true);
             }
         };
 
         prihlaseni.prihlas(login, pass);
     }
 
+    /**
+     * Nastartuje aktivitu {@link MainActivity}
+     */
     private void startMain() {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
         finish();
+    }
+
+    /**
+     * Zabrání vypnutí aplikace při zmáčknutí tlačítka zpět
+     */
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 }

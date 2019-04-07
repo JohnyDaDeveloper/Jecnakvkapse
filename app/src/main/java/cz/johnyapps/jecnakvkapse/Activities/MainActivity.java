@@ -75,11 +75,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout = findViewById(R.id.Main_layoutMain);
         navigationView = findViewById(R.id.Main_menu);
-
         Setup_Menu();
 
         fragment_selected = prefs.getInt("main_fragment", R.id.MenuMain_Znamky);
-
         SwitchFragments(fragment_selected);
     }
 
@@ -88,6 +86,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private void Setup_Menu() {
         navigationView.setNavigationItemSelectedListener(this);
+
+        if (user.isLogged()) {
+            navigationView.getMenu().findItem(R.id.MenuMain_Prihlasit).setVisible(false);
+            navigationView.getMenu().findItem(R.id.MenuMain_Odhlasit).setVisible(true);
+        } else {
+            navigationView.getMenu().findItem(R.id.MenuMain_Prihlasit).setVisible(true);
+            navigationView.getMenu().findItem(R.id.MenuMain_Odhlasit).setVisible(false);
+        }
 
         user.setLoggedListener(new User.LoggedListener() {
             @Override
@@ -116,12 +122,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId()) {
             case R.id.MenuMain_Prihlasit: {
-
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
                 break;
             }
 
             case R.id.MenuMain_Odhlasit: {
-                DialogOdhlasit odhlasit = new DialogOdhlasit(context);
+                DialogOdhlasit odhlasit = new DialogOdhlasit(context){
+                    @Override
+                    public void finished() {
+                        super.finished();
+
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        context.startActivity(intent);
+
+                        finish();
+                    }
+                };
                 odhlasit.get().show();
                 break;
             }

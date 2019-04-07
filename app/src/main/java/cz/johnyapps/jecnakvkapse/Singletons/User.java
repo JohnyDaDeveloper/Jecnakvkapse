@@ -192,6 +192,13 @@ public class User {
     }
 
     /**
+     * @return True - uživatel přihlášen; False - uživatel odhlášen
+     */
+    public boolean isLogged() {
+        return logged;
+    }
+
+    /**
      * Nastaví listener přihlášení
      * @param loggedListener    Listener
      */
