@@ -186,7 +186,9 @@ public class User {
             setSessionId("");
         }
 
-        loggedListener.onLoggedChange(logged);
+        if (loggedListener != null) {
+            loggedListener.onLoggedChange(logged);
+        }
     }
 
     /**

@@ -15,8 +15,6 @@ import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
 
-import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
-import cz.johnyapps.jecnakvkapse.Dialogs.DialogLogin;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogOdhlasit;
 import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Omluvenky;
 import cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Prichody;
@@ -34,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = "MainActivity: ";
 
     private Context context;
-    private SharedPreferences prefs;
     private User user;
 
     private DrawerLayout drawerLayout;
@@ -70,10 +67,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /**
-     * Načte globální proměnné, reklamu, menu {@link #Setup_Menu()}, fragment a spustí {@link #AutoLogIn()}
+     * Načte globální proměnné, reklamu, menu {@link #Setup_Menu()} a fragment
      */
     private void initialize() {
-        prefs = getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
         user = User.getUser();
 
         drawerLayout = findViewById(R.id.Main_layoutMain);
@@ -83,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         fragment_selected = prefs.getInt("main_fragment", R.id.MenuMain_Znamky);
 
-        AutoLogIn();
+        SwitchFragments(fragment_selected);
     }
 
     /**
@@ -119,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId()) {
             case R.id.MenuMain_Prihlasit: {
-                Dialog_LogIn();
+
                 break;
             }
 
@@ -217,61 +214,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.commit();
         fragment_selected = id;
         onResume();
-    }
-
-    /**
-     * Pokusí se o automatické přihlášení přes {@link #login(String, String)} pomocí dat z paméti. Pokud selže spustí {@link #Dialog_LogIn()}
-     */
-    private void AutoLogIn() {
-        String login = prefs.getString("login", null);
-        String pass = prefs.getString("pass", null);
-
-        if (!(login == null || pass == null)) {
-            login(login, pass);
-        } else {
-            Dialog_LogIn();
-        }
-    }
-
-    /**
-     * Otevře přihlašovací dialog
-     * @see DialogLogin
-     */
-    private void Dialog_LogIn() {
-        DialogLogin dialogLogin = new DialogLogin(context){
-            @Override
-            public void login(String login, String pass, boolean remember) {
-                super.login(login, pass, remember);
-                MainActivity.this.login(login, pass);
-            }
-        };
-
-        dialogLogin.get().show();
-    }
-
-    /**
-     * Přihlásí uživatele a načte fragment přes {@link #SwitchFragments(int)}
-     * @param login Login
-     * @param pass  Heslo
-     */
-    public void login(final String login, final String pass) {
-        Prihlaseni prihlaseni = new Prihlaseni(context) {
-            @Override
-            public void onResult() {
-                super.onResult();
-                SwitchFragments(fragment_selected);
-            }
-
-            @Override
-            public void error() {
-                super.error();
-
-                if (fragment_selected == R.id.MenuMain_Rozvrh) {
-                    SwitchFragments(fragment_selected);
-                }
-            }
-        };
-
-        prihlaseni.prihlas(login, pass);
     }
 }
