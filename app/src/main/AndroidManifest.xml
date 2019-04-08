@@ -16,7 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/LightTheme"
         tools:ignore="InnerclassSeparator">
-        <activity android:name=".Activities.LoginActivity" android:screenOrientation="portrait" />
         <activity android:name=".Activities.OAplikaci" android:screenOrientation="portrait" />
         <activity android:name=".Activities.SettingsActivity" android:screenOrientation="portrait" />
         <activity android:name=".Activities.MainActivity" android:screenOrientation="portrait">
