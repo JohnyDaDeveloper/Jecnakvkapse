@@ -33,9 +33,6 @@ public class User {
     private SuplarchHolder suplarchHolder;
 
     private LoggedListener loggedListener;
-    private boolean logged;
-
-    private boolean offlineModeEnabled;
 
     /**
      * Inicializace
@@ -45,9 +42,6 @@ public class User {
         login = "";
 
         loggedListener = null;
-        logged = false;
-
-        offlineModeEnabled = false;
     }
 
     /**
@@ -184,8 +178,6 @@ public class User {
      * @param logged    Stav
      */
     public void setLogged(boolean logged) {
-        this.logged = logged;
-
         if (!logged) {
             setSessionId("");
         }
@@ -193,13 +185,6 @@ public class User {
         if (loggedListener != null) {
             loggedListener.onLoggedChange(logged);
         }
-    }
-
-    /**
-     * @return True - uživatel přihlášen; False - uživatel odhlášen
-     */
-    public boolean isLogged() {
-        return logged;
     }
 
     /**

@@ -93,7 +93,6 @@ public class MainFragment_Rozvrh extends Fragment {
      */
     public void rozvrh() {
         Crashlytics.log(TAG + "Downloading");
-        progressBar.setVisibility(View.VISIBLE);
         String[] rozvrhStr = offlineMode.read("rozvrh");
 
         NetworkState networkState = new NetworkState();
@@ -110,6 +109,8 @@ public class MainFragment_Rozvrh extends Fragment {
         }
 
         if (!networkState.isConnected(context)) {
+            progressBar.setVisibility(View.VISIBLE);
+
             StahniRozvrh stahniRozvrh = new StahniRozvrh() {
                 @Override
                 public void onResult(String result) {
