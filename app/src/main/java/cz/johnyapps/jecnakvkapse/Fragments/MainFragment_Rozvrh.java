@@ -103,12 +103,12 @@ public class MainFragment_Rozvrh extends Fragment {
             user.setRozvrh(rozvrh);
 
             displayRozvrh();
-        } else if (networkState.isConnected(context)) {
+        } else if (!networkState.isConnected(context)) {
             DialogError dialogError = new DialogError(context);
             dialogError.get("Nenalezen žádný uložený rozvrh").show();
         }
 
-        if (!networkState.isConnected(context)) {
+        if (networkState.isConnected(context)) {
             progressBar.setVisibility(View.VISIBLE);
 
             StahniRozvrh stahniRozvrh = new StahniRozvrh() {
