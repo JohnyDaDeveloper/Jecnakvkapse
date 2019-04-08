@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.os.Environment;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -29,6 +28,7 @@ import cz.johnyapps.jecnakvkapse.Tools.GenericFileProvider;
  */
 public class StahniSuplarch {
     private static final String TAG = "StahniSuplarch";
+    private File SUPLARCH_DIR;
 
     private Context context;
     private SuplarchLink link;
@@ -39,6 +39,7 @@ public class StahniSuplarch {
      */
     public StahniSuplarch(Context context) {
         this.context = context;
+        SUPLARCH_DIR = context.getCacheDir();
     }
 
     /**
@@ -50,7 +51,7 @@ public class StahniSuplarch {
 
         DialogLoading dialog = new DialogLoading(context);
 
-        Request request = new Request(link.getLink(), "GET", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + link.getDocName());
+        Request request = new Request(link.getLink(), "GET", SUPLARCH_DIR.getPath() + "/" + link.getDocName());
 
         @SuppressLint("StaticFieldLeak") DownloadFile download = new DownloadFile(dialog.get(link.getDocName())) {
             @Override
@@ -83,7 +84,7 @@ public class StahniSuplarch {
      */
     private void openSuplarch(SuplarchLink link) {
         Crashlytics.log(TAG + "Getting downloads directory");
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), link.getDocName());
+        File file = new File(SUPLARCH_DIR.getPath(), link.getDocName());
 
         Crashlytics.log(TAG + "Getting file provider");
         Uri uri = GenericFileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);

@@ -2,7 +2,6 @@ package cz.johnyapps.jecnakvkapse.HttpConnection;
 
 import android.support.v7.app.AlertDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,8 +28,6 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
  * @see Request
  */
 public class Connection extends AsyncTask<Request, Request, String> {
-    private static final String TAG = "Connection";
-
     private AlertDialog dialog = null;
     private User user;
 
@@ -191,7 +188,6 @@ public class Connection extends AsyncTask<Request, Request, String> {
     @Override
     protected void onPostExecute(String result) {
         if (dialog != null) dialog.dismiss();
-        Log.i(TAG, result);
 
         super.onPostExecute(result);
         nextAction(result);

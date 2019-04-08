@@ -3,7 +3,6 @@ package cz.johnyapps.jecnakvkapse.HttpConnection;
 import android.support.v7.app.AlertDialog;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -26,7 +25,6 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
  * @see Request
  */
 public class DownloadFile extends AsyncTask<Request, Request, String> {
-    private static final String TAG = "Connection";
     private AlertDialog dialog;
     private User user;
 
@@ -84,8 +82,6 @@ public class DownloadFile extends AsyncTask<Request, Request, String> {
                 connection.setRequestProperty("Cookie", user.getSessionId());
             }
             connection.connect();
-
-            Log.i(TAG, user.getSessionId() + " - " + request.getDotaz());
 
             if (request.getMethod().equals("POST")) {
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
