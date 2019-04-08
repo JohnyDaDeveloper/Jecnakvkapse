@@ -25,6 +25,10 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
 import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
 import io.fabric.sdk.android.Fabric;
 
+/**
+ * Aktivita na přihlašování. <b>MOMENTÁLNĚ SE NEPOUŽÍVÁ!</b>.
+ * @see cz.johnyapps.jecnakvkapse.Dialogs.DialogLogin
+ */
 public class LoginActivity extends AppCompatActivity implements NetworkStateReceiver.ConnectivityReceiverListener {
     private static final String TAG = "LoginActivity: ";
 

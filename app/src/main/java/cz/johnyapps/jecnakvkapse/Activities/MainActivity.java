@@ -15,6 +15,8 @@ import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
 
+import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
+import cz.johnyapps.jecnakvkapse.Dialogs.DialogLogin;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogOdhlasit;
 import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Omluvenky;
 import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Prichody;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = "MainActivity: ";
 
     private Context context;
+    private SharedPreferences prefs;
     private User user;
 
     private DrawerLayout drawerLayout;
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * Načte globální proměnné, reklamu, menu {@link #Setup_Menu()} a fragment
      */
     private void initialize() {
-        SharedPreferences prefs = getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
+        prefs = getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
         user = User.getUser();
 
         drawerLayout = findViewById(R.id.Main_layoutMain);
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         fragment_selected = prefs.getInt("main_fragment", R.id.MenuMain_Znamky);
 
-        SwitchFragments(fragment_selected);
+        AutoLogin();
     }
 
     /**
@@ -110,6 +113,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /**
+     * Automatické přihlášení s uloženými daty
+     */
+    private void AutoLogin() {
+        String login = prefs.getString("login", "NEULOZENO");
+        String heslo = prefs.getString("pass", "NEULOZENO");
+
+        if (login != null && heslo !=null) {
+            if (!login.equals("NEULOZENO") && !heslo.equals("NEULOZENO")) {
+                login(login, heslo);
+            }
+        }
+    }
+
+    /**
      * Obstarává stisknutí tlačítka v menu
      * @param item  Vybraná položka z menu
      * @return      true
@@ -122,7 +139,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId()) {
             case R.id.MenuMain_Prihlasit: {
+                DialogLogin login = new DialogLogin(context) {
+                    @Override
+                    public void login(String login, String pass, boolean remember) {
+                        super.login(login, pass, remember);
 
+                        MainActivity.this.login(login, pass);
+                    }
+                };
+                login.get().show();
                 break;
             }
 
@@ -220,5 +245,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.commit();
         fragment_selected = id;
         onResume();
+    }
+
+    /**
+     * Přihlásí uživatele
+     * @param login Login
+     * @param pass  Heslo
+     */
+    public void login(final String login, final String pass) {
+        Prihlaseni prihlaseni = new Prihlaseni(context) {
+            @Override
+            public void onResult() {
+                super.onResult();
+                SwitchFragments(fragment_selected);
+            }
+
+            @Override
+            public void error() {
+                super.error();
+            }
+        };
+
+        prihlaseni.prihlas(login, pass);
     }
 }
