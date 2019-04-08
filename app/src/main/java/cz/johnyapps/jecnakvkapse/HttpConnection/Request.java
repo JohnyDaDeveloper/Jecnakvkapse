@@ -1,5 +1,6 @@
 package cz.johnyapps.jecnakvkapse.HttpConnection;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,7 @@ public class Request {
     private String dotaz;
     private String method;
 
-    private String path;
+    private File file;
 
     private StringBuilder data;
 
@@ -29,13 +30,13 @@ public class Request {
      * Inicializace
      * @param dotaz     Adresa dotazu
      * @param method    Metoda (POST, GET...)
-     * @param path      Cesta k souboru
+     * @param file      Soubor s daty
      */
-    public Request(String dotaz, String method, String path) {
+    public Request(String dotaz, String method, File file) {
         this.dotaz = dotaz;
         this.method = method.toUpperCase();
 
-        this.path = path;
+        this.file = file;
 
         this.data = new StringBuilder();
     }
@@ -91,7 +92,7 @@ public class Request {
      * Vrátí cestu k souboru
      * @return  String cesta
      */
-    public String getPath() {
-        return path;
+    public File getFile() {
+        return file;
     }
 }

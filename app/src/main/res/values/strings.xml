@@ -27,5 +27,6 @@
     <string name="oaplikaci_app_title">Aplikace</string>
     <string name="oaplikaci_app_verze">Verze</string>
     <string name="oaplikaci_info_title">Dodatečné informace</string>
-    <string name="oaplikaci_info_suplarch">Suplování se stahují do složky Downloads v paměti zařízení. Aplikce je zatím neumí mazat.</string>
+    <string name="oaplikaci_info_suplarch">Suplování se stahuje do cache aplikace. Ten se zatí musí mazat manuálně.</string>
+    <string name="oaplikaci_info_suplarch_clear_cache">Vymazat cahce</string>
 </resources>

@@ -28,7 +28,6 @@ import cz.johnyapps.jecnakvkapse.Tools.GenericFileProvider;
  */
 public class StahniSuplarch {
     private static final String TAG = "StahniSuplarch";
-    private File SUPLARCH_DIR;
 
     private Context context;
     private SuplarchLink link;
@@ -39,7 +38,6 @@ public class StahniSuplarch {
      */
     public StahniSuplarch(Context context) {
         this.context = context;
-        SUPLARCH_DIR = context.getCacheDir();
     }
 
     /**
@@ -50,8 +48,7 @@ public class StahniSuplarch {
         this.link = link;
 
         DialogLoading dialog = new DialogLoading(context);
-
-        Request request = new Request(link.getLink(), "GET", SUPLARCH_DIR.getPath() + "/" + link.getDocName());
+        Request request = new Request(link.getLink(), "GET", new File(context.getCacheDir(), link.getDocName()));
 
         @SuppressLint("StaticFieldLeak") DownloadFile download = new DownloadFile(dialog.get(link.getDocName())) {
             @Override
@@ -84,7 +81,7 @@ public class StahniSuplarch {
      */
     private void openSuplarch(SuplarchLink link) {
         Crashlytics.log(TAG + "Getting downloads directory");
-        File file = new File(SUPLARCH_DIR.getPath(), link.getDocName());
+        File file = new File(context.getCacheDir(), link.getDocName());
 
         Crashlytics.log(TAG + "Getting file provider");
         Uri uri = GenericFileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);

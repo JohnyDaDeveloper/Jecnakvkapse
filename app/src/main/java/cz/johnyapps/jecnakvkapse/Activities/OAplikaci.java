@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cz.johnyapps.jecnakvkapse.BuildConfig;
 import cz.johnyapps.jecnakvkapse.R;
+import cz.johnyapps.jecnakvkapse.Tools.CacheManager;
 import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
 
 /**
@@ -66,5 +68,12 @@ public class OAplikaci extends AppCompatActivity {
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"johnydadeveloper@gmail.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, "Verze aplikace: " + BuildConfig.VERSION_NAME);
         startActivity(intent);
+    }
+
+    public void clearCache(View V) {
+        CacheManager manager = new CacheManager(context);
+        manager.clearAll();
+
+        Toast.makeText(context, "Mažu cache", Toast.LENGTH_LONG).show();
     }
 }

@@ -90,7 +90,7 @@ public class DownloadFile extends AsyncTask<Request, Request, String> {
             }
 
             InputStream input = connection.getInputStream();
-            File file = new File(request.getPath());
+            File file = request.getFile();
             FileOutputStream output = new FileOutputStream(file);
 
             int bytesRead;
