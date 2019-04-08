@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import com.crashlytics.android.Crashlytics;
 
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogError;
+import cz.johnyapps.jecnakvkapse.Receivers.NetworkState;
 import cz.johnyapps.jecnakvkapse.Rozvrh.StahniRozvrh;
 import cz.johnyapps.jecnakvkapse.Adapters.RozvrhAdaper;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
@@ -95,18 +96,20 @@ public class MainFragment_Rozvrh extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         String[] rozvrhStr = offlineMode.read("rozvrh");
 
+        NetworkState networkState = new NetworkState();
+
         if (!rozvrhStr[0].equals("ERROR")) {
             RozvrhConventor conventor = new RozvrhConventor();
             Rozvrh rozvrh = conventor.convert(rozvrhStr[0]);
             user.setRozvrh(rozvrh);
 
             displayRozvrh();
-        } else if (user.isOfflineModeEnabled()) {
+        } else if (networkState.isConnected(context)) {
             DialogError dialogError = new DialogError(context);
             dialogError.get("Nenalezen žádný uložený rozvrh").show();
         }
 
-        if (!user.isOfflineModeEnabled()) {
+        if (!networkState.isConnected(context)) {
             StahniRozvrh stahniRozvrh = new StahniRozvrh() {
                 @Override
                 public void onResult(String result) {

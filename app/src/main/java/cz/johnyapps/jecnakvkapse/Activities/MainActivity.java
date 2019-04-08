@@ -61,12 +61,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initialize();
     }
 
-    /**
-     * Znemožní odejít z aplikace stiskem tlačítka zpět
-     */
     @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
+    protected void onResume() {
+        Crashlytics.log(TAG + "onResume");
+        super.onResume();
     }
 
     @Override
@@ -124,6 +122,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 login(login, heslo);
             }
         }
+    }
+
+    /**
+     * Znemožní odejít z aplikace stiskem tlačítka zpět
+     */
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 
     /**
