@@ -1,13 +1,11 @@
 package cz.johnyapps.jecnakvkapse.Dialogs;
 
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import cz.johnyapps.jecnakvkapse.Activities.LoginActivity;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -24,7 +22,7 @@ public class DialogOdhlasit {
      * Inicializace
      * @param context   Context
      */
-    protected DialogOdhlasit(Context context) {
+    public DialogOdhlasit(Context context) {
         this.context = context;
         prefs = context.getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
         user = User.getUser();
@@ -59,16 +57,6 @@ public class DialogOdhlasit {
     private void odhlasit() {
         prefs.edit().remove("pass").apply();
         user.setLogged(false);
-
         Toast.makeText(context, "Odhášeno", Toast.LENGTH_SHORT).show();
-
-        finished();
-    }
-
-    /**
-     * Spustí se při dokončení odhlášení
-     */
-    public void finished() {
-
     }
 }
