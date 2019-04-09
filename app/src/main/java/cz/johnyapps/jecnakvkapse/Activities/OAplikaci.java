@@ -3,6 +3,7 @@ package cz.johnyapps.jecnakvkapse.Activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -64,6 +65,16 @@ public class OAplikaci extends AppCompatActivity {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"johnydadeveloper@gmail.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, "Verze aplikace: " + BuildConfig.VERSION_NAME);
+        startActivity(intent);
+    }
+
+    /**
+     * Po kliknutí na View otevře github
+     * @param V View
+     */
+    public void gitHub(View V) {
+        Uri uri = Uri.parse("https://github.com/JohnyDaDeveloper/Jecnakvkapse");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
 }
