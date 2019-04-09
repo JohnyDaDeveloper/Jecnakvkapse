@@ -25,7 +25,7 @@ public class CacheManager {
 
     /**
      * Inicializace
-     * @param context   Context
+     * @param context Context
      */
     public CacheManager(Context context) {
         this.context = context;
@@ -35,7 +35,8 @@ public class CacheManager {
      * Vymaže cahce přes {@link ClearAll}
      */
     public void clearAll() {
-        File[] files = context.getCacheDir().listFiles();
+        File cacheDir = context.getCacheDir();
+        File[] files = cacheDir.listFiles();
 
         ClearAll clearAll = new ClearAll();
         clearAll.execute(files);
@@ -47,12 +48,22 @@ public class CacheManager {
      * @param fileName  Soubor který má data obsahovat
      * @throws IOException IOException
      */
-    public void writeToCache(byte[] bytes, String fileName) throws IOException {
+    public void writeData(byte[] bytes, String fileName) throws IOException {
         File cacheDir = context.getCacheDir();
         RawFile rawFile = new RawFile(bytes, fileName, cacheDir);
 
         WriteData writeData = new WriteData();
         writeData.execute(rawFile);
+    }
+
+    /**
+     * Zmenší cahce na maximální povolenou velikost přes {@link FitMaxSize}
+     */
+    public void fitMaxSize() {
+        File cacheDir = context.getCacheDir();
+
+        FitMaxSize fitMaxSize = new FitMaxSize();
+        fitMaxSize.execute(cacheDir);
     }
 
     /**
@@ -104,13 +115,13 @@ public class CacheManager {
                 size += rawFile.bytes.length;
 
                 //Pokud je velikost složka větší než maximální povolená velikost, odstraní soubor
-                while (size > MAX_SIZE) {
-                    for (File file : filesInDir) {
-                        if (file.isFile()) {
-                            size -= file.length();
-                            //noinspection ResultOfMethodCallIgnored
-                            file.delete();
-                        }
+                for (File file : filesInDir) {
+                    if (file.isFile()) {
+                        size -= file.length();
+                        //noinspection ResultOfMethodCallIgnored
+                        file.delete();
+
+                        if (size <= MAX_SIZE) break;
                     }
                 }
 
@@ -126,6 +137,46 @@ public class CacheManager {
                     }
                 } catch (IOException e) {
                     Crashlytics.log(TAG + "IOException occurred while writing " + rawFile.getFileName());
+                }
+            }
+
+            return null;
+        }
+    }
+
+    /**
+     * Zmenší cahce na maximální povolenou velikost
+     */
+    static class FitMaxSize extends AsyncTask<File, File, Void> {
+        @Override
+        protected Void doInBackground(File... params) {
+            for (File dir : params) {
+                List<File> filesInDir = Arrays.asList(dir.listFiles());
+
+                Collections.sort(filesInDir, new Comparator<File>() {
+                    @Override
+                    public int compare(File o1, File o2) {
+                        return Integer.compare((int) o1.lastModified(), (int) o2.lastModified());
+                    }
+                });
+
+                //Spočítá velikost složky
+                long size = 0;
+                for (File file : filesInDir) {
+                    if (file.isFile()) {
+                        size += file.length();
+                    }
+                }
+
+                //Pokud je velikost složka větší než maximální povolená velikost, odstraní soubor
+                for (File file : filesInDir) {
+                    if (file.isFile()) {
+                        size -= file.length();
+                        //noinspection ResultOfMethodCallIgnored
+                        file.delete();
+
+                        if (size <= MAX_SIZE) break;
+                    }
                 }
             }
 

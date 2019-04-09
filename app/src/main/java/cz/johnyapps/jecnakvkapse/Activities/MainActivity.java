@@ -25,6 +25,7 @@ import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Suplarch;
 import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Znamky;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
+import cz.johnyapps.jecnakvkapse.Tools.CacheManager;
 import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
 
 /**
@@ -83,10 +84,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.Main_layoutMain);
         navigationView = findViewById(R.id.Main_menu);
 
-        Setup_Menu();
-
         fragment_selected = prefs.getInt("main_fragment", R.id.MenuMain_Znamky);
 
+        Setup_Menu();
+        ClearChache();
         AutoLogin();
     }
 
@@ -108,6 +109,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+    }
+
+    /**
+     * Vymaže cache
+     */
+    private void ClearChache() {
+        CacheManager cacheManager = new CacheManager(context);
+        cacheManager.clearAll();
     }
 
     /**
