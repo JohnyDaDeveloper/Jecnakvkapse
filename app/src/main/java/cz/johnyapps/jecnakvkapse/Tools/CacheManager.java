@@ -10,6 +10,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Stará se o cache aplikace
@@ -80,15 +83,27 @@ public class CacheManager {
         @Override
         protected Void doInBackground(RawFile... params) {
             for (RawFile rawFile  : params) {
-                File[] filesInDir = rawFile.getDir().listFiles();
-                long size = 0;
+                List<File> filesInDir = Arrays.asList(rawFile.getDir().listFiles());
 
+                Collections.sort(filesInDir, new Comparator<File>() {
+                    @Override
+                    public int compare(File o1, File o2) {
+                        return Integer.compare((int) o1.lastModified(), (int) o2.lastModified());
+                    }
+                });
+
+                //Spočítá velikost složky
+                long size = 0;
                 for (File file : filesInDir) {
                     if (file.isFile()) {
                         size += file.length();
                     }
                 }
 
+                //K velikosti složky přidá velikost souboru, který se má připsat
+                size += rawFile.bytes.length;
+
+                //Pokud je velikost složka větší než maximální povolená velikost, odstraní soubor
                 while (size > MAX_SIZE) {
                     for (File file : filesInDir) {
                         if (file.isFile()) {
