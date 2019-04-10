@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Konvertuje HTML na příchody
  * @see Prichody
  * @see cz.johnyapps.jecnakvkapse.Singletons.User
- * @see cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Prichody
+ * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Prichody
  */
 public class PrichodyConvertor {
     /**

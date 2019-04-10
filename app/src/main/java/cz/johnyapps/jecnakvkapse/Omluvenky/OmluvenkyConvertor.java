@@ -7,7 +7,7 @@ import org.jsoup.select.Elements;
 
 /**
  * Konvertuje HTML na omluvekny
- * @see cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Omluvenky
+ * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Omluvenky
  * @see Omluvnak
  * @see cz.johnyapps.jecnakvkapse.Singletons.User
  */

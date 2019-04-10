@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Konvetuje HTML na známky
  * @see Score
  * @see cz.johnyapps.jecnakvkapse.Singletons.User
- * @see cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Znamky
+ * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Znamky
  */
 public class ScoreConvertor {
     /**

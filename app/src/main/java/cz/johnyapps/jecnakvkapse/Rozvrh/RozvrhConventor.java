@@ -14,7 +14,7 @@ import java.util.Locale;
  * Konvertuje HTML na rozvrh
  * @see Rozvrh
  * @see cz.johnyapps.jecnakvkapse.Singletons.User
- * @see cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Rozvrh
+ * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Rozvrh
  */
 public class RozvrhConventor {
     /**

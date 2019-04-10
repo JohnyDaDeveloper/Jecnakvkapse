@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,13 +27,14 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování odkazů na suplování
  */
-public class MainFragment_Znamky extends Fragment implements View.OnClickListener {
+public class MainFragment_Znamky extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "MainFragment_Znamky: ";
 
     private Context context;
     private User user;
 
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeLayout;
 
     /**
      * Nastaví content view a supustí {@link #initialize()}
@@ -47,7 +49,7 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
     }
 
     /**
-     * Načte globální proměnné
+     * Inicializace
      */
     private void initialize() {
         this.context = getContext();
@@ -69,6 +71,9 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
 
         FloatingActionButton button = view.findViewById(R.id.MainFragmentZnamky_button);
         button.setOnClickListener(this);
+
+        swipeLayout = view.findViewById(R.id.MainFragmentZnamky_swipelayout);
+        swipeLayout.setOnRefreshListener(this);
 
         return view;
     }
@@ -99,6 +104,11 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
         }
     }
 
+    @Override
+    public void onRefresh() {
+        marks(null);
+    }
+
     /**
      * Zobrazí dialog na změnu období
      */
@@ -107,7 +117,6 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
             @Override
             public void zobrazit(String obdobi) {
                 super.zobrazit(obdobi);
-
                 marks(obdobi);
             }
 
@@ -132,7 +141,7 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
         String sessionId = user.getSessionId();
 
         if (sessionId != null) {
-            StahniScore stahniScore = new StahniScore(context) {
+            StahniScore stahniScore = new StahniScore() {
                 @Override
                 public void onResult(String result) {
                     super.onResult(result);
@@ -145,6 +154,8 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
 
                         user.setScore(score);
 
+                        swipeLayout.setRefreshing(false);
+
                         displayMarks();
                     } else {
                         Crashlytics.log(TAG + "Download error: " + result);
@@ -152,6 +163,7 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
                 }
             };
 
+            swipeLayout.setRefreshing(true);
             stahniScore.stahni(obdobi);
         }
     }
