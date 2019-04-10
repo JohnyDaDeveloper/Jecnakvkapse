@@ -13,6 +13,17 @@ public class ZnamkyGridView extends GridView {
      * Inicializace
      * @param context   Context
      * @param attrs     Atributy
+     * @param defStyle  Základní styl
+     */
+    public ZnamkyGridView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
+
+
+    /**
+     * Inicializace
+     * @param context   Context
+     * @param attrs     Atributy
      */
     public ZnamkyGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -24,16 +35,6 @@ public class ZnamkyGridView extends GridView {
      */
     public ZnamkyGridView(Context context) {
         super(context);
-    }
-
-    /**
-     * Inicializace
-     * @param context   Context
-     * @param attrs     Atributy
-     * @param defStyle  Základní styl
-     */
-    public ZnamkyGridView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
     }
 
     /**
