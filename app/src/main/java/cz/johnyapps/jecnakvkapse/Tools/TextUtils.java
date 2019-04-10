@@ -1,8 +1,14 @@
 package cz.johnyapps.jecnakvkapse.Tools;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.TypedValue;
+
+import cz.johnyapps.jecnakvkapse.R;
 
 /**
  * Slouží k formátování textu.
@@ -27,5 +33,17 @@ public class TextUtils {
             //noinspection deprecation
             return Html.fromHtml(html);
         }
+    }
+
+    /**
+     * Vrátí colorAccent barvu
+     * @param context   Context
+     * @return          Barva
+     */
+    public int getColorAccent(Context context) {
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
+        return ContextCompat.getColor(context, typedValue.resourceId);
     }
 }

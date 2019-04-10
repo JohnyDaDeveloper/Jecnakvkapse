@@ -1,9 +1,6 @@
 package cz.johnyapps.jecnakvkapse.Adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.support.v4.content.ContextCompat;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +16,11 @@ import cz.johnyapps.jecnakvkapse.Rozvrh.Hodina;
 import cz.johnyapps.jecnakvkapse.Rozvrh.Period;
 import cz.johnyapps.jecnakvkapse.Rozvrh.Predmet;
 import cz.johnyapps.jecnakvkapse.Rozvrh.Rozvrh;
+import cz.johnyapps.jecnakvkapse.Tools.TextUtils;
 
 /**
  * Adapter pro rozvrh
- * @see cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Rozvrh
+ * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Rozvrh
  */
 public class RozvrhAdaper {
     private Context context;
@@ -165,7 +163,9 @@ public class RozvrhAdaper {
         TextView skupinaTxt = predmetLayout.findViewById(R.id.Predmet_skupina);
 
         if (now) {
-            int color = getColorAccent();
+            TextUtils textUtils = new TextUtils();
+
+            int color = textUtils.getColorAccent(context);
 
             vyucujiciTxt.setTextColor(color);
             ucebnaTxt.setTextColor(color);
@@ -206,12 +206,5 @@ public class RozvrhAdaper {
         }
 
         return predmetLayout;
-    }
-
-    private int getColorAccent() {
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
-        return ContextCompat.getColor(context, typedValue.resourceId);
     }
 }
