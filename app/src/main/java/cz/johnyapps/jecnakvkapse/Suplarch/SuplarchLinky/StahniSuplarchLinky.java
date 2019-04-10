@@ -1,10 +1,7 @@
 package cz.johnyapps.jecnakvkapse.Suplarch.SuplarchLinky;
 
 import android.annotation.SuppressLint;
-import android.support.v7.app.AlertDialog;
-import android.content.Context;
 
-import cz.johnyapps.jecnakvkapse.Dialogs.DialogLoading;
 import cz.johnyapps.jecnakvkapse.HttpConnection.Connection;
 import cz.johnyapps.jecnakvkapse.HttpConnection.Request;
 
@@ -13,26 +10,20 @@ import cz.johnyapps.jecnakvkapse.HttpConnection.Request;
  * @see Connection
  */
 public class StahniSuplarchLinky {
-    private Context context;
-
     /**
      * Inicializace
-     * @param context   Context
      */
-    protected StahniSuplarchLinky(Context context) {
-        this.context = context;
+    protected StahniSuplarchLinky() {
+
     }
 
     /**
      * Stáhne odkazy na suplování přes {@link Connection}
      */
     public void stahni() {
-        DialogLoading dialogLoading = new DialogLoading(context);
-        AlertDialog dialog = dialogLoading.get("Downloading...");
-
         Request request = new Request("", "POST");
 
-        @SuppressLint("StaticFieldLeak") Connection connection = new Connection(dialog) {
+        @SuppressLint("StaticFieldLeak") Connection connection = new Connection() {
             @Override
             public void nextAction(String result) {
                 super.nextAction(result);

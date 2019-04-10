@@ -16,7 +16,7 @@ import cz.johnyapps.jecnakvkapse.R;
 
 /**
  * Adapter pro omluvenky
- * @see cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Omluvenky
+ * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Omluvenky
  */
 public class OmluvenkyRecyclerAdapter extends RecyclerView.Adapter {
     private LayoutInflater inflater;

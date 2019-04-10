@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,12 +26,13 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování omluvenek
  */
-public class MainFragment_Omluvenky extends Fragment {
+public class MainFragment_Omluvenky extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "MainFragment_Omluvenky: ";
     private Context context;
     private User user;
 
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeLayout;
 
     /**
      * Nastaví content view a supustí {@link #initialize()}
@@ -65,6 +67,9 @@ public class MainFragment_Omluvenky extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_omluvnak, container, false);
         recyclerView = view.findViewById(R.id.MainFragmentOmluvnak_recycler);
 
+        swipeLayout = view.findViewById(R.id.MainFragmentOmluvnak_swipelayout);
+        swipeLayout.setOnRefreshListener(this);
+
         return view;
     }
 
@@ -80,6 +85,14 @@ public class MainFragment_Omluvenky extends Fragment {
     }
 
     /**
+     * Stará se o obnovení omluvenek potažením dolů
+     */
+    @Override
+    public void onRefresh() {
+        omluvenky();
+    }
+
+    /**
      * Stáhne omluvekny
      * @see StahniOmluvenky
      * @see OmluvenkyConvertor
@@ -87,7 +100,7 @@ public class MainFragment_Omluvenky extends Fragment {
     public void omluvenky() {
         Crashlytics.log(TAG + "Downloading");
 
-        StahniOmluvenky stahniOmluvenky = new StahniOmluvenky(context) {
+        StahniOmluvenky stahniOmluvenky = new StahniOmluvenky() {
             @Override
             public void onResult(String result) {
                 super.onResult(result);
@@ -99,12 +112,17 @@ public class MainFragment_Omluvenky extends Fragment {
                     Omluvnak omluvnak = omluvenkyConvertor.convert(result);
 
                     user.setOmluvnak(omluvnak);
+
+                    swipeLayout.setRefreshing(false);
+
                     displayOmluvenky();
                 } else {
                     Crashlytics.log(TAG + "Downloading error: " + result);
                 }
             }
         };
+
+        swipeLayout.setRefreshing(true);
 
         stahniOmluvenky.stahni();
     }

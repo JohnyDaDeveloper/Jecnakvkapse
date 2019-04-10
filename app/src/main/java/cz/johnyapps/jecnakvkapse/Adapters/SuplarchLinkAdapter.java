@@ -18,7 +18,7 @@ import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchLinky.SuplarchLink;
 
 /**
  * Adapter pro odkazy na stažení Suplarchu
- * @see cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Suplarch
+ * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Suplarch
  */
 public class SuplarchLinkAdapter extends RecyclerView.Adapter {
     private static final String TAG = "SuplarchLinkAdapter: ";

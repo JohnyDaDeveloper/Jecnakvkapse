@@ -5,8 +5,14 @@
     android:layout_height="wrap_content"
     android:background="?attr/color_background_darker">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/MainFragmentSuplarch_recycler"
+    <cz.johnyapps.jecnakvkapse.CustomViews.ColoredSwipeRefreshLayout
+        android:id="@+id/MainFragmentSuplarch_swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/MainFragmentSuplarch_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </cz.johnyapps.jecnakvkapse.CustomViews.ColoredSwipeRefreshLayout>
 </RelativeLayout>

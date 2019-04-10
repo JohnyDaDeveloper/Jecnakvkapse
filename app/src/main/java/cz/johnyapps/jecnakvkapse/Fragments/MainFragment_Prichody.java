@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,12 +27,13 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování příchodů
  */
-public class MainFragment_Prichody extends Fragment implements View.OnClickListener {
+public class MainFragment_Prichody extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "MainFragment_Prichody: ";
     private Context context;
     private User user;
 
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeLayout;
 
     /**
      * Nastaví content view a supustí {@link #initialize()}
@@ -69,6 +71,9 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
         FloatingActionButton button = view.findViewById(R.id.MainFragmentPrichody_button);
         button.setOnClickListener(this);
 
+        swipeLayout = view.findViewById(R.id.MainFragmentPrichody_swipeLayout);
+        swipeLayout.setOnRefreshListener(this);
+
         return view;
     }
 
@@ -97,6 +102,14 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
 
             default: break;
         }
+    }
+
+    /**
+     * Stará se o obnovení příchdů potažením dolů
+     */
+    @Override
+    public void onRefresh() {
+        prichody(null);
     }
 
     /**
@@ -130,7 +143,7 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
     private void prichody(@Nullable String obdobi) {
         Crashlytics.log(TAG + "Downloading");
 
-        StahniPrichody stahniPrichody = new StahniPrichody(context) {
+        StahniPrichody stahniPrichody = new StahniPrichody() {
             @Override
             public void onResult(String result) {
                 super.onResult(result);
@@ -144,12 +157,17 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
                     Prichody prichody = prichodyConvertor.convert(result);
 
                     user.setPrichody(prichody);
+
+                    swipeLayout.setRefreshing(false);
+
                     displayPrichody();
                 } else {
                     Crashlytics.log(TAG + "Downloading error: " + result);
                 }
             }
         };
+
+        swipeLayout.setRefreshing(true);
 
         stahniPrichody.stahni(obdobi);
     }

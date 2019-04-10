@@ -104,6 +104,9 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
         }
     }
 
+    /**
+     * Stará se o obnovení známek potažením dolů
+     */
     @Override
     public void onRefresh() {
         marks(null);

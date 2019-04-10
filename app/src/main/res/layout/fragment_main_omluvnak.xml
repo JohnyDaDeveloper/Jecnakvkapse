@@ -3,8 +3,14 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="?attr/color_background">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/MainFragmentOmluvnak_recycler"
+    <cz.johnyapps.jecnakvkapse.CustomViews.ColoredSwipeRefreshLayout
+        android:id="@+id/MainFragmentOmluvnak_swipelayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/MainFragmentOmluvnak_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </cz.johnyapps.jecnakvkapse.CustomViews.ColoredSwipeRefreshLayout>
 </RelativeLayout>

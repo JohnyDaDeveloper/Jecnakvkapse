@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,7 +31,7 @@ import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchLinky.SuplarchLink;
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování odkazů na suplování
  */
-public class MainFragment_Suplarch extends Fragment {
+public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "MainFragment_Suplarch: ";
     private static final int PERMISSION_REQUEST_CODE = 749;
 
@@ -38,6 +39,7 @@ public class MainFragment_Suplarch extends Fragment {
     private User user;
 
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeLayout;
 
     /**
      * Nastaví content view a supustí {@link #initialize()}
@@ -72,6 +74,9 @@ public class MainFragment_Suplarch extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_suplarch, container, false);
         recyclerView = view.findViewById(R.id.MainFragmentSuplarch_recycler);
 
+        swipeLayout = view.findViewById(R.id.MainFragmentSuplarch_swipeLayout);
+        swipeLayout.setOnRefreshListener(this);
+
         return view;
     }
 
@@ -83,6 +88,14 @@ public class MainFragment_Suplarch extends Fragment {
     public void onStart() {
         super.onStart();
         askForPermissions();
+    }
+
+    /**
+     * Stará se o obnovení suplarlinků potažením dolů
+     */
+    @Override
+    public void onRefresh() {
+        suplarch();
     }
 
     /**
@@ -158,7 +171,7 @@ public class MainFragment_Suplarch extends Fragment {
     public void suplarch() {
         Crashlytics.log(TAG + "Downloading \"Suplarch linky\"");
 
-        StahniSuplarchLinky stahniSuplarchLinky = new StahniSuplarchLinky(context) {
+        StahniSuplarchLinky stahniSuplarchLinky = new StahniSuplarchLinky() {
             @Override
             public void onResult(String result) {
                 super.onResult(result);
@@ -175,12 +188,16 @@ public class MainFragment_Suplarch extends Fragment {
 
                     user.setSuplarchHolder(suplarchHolder);
 
+                    swipeLayout.setRefreshing(false);
+
                     displaySuplarchLinks();
                 } else {
                     Crashlytics.log(TAG + "Downloading \"Suplarch linky\" error: " + result);
                 }
             }
         };
+
+        swipeLayout.setRefreshing(true);
 
         stahniSuplarchLinky.stahni();
     }

@@ -16,7 +16,7 @@ import cz.johnyapps.jecnakvkapse.R;
 
 /**
  * Adapter pro příchody
- * @see cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Prichody
+ * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Prichody
  */
 public class PrichodyRecyclerAdapter extends RecyclerView.Adapter {
     private LayoutInflater inflater;

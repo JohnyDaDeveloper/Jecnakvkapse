@@ -24,7 +24,7 @@ import cz.johnyapps.jecnakvkapse.Score.Subject;
 /**
  * Adapter pro známky - Předměty
  * @see MarksGridAdapter
- * @see cz.johnyapps.jecnakvkapse.Fragments.Main.MainFragment_Znamky
+ * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Znamky
  */
 public class ScoreRecyclerAdapter extends RecyclerView.Adapter {
     private ArrayList<Subject> subjects;
