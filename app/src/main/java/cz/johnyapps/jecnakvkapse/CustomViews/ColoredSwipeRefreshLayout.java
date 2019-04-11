@@ -6,7 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 
 import cz.johnyapps.jecnakvkapse.R;
-import cz.johnyapps.jecnakvkapse.Tools.TextUtils;
+import cz.johnyapps.jecnakvkapse.Tools.ColorUtils;
 
 /**
  * SwipeRefreshLayout který má speciální atribut (refreshColor) na nastavení barvy progress kolečka
@@ -23,8 +23,8 @@ public class ColoredSwipeRefreshLayout extends SwipeRefreshLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ColoredSwipeRefreshLayout);
 
         try {
-            TextUtils textUtils = new TextUtils();
-            int refreshColor = typedArray.getColor(R.styleable.ColoredSwipeRefreshLayout_refreshColor, textUtils.getColorAccent(context));
+            ColorUtils colorUtils = new ColorUtils();
+            int refreshColor = typedArray.getColor(R.styleable.ColoredSwipeRefreshLayout_refreshColor, colorUtils.getColorAccent(context));
 
             setColorSchemeColors(refreshColor);
         } finally {

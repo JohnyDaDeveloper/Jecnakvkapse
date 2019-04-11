@@ -1,7 +1,12 @@
 package cz.johnyapps.jecnakvkapse.Tools;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -30,9 +35,8 @@ public class ThemeManager {
     /**
      *  Načte nastavené téma z paměti zařízení
      */
-    public void loadTheme() {
+    public void loadTheme(Activity activity) {
         int theme = prefs.getInt("selected_theme", R.id.SettingsTheme_light);
-
         switch (theme) {
             case R.id.SettingsTheme_dark: {
                 Crashlytics.log(TAG + "switching theme to Dark");
@@ -51,6 +55,17 @@ public class ThemeManager {
                 context.setTheme(R.style.LightTheme);
                 break;
             }
+        }
+
+        String label = context.getResources().getString(R.string.app_name);
+        ColorUtils colorUtils = new ColorUtils();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            int icon = R.mipmap.ic_launcher_round;
+            activity.setTaskDescription(new ActivityManager.TaskDescription(label, icon, colorUtils.getColorPrimary(context)));
+        } else {
+            Bitmap icon = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher_round);
+            activity.setTaskDescription(new ActivityManager.TaskDescription(label, icon, colorUtils.getColorPrimary(context)));
         }
     }
 }

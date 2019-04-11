@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         context = this;
 
         ThemeManager themeManager = new ThemeManager(context);
-        themeManager.loadTheme();
+        themeManager.loadTheme(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

@@ -16,7 +16,7 @@ import cz.johnyapps.jecnakvkapse.Rozvrh.Hodina;
 import cz.johnyapps.jecnakvkapse.Rozvrh.Period;
 import cz.johnyapps.jecnakvkapse.Rozvrh.Predmet;
 import cz.johnyapps.jecnakvkapse.Rozvrh.Rozvrh;
-import cz.johnyapps.jecnakvkapse.Tools.TextUtils;
+import cz.johnyapps.jecnakvkapse.Tools.ColorUtils;
 
 /**
  * Adapter pro rozvrh
@@ -163,9 +163,9 @@ public class RozvrhAdaper {
         TextView skupinaTxt = predmetLayout.findViewById(R.id.Predmet_skupina);
 
         if (now) {
-            TextUtils textUtils = new TextUtils();
+            ColorUtils colorUtils = new ColorUtils();
 
-            int color = textUtils.getColorAccent(context);
+            int color = colorUtils.getColorAccent(context);
 
             vyucujiciTxt.setTextColor(color);
             ucebnaTxt.setTextColor(color);

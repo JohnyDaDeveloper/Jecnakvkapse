@@ -22,7 +22,7 @@ public class OAplikaci extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemeManager themeManager = new ThemeManager(this);
-        themeManager.loadTheme();
+        themeManager.loadTheme(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oaplikaci);

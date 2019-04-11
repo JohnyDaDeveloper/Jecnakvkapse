@@ -19,13 +19,12 @@ public class SettingsActivity extends AppCompatActivity {
     private Context context;
     private SharedPreferences prefs;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         context = this;
 
         ThemeManager themeManager = new ThemeManager(context);
-        themeManager.loadTheme();
+        themeManager.loadTheme(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
