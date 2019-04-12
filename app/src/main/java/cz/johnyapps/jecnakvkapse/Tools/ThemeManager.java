@@ -50,6 +50,12 @@ public class ThemeManager {
                 break;
             }
 
+            case R.id.SettingsTheme_red: {
+                Crashlytics.log(TAG + "switching theme to Code Red");
+                context.setTheme(R.style.RedTheme);
+                break;
+            }
+
             default: {
                 Crashlytics.log(TAG + "switching theme to Default (light)");
                 context.setTheme(R.style.LightTheme);

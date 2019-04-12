@@ -135,9 +135,13 @@ public class SettingsActivity extends AppCompatActivity {
     private void Setup_Theme() {
         int theme = prefs.getInt("selected_theme", R.id.SettingsTheme_light);
         boolean pink = prefs.getBoolean("enable_pink", false);
+        boolean red = prefs.getBoolean("enable_red", false);
 
         if (pink) {
             RadioButton button = findViewById(R.id.SettingsTheme_pink);
+            button.setVisibility(View.VISIBLE);
+        } else if (red) {
+            RadioButton button = findViewById(R.id.SettingsTheme_red);
             button.setVisibility(View.VISIBLE);
         }
 
@@ -166,6 +170,15 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     }
 
+                    case R.id.SettingsTheme_red: {
+                        if (theme != R.id.SettingsTheme_red) {
+                            prefs.edit().putInt("selected_theme", R.id.SettingsTheme_red).apply();
+                            restart();
+                        }
+
+                        break;
+                    }
+
                     default: {
                         if (theme != R.id.SettingsTheme_light) {
                             prefs.edit().putInt("selected_theme", R.id.SettingsTheme_light).apply();
@@ -188,6 +201,12 @@ public class SettingsActivity extends AppCompatActivity {
 
             case R.id.SettingsTheme_pink: {
                 RadioButton button = findViewById(R.id.SettingsTheme_pink);
+                button.setChecked(true);
+                break;
+            }
+
+            case R.id.SettingsTheme_red: {
+                RadioButton button = findViewById(R.id.SettingsTheme_red);
                 button.setChecked(true);
                 break;
             }

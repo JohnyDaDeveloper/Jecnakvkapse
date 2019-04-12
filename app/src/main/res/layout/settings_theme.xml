@@ -40,5 +40,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"/>
+
+        <RadioButton
+            android:id="@+id/SettingsTheme_red"
+            android:text="@string/settings_theme_red"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
     </RadioGroup>
 </LinearLayout>

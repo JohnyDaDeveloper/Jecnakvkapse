@@ -21,6 +21,28 @@
         <item name="alertDialogTheme">@style/CustomDialog_Light</item>
     </style>
 
+    <style name="RedTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/red_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/red_colorPrimaryDark</item>
+        <item name="colorAccent">@color/red_colorAccent</item>
+
+        <item name="color_background">@color/red_color_background</item>
+        <item name="color_background_darker">@color/red_color_background_darker</item>
+
+        <item name="color_button_disabled">@color/red_color_button_disabled</item>
+
+        <item name="color_textTitle">@color/red_color_textTitle</item>
+        <item name="color_textMain">@color/red_color_textMain</item>
+        <item name="color_textSub">@color/red_color_textSub</item>
+
+        <item name="color_rozvrhPeriod">@color/red_color_rozvrhPeriod</item>
+
+        <item name="android:editTextStyle">@style/EditText</item>
+        <item name="android:textViewStyle">@style/TextView</item>
+        <item name="android:buttonStyle">@style/Button</item>
+        <item name="alertDialogTheme">@style/CustomDialog_Light</item>
+    </style>
+
     <style name="DarkTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/dark_colorPrimary</item>
         <item name="colorPrimaryDark">@color/dark_colorPrimaryDark</item>
