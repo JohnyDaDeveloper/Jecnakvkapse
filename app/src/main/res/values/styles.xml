@@ -40,7 +40,7 @@
         <item name="android:editTextStyle">@style/EditText</item>
         <item name="android:textViewStyle">@style/TextView</item>
         <item name="android:buttonStyle">@style/Button</item>
-        <item name="alertDialogTheme">@style/CustomDialog_Light</item>
+        <item name="alertDialogTheme">@style/CustomDialog_Red</item>
     </style>
 
     <style name="DarkTheme" parent="Theme.AppCompat.NoActionBar">
@@ -100,6 +100,16 @@
         <item name="textColorAlertDialogListItem">@color/light_color_textMain</item>
 
         <item name="android:background">@color/light_color_background</item>
+    </style>
+
+    <style name="CustomDialog_Red" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/red_colorAccent</item>
+
+        <item name="android:textColorPrimary">@color/red_color_textMain</item>
+        <item name="android:textColorSecondary">@color/red_color_textMain</item>
+        <item name="textColorAlertDialogListItem">@color/red_color_textMain</item>
+
+        <item name="android:background">@color/red_color_background</item>
     </style>
 
     <style name="CustomDialog_Dark" parent="Theme.AppCompat.Light.Dialog.Alert">

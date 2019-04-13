@@ -127,7 +127,7 @@ public class MarksGridAdapter extends BaseAdapter {
                             prefs.edit().putBoolean("enable_pink", true).apply();
                             Toast.makeText(context, "Růžové téma povoleno", Toast.LENGTH_LONG).show();
                         }
-                    } else  if (mark.getValue().equals("DT")) {
+                    } else  if (mark.getValue().equals("DT") || mark.getValue().equals("DŘ")) {
                         boolean red = prefs.getBoolean("enable_red", false);
 
                         if (red) {
