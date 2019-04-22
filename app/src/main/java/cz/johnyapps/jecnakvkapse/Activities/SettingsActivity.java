@@ -140,7 +140,9 @@ public class SettingsActivity extends AppCompatActivity {
         if (pink) {
             RadioButton button = findViewById(R.id.SettingsTheme_pink);
             button.setVisibility(View.VISIBLE);
-        } else if (red) {
+        }
+
+        if (red) {
             RadioButton button = findViewById(R.id.SettingsTheme_red);
             button.setVisibility(View.VISIBLE);
         }
