@@ -45,7 +45,7 @@ public class Mark {
      * Inicializace
      * @param value Hodnota známky
      */
-    Mark(String value) {
+    public Mark(String value) {
         this.value = value;
 
         rozlVel = true;
@@ -132,7 +132,7 @@ public class Mark {
             }
 
             case "5?": {
-                return Color.argb(255, 255, 48, 48);
+                return Color.argb(255, 255, 138, 138);
             }
 
             case "N": {
