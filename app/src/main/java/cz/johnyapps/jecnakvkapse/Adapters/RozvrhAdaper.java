@@ -1,6 +1,7 @@
 package cz.johnyapps.jecnakvkapse.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -172,6 +173,9 @@ public class RozvrhAdaper {
             predmetTxt.setTextColor(color);
             tridaTxt.setTextColor(color);
             skupinaTxt.setTextColor(color);
+
+            int clr = Color.argb(40, Color.red(color), Color.green(color), Color.blue(color));
+            predmetLayout.setBackgroundColor(clr);
         }
 
         if (predmet.getVyucujici() != null) {
