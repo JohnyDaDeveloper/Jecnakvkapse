@@ -77,4 +77,14 @@ public class OAplikaci extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
+
+    /**
+     * Po kliknutí na View otevře github
+     * @param V View
+     */
+    public void catosLibrary(View V) {
+        Uri uri = Uri.parse("https://github.com/JohnyDaDeveloper/CatosLibrary");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
 }

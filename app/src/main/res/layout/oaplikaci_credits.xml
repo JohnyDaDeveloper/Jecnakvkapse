@@ -5,22 +5,20 @@
     style="@style/Jecnak.CardView">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <TextView
             style="@style/Text_Title"
+            android:text="@string/oaplikaci_credits_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/oaplikaci_info_title"/>
+            android:layout_height="wrap_content" />
 
         <TextView
             style="@style/Text_Subtext"
+            android:text="@string/oaplikaci_credits_vojtech_kopriva"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:drawablePadding="5dp"
-            android:text="@string/oaplikaci_info_suplarch"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

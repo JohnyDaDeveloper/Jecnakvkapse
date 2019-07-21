@@ -44,6 +44,9 @@
 
             <include
                 layout="@layout/oaplikaci_info" />
+
+            <include
+                layout="@layout/oaplikaci_credits" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
