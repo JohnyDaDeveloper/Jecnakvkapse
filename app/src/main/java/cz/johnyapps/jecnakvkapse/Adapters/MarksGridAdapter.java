@@ -1,8 +1,8 @@
 package cz.johnyapps.jecnakvkapse.Adapters;
 
-import android.content.SharedPreferences;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import cz.johnyapps.catoslibrary.Catos.Entity.Cato;
+import cz.johnyapps.catoslibrary.Catos.View.CatoView;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogMarkBuilder;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Score.Mark;
@@ -81,21 +83,50 @@ public class MarksGridAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) convertView = inflater.inflate(R.layout.item_score_mark, parent, false);
+        boolean cato_enabled = prefs.getBoolean("enable_catos", false);
         Mark mark = getItem(position);
 
-        TextView txtMark = convertView.findViewById(R.id.Mark_txtMark);
-        txtMark.setText(mark.getValue());
-        txtMark.setBackgroundColor(mark.getColor());
+        if (convertView == null) {
+            if (cato_enabled && (mark.getValue().equals("1") || mark.getValue().equals("5"))) {
+                convertView = inflater.inflate(R.layout.item_score_cato, parent, false);
+            } else {
+                convertView = inflater.inflate(R.layout.item_score_mark, parent, false);
+            }
+        }
 
-        if (mark.isSmall() && mark.rozlisovatVelikost()) {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) txtMark.getLayoutParams();
-            params.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
-            txtMark.setLayoutParams(params);
+        if (cato_enabled && (mark.getValue().equals("1") || mark.getValue().equals("5"))) {
+            if (!(convertView instanceof CatoView)) {
+                convertView = inflater.inflate(R.layout.item_score_cato, parent, false);
+            }
+
+            Cato cato = new Cato();
+
+            if (mark.getValue().equals("1")) {
+                cato.loadFromRawResources(context, "greencato");
+            }
+
+            if (mark.getValue().equals("5")) {
+                cato.loadFromRawResources(context, "redcato");
+            }
+
+            ((CatoView) convertView).setCato(cato);
+        } else {
+            if (convertView instanceof CatoView) {
+                convertView = inflater.inflate(R.layout.item_score_mark, parent, false);
+            }
+
+            TextView txtMark = convertView.findViewById(R.id.Mark_txtMark);
+            txtMark.setText(mark.getValue());
+            txtMark.setBackgroundColor(mark.getColor());
+
+            if (mark.isSmall() && mark.rozlisovatVelikost()) {
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) txtMark.getLayoutParams();
+                params.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+                txtMark.setLayoutParams(params);
+            }
         }
 
         Setup_OnClick(convertView, mark);
-
         return convertView;
     }
 
@@ -136,6 +167,16 @@ public class MarksGridAdapter extends BaseAdapter {
                         } else {
                             prefs.edit().putBoolean("enable_red", true).apply();
                             Toast.makeText(context, "Code red téma povoleno", Toast.LENGTH_LONG).show();
+                        }
+                    } else if (mark.getValue().equals("PT") || mark.getValue().equals("PŘ")) {
+                        boolean cato = prefs.getBoolean("enable_catos", false);
+
+                        if (cato) {
+                            prefs.edit().putBoolean("enable_catos", false).apply();
+                            Toast.makeText(context, "Cato známky zakázány", Toast.LENGTH_LONG).show();
+                        } else {
+                            prefs.edit().putBoolean("enable_catos", true).apply();
+                            Toast.makeText(context, "Cato známky povoleny", Toast.LENGTH_LONG).show();
                         }
                     }
 

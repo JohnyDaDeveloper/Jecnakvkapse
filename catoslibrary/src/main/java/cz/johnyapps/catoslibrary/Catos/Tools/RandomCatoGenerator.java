@@ -6,21 +6,39 @@ import java.util.Random;
 
 import cz.johnyapps.catoslibrary.Catos.Entity.Cato;
 
+/**
+ * Generates a random {@link Cato}
+ */
 public class RandomCatoGenerator {
     private Random random;
     private Cato cato;
 
     private boolean lightBody = false;
 
+    /**
+     * Inicializaton
+     */
     public RandomCatoGenerator() {
         init();
     }
 
+    /**
+     * Inicializaton
+     */
     private void init() {
         cato = new Cato();
         random = new Random();
     }
 
+    /**
+     * Generates {@link Cato}
+     * @return  {@link Cato}
+     * @see #background()
+     * @see #body()
+     * @see #face()
+     * @see #paws()
+     * @see #collar()
+     */
     public Cato generate() {
         background();
         body();
@@ -31,12 +49,18 @@ public class RandomCatoGenerator {
         return cato;
     }
 
+    /**
+     * Generates background
+     */
     private void background() {
         int color = generateColor();
 
         cato.setColor(Cato.BACKGROUND, color);
     }
 
+    /**
+     * Generates body
+     */
     private void body() {
         int red = random.nextInt(256);
         int green = random.nextInt(256);
@@ -60,6 +84,9 @@ public class RandomCatoGenerator {
         }
     }
 
+    /**
+     * Generates face
+     */
     private void face() {
         if (lightBody) {
             int color = Color.BLACK;
@@ -74,6 +101,9 @@ public class RandomCatoGenerator {
         }
     }
 
+    /**
+     * Generate paws
+     */
     private void paws() {
         int variant = random.nextInt(9);
 
@@ -194,6 +224,10 @@ public class RandomCatoGenerator {
         }
     }
 
+    /**
+     * Generates top of the head
+     * @param color Color
+     */
     private void head_top(int color) {
         boolean visible = random.nextBoolean();
 
@@ -206,11 +240,18 @@ public class RandomCatoGenerator {
         }
     }
 
+    /**
+     * Generates collar
+     */
     private void collar() {
         int color = generateColor();
         cato.setColor(Cato.COLLAR, color);
     }
 
+    /**
+     * Generates random color
+     * @return  Color
+     */
     private int generateColor() {
         int red = random.nextInt(256);
         int green = random.nextInt(256);

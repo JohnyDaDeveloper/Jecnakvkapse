@@ -3,18 +3,27 @@ package cz.johnyapps.catoslibrary.Catos.Entity;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.johnyapps.catoslibrary.R;
+
+/**
+ * Cato. To draw cato, use {@link cz.johnyapps.catoslibrary.Catos.View.CatoView}
+ */
 public class Cato {
     private static final String TAG = "Cato";
 
@@ -41,6 +50,9 @@ public class Cato {
     public static final int LEG_RIGHT_BACK = 18;
     public static final int BACKGROUND = 19;
 
+    public static final int MOUTH_STYLE_HMM = R.drawable.mouth_0;
+    public static final int MOUTH_STYLE_YASS = R.drawable.mouth_1;
+
     private int color_leftFrontPaw = Color.BLACK;
     private int color_rightFrontPaw = Color.BLACK;
     private int color_leftBackPaw = Color.BLACK;
@@ -64,8 +76,13 @@ public class Cato {
     private int color_legRightBack = Color.argb(255, 128, 51, 0);
     private int color_background = Color.GRAY;
 
+    private int style_mouth = MOUTH_STYLE_HMM;
+
     public static final List<CatoInfo> INFOS = new ArrayList<>();
 
+    /**
+     * Inicializaton
+     */
     public Cato() {
         if (INFOS.isEmpty()) {
             INFOS.add(new CatoInfo("Background", BACKGROUND));
@@ -82,25 +99,73 @@ public class Cato {
         }
     }
 
+    /**
+     * Saves cato to file "cato.json"
+     * @param context   Context
+     * @see #save(Context, FileOutputStream)
+     */
     public void save(Context context) {
         try {
-            JSONObject cato = new JSONObject();
-            cato.put("background", color_background);
-            cato.put("head_top", color_headTop);
-            cato.put("face", color_eyes);
-            cato.put("ears_in", color_earLeft_in);
-            cato.put("ears_out", color_earLeft_out);
-            cato.put("head", color_head);
-            cato.put("body", color_body);
-            cato.put("tummy", color_tummy);
-            cato.put("tail", color_tail);
-            cato.put("paws", color_leftBackPaw);
-            cato.put("tail_top", color_tailTop);
-            cato.put("collar", color_collar);
+            FileOutputStream output = context.openFileOutput("cato.json", Context.MODE_PRIVATE);
+            save(context, output);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            OutputStreamWriter output = new OutputStreamWriter(context.openFileOutput("cato.json", Context.MODE_PRIVATE));
-            output.write(cato.toString());
+    /**
+     * Saves cato to given file
+     * @param context   Context
+     * @param file      File
+     * @see #save(Context, FileOutputStream)
+     */
+    public void saveToFile(Context context, File file) {
+        try {
+            FileOutputStream stream = new FileOutputStream(file);
+            save(context, stream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Writes cato with given {@link FileOutputStream}
+     * @param context   Context
+     * @param output    Output stream
+     */
+    private void save(Context context, FileOutputStream output) {
+        try {
+            JSONObject cato = new JSONObject();
+            JSONObject colors = new JSONObject();
+            JSONObject styles = new JSONObject();
+
+            colors.put("background", color_background);
+            colors.put("head_top", color_headTop);
+            colors.put("face", color_eyes);
+            colors.put("ears_in", color_earLeft_in);
+            colors.put("ears_out", color_earLeft_out);
+            colors.put("head", color_head);
+            colors.put("body", color_body);
+            colors.put("tummy", color_tummy);
+            colors.put("tail", color_tail);
+            colors.put("paws", color_leftBackPaw);
+            colors.put("tail_top", color_tailTop);
+            colors.put("collar", color_collar);
+
+            styles.put("mouth_0", style_mouth);
+
+            cato.put("colors", colors);
+            cato.put("styles", styles);
+
+            char[] chars = cato.toString().toCharArray();
+
+            for (char c : chars) {
+                output.write((int) c);
+            }
+
             output.close();
+
+            Toast.makeText(context, "Saved!", Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -110,14 +175,86 @@ public class Cato {
         }
     }
 
+    /**
+     * Loads cato from "cato.json"
+     * @param context   Context
+     * @see #load(FileInputStream)
+     */
     public void load(Context context) {
         try {
-            InputStreamReader input = new InputStreamReader(context.openFileInput("cato.json"));
+            File file = new File("cato.json");
+            FileInputStream fileInput = context.openFileInput(file.getPath());
+            load(fileInput);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads cato from given file
+     * @param file  File
+     * @see #load(FileInputStream)
+     */
+    public void loadFromFile(File file) {
+        try {
+            FileInputStream fileInput = new FileInputStream(file);
+            load(fileInput);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads file from raw resources
+     * @param context   Context
+     * @param file      File name (without suffix)
+     * @see #load(InputStreamReader)
+     */
+    public void loadFromRawResources(Context context, String file) {
+        try {
+            int id = context.getResources().getIdentifier(file, "raw", context.getPackageName());
+            InputStream inputStream = context.getResources().openRawResource(id);
+            InputStreamReader input = new InputStreamReader(inputStream);
+
+            load(input);
+
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads cato with given {@link FileInputStream}
+     * @param fileInput    Input stream
+     * @see #load(InputStreamReader)
+     */
+    private void load(FileInputStream fileInput) {
+        try {
+            InputStreamReader input = new InputStreamReader(fileInput);
+
+            load(input);
+
+            fileInput.close();
+            input.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads cato from file using given {@link InputStreamReader}
+     * @param input Input stream
+     */
+    private void load(InputStreamReader input) {
+        try {
             BufferedReader bufferedReader = new BufferedReader(input);
             String receiveString;
             StringBuilder stringBuilder = new StringBuilder();
 
-            while ( (receiveString = bufferedReader.readLine()) != null ) {
+            while ((receiveString = bufferedReader.readLine()) != null ) {
                 stringBuilder.append(receiveString);
             }
 
@@ -125,63 +262,69 @@ public class Cato {
             String data = stringBuilder.toString();
 
             JSONObject cato = new JSONObject(data);
+            JSONObject colors = cato.getJSONObject("colors");
+            JSONObject styles = cato.getJSONObject("styles");
 
-            if (cato.has("background")) {
-                color_background = cato.getInt("background");
+            if (colors.has("background")) {
+                color_background = colors.getInt("background");
             }
 
-            if (cato.has("head_top")) {
-                color_headTop = cato.getInt("head_top");
+            if (colors.has("head_top")) {
+                color_headTop = colors.getInt("head_top");
             }
 
-            if (cato.has("face")) {
-                color_eyes = cato.getInt("face");
-                color_mouth = cato.getInt("face");
+            if (colors.has("face")) {
+                color_eyes = colors.getInt("face");
+                color_mouth = colors.getInt("face");
             }
 
-            if (cato.has("ears_in")) {
-                color_earLeft_in = cato.getInt("ears_in");
-                color_earRight_in = cato.getInt("ears_in");
+            if (colors.has("ears_in")) {
+                color_earLeft_in = colors.getInt("ears_in");
+                color_earRight_in = colors.getInt("ears_in");
             }
 
-            if (cato.has("ears_out")) {
-                color_earLeft_out = cato.getInt("ears_out");
-                color_earRight_out = cato.getInt("ears_out");
+            if (colors.has("ears_out")) {
+                color_earLeft_out = colors.getInt("ears_out");
+                color_earRight_out = colors.getInt("ears_out");
             }
 
-            if (cato.has("head")) {
-                color_head = cato.getInt("head");
+            if (colors.has("head")) {
+                color_head = colors.getInt("head");
             }
 
-            if (cato.has("body")) {
-                color_body = cato.getInt("body");
-                color_legLeftBack = cato.getInt("body");
-                color_legLeftFront = cato.getInt("body");
-                color_legRightBack = cato.getInt("body");
-                color_legRightFront = cato.getInt("body");
+            if (colors.has("body")) {
+                color_body = colors.getInt("body");
+                color_legLeftBack = colors.getInt("body");
+                color_legLeftFront = colors.getInt("body");
+                color_legRightBack = colors.getInt("body");
+                color_legRightFront = colors.getInt("body");
             }
 
-            if (cato.has("tummy")) {
-                color_tummy = cato.getInt("tummy");
+            if (colors.has("tummy")) {
+                color_tummy = colors.getInt("tummy");
             }
 
-            if (cato.has("tail")) {
-                color_tail = cato.getInt("tail");
+            if (colors.has("tail")) {
+                color_tail = colors.getInt("tail");
             }
 
-            if (cato.has("paws")) {
-                color_leftFrontPaw = cato.getInt("paws");
-                color_leftBackPaw = cato.getInt("paws");
-                color_rightFrontPaw = cato.getInt("paws");
-                color_rightBackPaw = cato.getInt("paws");
+            if (colors.has("paws")) {
+                color_leftFrontPaw = colors.getInt("paws");
+                color_leftBackPaw = colors.getInt("paws");
+                color_rightFrontPaw = colors.getInt("paws");
+                color_rightBackPaw = colors.getInt("paws");
             }
 
-            if (cato.has("tail_top")) {
-                color_tailTop = cato.getInt("tail_top");
+            if (colors.has("tail_top")) {
+                color_tailTop = colors.getInt("tail_top");
             }
 
-            if (cato.has("collar")) {
-                color_collar = cato.getInt("collar");
+            if (colors.has("collar")) {
+                color_collar = colors.getInt("collar");
+            }
+
+            if (styles.has("mouth")) {
+                style_mouth = styles.getInt("mouth");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -192,6 +335,11 @@ public class Cato {
         }
     }
 
+    /**
+     * Calculate color of outer ears
+     * @param color Color of inner ears
+     * @return      Color
+     */
     private int calculateEarOut(int color) {
         int red;
         int green;
@@ -218,6 +366,11 @@ public class Cato {
         return Color.argb(255, red, green, blue);
     }
 
+    /**
+     * Calculate color of inner ears
+     * @param color Color of outer ears
+     * @return      Color of inner ears
+     */
     private int calculateEarIn(int color) {
         int red;
         int green;
@@ -244,6 +397,11 @@ public class Cato {
         return Color.argb(255, red, green, blue);
     }
 
+    /**
+     * Return color of body part
+     * @param id    Id of body part
+     * @return      Color
+     */
     public int getColor(int id) {
         switch (id) {
             case PAW_LEFT_FRONT: {
@@ -341,6 +499,11 @@ public class Cato {
         }
     }
 
+    /**
+     * Sets color to body part
+     * @param id    Id of body part
+     * @param color Color
+     */
     public void setColor(int id, int color) {
         switch (id) {
             case PAW_LEFT_FRONT: {
@@ -464,6 +627,46 @@ public class Cato {
         }
     }
 
+    /**
+     * Returns style of body part
+     * @param id    Id of body part
+     * @return      Style
+     */
+    public int getStyle(int id) {
+        switch (id) {
+            case MOUTH: {
+                return style_mouth;
+            }
+
+            default: {
+                Log.w(TAG, "Invalid id");
+                return 0;
+            }
+        }
+    }
+
+    /**
+     * Sets style to body part
+     * @param id    Id of body part
+     * @param style Style
+     */
+    public void setStyle(int id, int style) {
+        switch (id) {
+            case MOUTH: {
+                style_mouth = style;
+                break;
+            }
+
+            default: {
+                Log.w(TAG, "Invalid id");
+                break;
+            }
+        }
+    }
+
+    /**
+     * Saves info about cato
+     */
     public class CatoInfo {
         public String name;
         public int[] ids;
