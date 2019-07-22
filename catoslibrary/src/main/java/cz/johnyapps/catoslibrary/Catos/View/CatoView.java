@@ -25,6 +25,8 @@ import cz.johnyapps.catoslibrary.R;
 public class CatoView extends View {
     private Cato cato;
 
+    private double padding;
+
     private int left = 0;
     private int top = 0;
     private int right = 0;
@@ -65,7 +67,16 @@ public class CatoView extends View {
      */
     private void initialize() {
         cato = new Cato();
+        padding = 0.1;
         invalidate();
+    }
+
+    /**
+     * Sets padding
+     * @param padding   Padding
+     */
+    public void setPadding(double padding) {
+        this.padding = padding;
     }
 
     /**
@@ -176,7 +187,6 @@ public class CatoView extends View {
 
             int width = getWidth();
             int height = getHeight();
-            double padding = 0.1;
 
             int heightOffset = width < height ? (int) Math.round((height - width) * (0.5 - padding)) : 0;
             int widthOffset = height < width ? (int) Math.round((width - height) * (0.5 - padding)) : 0;

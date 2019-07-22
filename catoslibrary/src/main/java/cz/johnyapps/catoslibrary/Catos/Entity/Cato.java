@@ -50,8 +50,8 @@ public class Cato {
     public static final int LEG_RIGHT_BACK = 18;
     public static final int BACKGROUND = 19;
 
-    public static final int MOUTH_STYLE_HMM = R.drawable.mouth_0;
-    public static final int MOUTH_STYLE_YASS = R.drawable.mouth_1;
+    public static final int MOUTH_STYLE_HMM = 0;
+    public static final int MOUTH_STYLE_YASS = 1;
 
     private int color_leftFrontPaw = Color.BLACK;
     private int color_rightFrontPaw = Color.BLACK;
@@ -635,7 +635,15 @@ public class Cato {
     public int getStyle(int id) {
         switch (id) {
             case MOUTH: {
-                return style_mouth;
+                switch (style_mouth) {
+                    case 1: {
+                        return R.drawable.mouth_1;
+                    }
+
+                    default: {
+                        return R.drawable.mouth_0;
+                    }
+                }
             }
 
             default: {

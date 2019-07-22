@@ -104,9 +104,18 @@ public class MarksGridAdapter extends BaseAdapter {
         return convertView;
     }
 
+    /**
+     * Načte cato view
+     * @param convertView   convertView
+     * @param parent        parent
+     * @param mark          mark
+     */
     private void loadCatoView(View convertView, ViewGroup parent, Mark mark) {
         if (!(convertView instanceof CatoView)) {
             convertView = inflater.inflate(R.layout.item_score_cato, parent, false);
+
+            CatoView catoView = (CatoView) convertView;
+            catoView.setPadding(0);
         }
 
         Cato cato = new Cato();
@@ -117,9 +126,16 @@ public class MarksGridAdapter extends BaseAdapter {
             cato.loadFromRawResources(context, "redcato");
         }
 
-        ((CatoView) convertView).setCato(cato);
+        CatoView catoView = (CatoView) convertView;
+        catoView.setCato(cato);
     }
 
+    /**
+     * Načte mark view
+     * @param convertView   convertView
+     * @param parent        parent
+     * @param mark          mark
+     */
     private void loadMarkView(View convertView, ViewGroup parent, Mark mark) {
         if (convertView instanceof CatoView) {
             convertView = inflater.inflate(R.layout.item_score_mark, parent, false);
