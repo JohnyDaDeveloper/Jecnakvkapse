@@ -95,39 +95,45 @@ public class MarksGridAdapter extends BaseAdapter {
         }
 
         if (cato_enabled && (mark.getValue().equals("1") || mark.getValue().equals("5"))) {
-            if (!(convertView instanceof CatoView)) {
-                convertView = inflater.inflate(R.layout.item_score_cato, parent, false);
-            }
-
-            Cato cato = new Cato();
-
-            if (mark.getValue().equals("1")) {
-                cato.loadFromRawResources(context, "greencato");
-            }
-
-            if (mark.getValue().equals("5")) {
-                cato.loadFromRawResources(context, "redcato");
-            }
-
-            ((CatoView) convertView).setCato(cato);
+            loadCatoView(convertView, parent, mark);
         } else {
-            if (convertView instanceof CatoView) {
-                convertView = inflater.inflate(R.layout.item_score_mark, parent, false);
-            }
-
-            TextView txtMark = convertView.findViewById(R.id.Mark_txtMark);
-            txtMark.setText(mark.getValue());
-            txtMark.setBackgroundColor(mark.getColor());
-
-            if (mark.isSmall() && mark.rozlisovatVelikost()) {
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) txtMark.getLayoutParams();
-                params.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
-                txtMark.setLayoutParams(params);
-            }
+            loadMarkView(convertView, parent, mark);
         }
 
         Setup_OnClick(convertView, mark);
         return convertView;
+    }
+
+    private void loadCatoView(View convertView, ViewGroup parent, Mark mark) {
+        if (!(convertView instanceof CatoView)) {
+            convertView = inflater.inflate(R.layout.item_score_cato, parent, false);
+        }
+
+        Cato cato = new Cato();
+
+        if (mark.getValue().equals("1")) {
+            cato.loadFromRawResources(context, "greencato");
+        } else if (mark.getValue().equals("5")) {
+            cato.loadFromRawResources(context, "redcato");
+        }
+
+        ((CatoView) convertView).setCato(cato);
+    }
+
+    private void loadMarkView(View convertView, ViewGroup parent, Mark mark) {
+        if (convertView instanceof CatoView) {
+            convertView = inflater.inflate(R.layout.item_score_mark, parent, false);
+        }
+
+        TextView txtMark = convertView.findViewById(R.id.Mark_txtMark);
+        txtMark.setText(mark.getValue());
+        txtMark.setBackgroundColor(mark.getColor());
+
+        if (mark.isSmall() && mark.rozlisovatVelikost()) {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) txtMark.getLayoutParams();
+            params.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+            txtMark.setLayoutParams(params);
+        }
     }
 
     /**

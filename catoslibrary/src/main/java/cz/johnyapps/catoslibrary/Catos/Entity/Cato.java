@@ -152,7 +152,7 @@ public class Cato {
             colors.put("tail_top", color_tailTop);
             colors.put("collar", color_collar);
 
-            styles.put("mouth_0", style_mouth);
+            styles.put("mouth", style_mouth);
 
             cato.put("colors", colors);
             cato.put("styles", styles);
