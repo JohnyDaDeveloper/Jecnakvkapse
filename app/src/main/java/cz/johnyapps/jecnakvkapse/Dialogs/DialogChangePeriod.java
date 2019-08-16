@@ -1,6 +1,5 @@
 package cz.johnyapps.jecnakvkapse.Dialogs;
 
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
@@ -8,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import androidx.appcompat.app.AlertDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

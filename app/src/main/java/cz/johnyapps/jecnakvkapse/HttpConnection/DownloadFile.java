@@ -1,8 +1,8 @@
 package cz.johnyapps.jecnakvkapse.HttpConnection;
 
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import java.io.BufferedWriter;
 import java.io.File;

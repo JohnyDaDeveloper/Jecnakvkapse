@@ -1,6 +1,6 @@
 package cz.johnyapps.jecnakvkapse.Dialogs;
 
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;

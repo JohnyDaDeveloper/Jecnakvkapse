@@ -1,6 +1,6 @@
 package cz.johnyapps.jecnakvkapse.Rozvrh;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 public class Predmet {
     private String nazev;

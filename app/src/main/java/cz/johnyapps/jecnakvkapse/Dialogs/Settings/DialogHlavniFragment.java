@@ -1,14 +1,9 @@
 package cz.johnyapps.jecnakvkapse.Dialogs.Settings;
 
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import cz.johnyapps.jecnakvkapse.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

@@ -2,8 +2,9 @@ package cz.johnyapps.jecnakvkapse.CustomViews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
+
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Tools.ColorUtils;

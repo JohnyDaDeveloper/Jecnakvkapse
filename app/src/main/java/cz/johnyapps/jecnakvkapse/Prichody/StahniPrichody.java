@@ -1,7 +1,7 @@
 package cz.johnyapps.jecnakvkapse.Prichody;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import cz.johnyapps.jecnakvkapse.HttpConnection.Connection;
 import cz.johnyapps.jecnakvkapse.HttpConnection.Request;
