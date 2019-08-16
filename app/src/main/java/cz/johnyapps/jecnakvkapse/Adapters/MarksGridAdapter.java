@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import cz.johnyapps.catoslibrary.Catos.Entity.Cato;
 import cz.johnyapps.catoslibrary.Catos.View.CatoView;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogMarkBuilder;
 import cz.johnyapps.jecnakvkapse.R;
@@ -83,51 +82,16 @@ public class MarksGridAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        boolean cato_enabled = prefs.getBoolean("enable_catos", false);
         Mark mark = getItem(position);
 
         if (convertView == null) {
-            if (cato_enabled && (mark.getValue().equals("1") || mark.getValue().equals("5"))) {
-                convertView = inflater.inflate(R.layout.item_score_cato, parent, false);
-            } else {
-                convertView = inflater.inflate(R.layout.item_score_mark, parent, false);
-            }
+            convertView = inflater.inflate(R.layout.item_score_mark, parent, false);
         }
 
-        if (cato_enabled && (mark.getValue().equals("1") || mark.getValue().equals("5"))) {
-            loadCatoView(convertView, parent, mark);
-        } else {
-            loadMarkView(convertView, parent, mark);
-        }
+        loadMarkView(convertView, parent, mark);
 
         Setup_OnClick(convertView, mark);
         return convertView;
-    }
-
-    /**
-     * Načte cato view
-     * @param convertView   convertView
-     * @param parent        parent
-     * @param mark          mark
-     */
-    private void loadCatoView(View convertView, ViewGroup parent, Mark mark) {
-        if (!(convertView instanceof CatoView)) {
-            convertView = inflater.inflate(R.layout.item_score_cato, parent, false);
-
-            CatoView catoView = (CatoView) convertView;
-            catoView.setPadding(0);
-        }
-
-        Cato cato = new Cato();
-
-        if (mark.getValue().equals("1")) {
-            cato.loadFromRawResources(context, "greencato");
-        } else if (mark.getValue().equals("5")) {
-            cato.loadFromRawResources(context, "redcato");
-        }
-
-        CatoView catoView = (CatoView) convertView;
-        catoView.setCato(cato);
     }
 
     /**
