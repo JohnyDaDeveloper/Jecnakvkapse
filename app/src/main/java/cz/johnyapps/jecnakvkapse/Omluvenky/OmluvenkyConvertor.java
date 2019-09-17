@@ -29,10 +29,13 @@ public class OmluvenkyConvertor {
 
         Document doc = Jsoup.parse(result);
         Element table = doc.selectFirst("table[class$=absence-list]");
-        Elements rows = table.select("tr");
 
-        for (Element row : rows) {
-            omluvnak.addOmluvenka(convertOmluvenka(row));
+        if (table != null) {
+            Elements rows = table.select("tr");
+
+            for (Element row : rows) {
+                omluvnak.addOmluvenka(convertOmluvenka(row));
+            }
         }
 
         return omluvnak;
