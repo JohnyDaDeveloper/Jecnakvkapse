@@ -3,17 +3,18 @@ package cz.johnyapps.jecnakvkapse.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import androidx.annotation.NonNull;
-import com.google.android.material.navigation.NavigationView;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.crashlytics.android.Crashlytics;
+import com.google.android.material.navigation.NavigationView;
 
 import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogLogin;
@@ -126,10 +127,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String login = prefs.getString("login", "NEULOZENO");
         String heslo = prefs.getString("pass", "NEULOZENO");
 
-        if (login != null && heslo !=null) {
-            if (!login.equals("NEULOZENO") && !heslo.equals("NEULOZENO")) {
-                login(login, heslo);
-            }
+        if (!login.equals("NEULOZENO") && !heslo.equals("NEULOZENO")) {
+            login(login, heslo);
         }
     }
 
