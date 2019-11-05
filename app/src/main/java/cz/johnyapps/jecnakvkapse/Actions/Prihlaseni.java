@@ -1,8 +1,9 @@
 package cz.johnyapps.jecnakvkapse.Actions;
 
 import android.annotation.SuppressLint;
-import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -40,32 +41,36 @@ public class Prihlaseni {
      * @see User
      */
     public void prihlas(String user, String pass) {
-        DialogLoading dialogLoading = new DialogLoading(context);
-        AlertDialog dialog = dialogLoading.get("Přihlašování...");
+        if (!User.getUser().isDummy()) {
+            DialogLoading dialogLoading = new DialogLoading(context);
+            AlertDialog dialog = dialogLoading.get("Přihlašování...");
 
-        Crashlytics.log("logging in");
+            Crashlytics.log("logging in");
 
-        ArrayList<Data> data = new ArrayList<>();
-        data.add(new Data("user", user));
-        data.add(new Data("pass", pass));
+            ArrayList<Data> data = new ArrayList<>();
+            data.add(new Data("user", user));
+            data.add(new Data("pass", pass));
 
-        this.user.setLogin(user);
+            this.user.setLogin(user);
 
-        Request request = new Request("user/login", "POST");
-        request.putData(data);
+            Request request = new Request("user/login", "POST");
+            request.putData(data);
 
-        @SuppressLint("StaticFieldLeak") Connection connection = new Connection(dialog) {
-            @Override
-            public void nextAction(String result) {
-                super.nextAction(result);
+            @SuppressLint("StaticFieldLeak") Connection connection = new Connection(dialog) {
+                @Override
+                public void nextAction(String result) {
+                    super.nextAction(result);
 
-                User.getUser().setLogged(true);
+                    User.getUser().setLogged(true);
 
-                stahniProfil();
-            }
-        };
+                    stahniProfil();
+                }
+            };
 
-        connection.execute(request);
+            connection.execute(request);
+        } else {
+            onResult();
+        }
     }
 
     /**

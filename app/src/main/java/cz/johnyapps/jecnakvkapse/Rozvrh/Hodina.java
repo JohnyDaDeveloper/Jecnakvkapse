@@ -15,7 +15,7 @@ public class Hodina {
      * Inicializace
      * @param cislo Číslo hodiny
      */
-    Hodina(int cislo) {
+    public Hodina(int cislo) {
         this.cislo = cislo;
         this.predmety = new ArrayList<>();
     }
@@ -32,7 +32,7 @@ public class Hodina {
      * Přidává předmět do hodiny
      * @param predmet   {@link Predmet}
      */
-    void addPredmet(Predmet predmet) {
+    public void addPredmet(Predmet predmet) {
         predmety.add(predmet);
     }
 

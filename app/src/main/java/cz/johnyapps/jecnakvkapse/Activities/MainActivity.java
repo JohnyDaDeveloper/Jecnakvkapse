@@ -129,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (!login.equals("NEULOZENO") && !heslo.equals("NEULOZENO")) {
             login(login, heslo);
+        } else {
+            ShowDialog_Login();
         }
     }
 
@@ -153,15 +155,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId()) {
             case R.id.MenuMain_Prihlasit: {
-                DialogLogin login = new DialogLogin(context) {
-                    @Override
-                    public void login(String login, String pass, boolean remember) {
-                        super.login(login, pass, remember);
-
-                        MainActivity.this.login(login, pass);
-                    }
-                };
-                login.get().show();
+                ShowDialog_Login();
                 break;
             }
 
@@ -193,6 +187,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return true;
+    }
+
+    public void ShowDialog_Login() {
+        DialogLogin login = new DialogLogin(context) {
+            @Override
+            public void login(String login, String pass, boolean remember) {
+                super.login(login, pass, remember);
+
+                MainActivity.this.login(login, pass);
+            }
+        };
+
+        login.get().show();
     }
 
     /**

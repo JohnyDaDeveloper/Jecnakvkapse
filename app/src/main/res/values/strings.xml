@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Ječňák v kapse</string>
 
+    <string name="dialog_prihlasit">Přihlásit</string>
+    <string name="dialog_demo">Demo</string>
+
     <string name="menu_prihlasit">Přihásit</string>
     <string name="menu_odhlasit">Odhlásit</string>
     <string name="menu_znamky">Známky</string>
@@ -32,4 +35,10 @@
     <string name="oaplikaci_info_suplarch">Suplování se stahuje do cache aplikace. Při každém zapnutí aplikace se cache vymaže.</string>
     <string name="oaplikaci_credits_title">Lidé, kteří přispěli k vývoji aplikace:</string>
     <string name="oaplikaci_credits_vojtech_kopriva">Vojtěch Kopřiva</string>
+
+    <string name="toasts_zadne_prichody">Žádné příchody</string>
+    <string name="toasts_zadne_omluvenky">Žádné omluvenky</string>
+    <string name="toasts_zadna_suplovani">Žádná suplování</string>
+
+    <string name="no_items">Žádná data</string>
 </resources>

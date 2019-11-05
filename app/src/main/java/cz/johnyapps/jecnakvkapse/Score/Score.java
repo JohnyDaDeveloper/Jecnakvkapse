@@ -17,7 +17,7 @@ public class Score {
      * @param subjects  ArrayList s předměty
      * @see Subject
      */
-    Score(ArrayList<Subject> subjects) {
+    public Score(ArrayList<Subject> subjects) {
         this.subjects = subjects;
 
         Locale locale = new Locale("cs", "CZ");

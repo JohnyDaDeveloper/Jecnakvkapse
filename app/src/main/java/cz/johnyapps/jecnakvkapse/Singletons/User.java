@@ -23,6 +23,7 @@ public class User {
 
     private String sessionId;
     private String login;
+    private boolean dummy;
 
     private Score score;
     private Rozvrh rozvrh;
@@ -40,6 +41,7 @@ public class User {
     private User() {
         sessionId = "";
         login = "";
+        dummy = false;
 
         loggedListener = null;
     }
@@ -75,6 +77,22 @@ public class User {
      */
     public String getLogin() {
         return login;
+    }
+
+    /**
+     * Nastaví zda je uživatel "Dummy" (pro demo)
+     * @param dummy True - je; False - není
+     */
+    public void setDummy(boolean dummy) {
+        this.dummy = dummy;
+    }
+
+    /**
+     * Vrátí zda je uživatel "Dummy" (pro demo)
+     * @return dummy    True - je; False - není
+     */
+    public boolean isDummy() {
+        return dummy;
     }
 
     /**

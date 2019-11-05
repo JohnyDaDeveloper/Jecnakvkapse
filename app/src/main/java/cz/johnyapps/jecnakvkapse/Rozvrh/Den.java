@@ -15,7 +15,7 @@ public class Den {
      * Inicializace
      * @param nazev Název
      */
-    Den(String nazev) {
+    public Den(String nazev) {
         this.nazev = nazev;
         hodiny = new ArrayList<>();
     }
@@ -32,7 +32,7 @@ public class Den {
      * Přidává hodinu do dne
      * @param hodina    {@link Hodina}
      */
-    void addHodina(Hodina hodina) {
+    public void addHodina(Hodina hodina) {
         hodiny.add(hodina);
     }
 

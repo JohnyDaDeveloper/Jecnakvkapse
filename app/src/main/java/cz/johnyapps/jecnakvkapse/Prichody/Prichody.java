@@ -15,7 +15,7 @@ public class Prichody {
      * @param prichody  Příchody
      * @see Prichod
      */
-    Prichody(ArrayList<Prichod> prichody) {
+    public Prichody(ArrayList<Prichod> prichody) {
         this.prichody = prichody;
     }
 

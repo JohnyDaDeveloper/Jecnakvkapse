@@ -20,7 +20,7 @@ public class Mark {
      * @param title     Důvod
      * @param small     Malá. True - ano, Flase - ne.
      */
-    Mark(String employee, String value, String title, boolean small) {
+    public Mark(String employee, String value, String title, boolean small) {
         this.employee = employee;
         this.value = value;
         this.title = convertTitle(title);

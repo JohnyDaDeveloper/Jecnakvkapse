@@ -13,7 +13,7 @@ public class Period {
      * @param poradi    Pořadí
      * @param cas       Čas (od - do)
      */
-    Period(int poradi, String cas) {
+    public Period(int poradi, String cas) {
         this.poradi = poradi;
         this.cas = cas;
     }

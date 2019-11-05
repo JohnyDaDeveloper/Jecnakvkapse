@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeLayout;
+    private View noItems;
 
     /**
      * Nastaví content view a supustí {@link #initialize()}
@@ -72,11 +74,14 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_suplarch, container, false);
+        RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.fragment_main_suplarch, container, false);
         recyclerView = view.findViewById(R.id.MainFragmentSuplarch_recycler);
 
         swipeLayout = view.findViewById(R.id.MainFragmentSuplarch_swipeLayout);
         swipeLayout.setOnRefreshListener(this);
+
+        noItems = inflater.inflate(R.layout.no_items, view, false);
+        view.addView(noItems);
 
         return view;
     }
@@ -215,9 +220,17 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
 
         if (suplarchHolder != null) {
             Crashlytics.log(TAG + "Displaying");
-            SuplarchLinkAdapter adapter = new SuplarchLinkAdapter(context, suplarchHolder.getSuplarchLinks());
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(adapter);
+
+            if (!user.getSuplarchHolder().getSuplarchLinks().isEmpty()) {
+                SuplarchLinkAdapter adapter = new SuplarchLinkAdapter(context, suplarchHolder.getSuplarchLinks());
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setAdapter(adapter);
+            } else {
+                recyclerView.setVisibility(View.GONE);
+                noItems.setVisibility(View.VISIBLE);
+
+                Toast.makeText(context, R.string.toasts_zadna_suplovani, Toast.LENGTH_LONG).show();
+            }
         } else {
             suplarch();
         }

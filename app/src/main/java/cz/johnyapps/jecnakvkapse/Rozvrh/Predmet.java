@@ -9,7 +9,7 @@ public class Predmet {
     private String skupina;
     private String trida;
 
-    Predmet(@Nullable String nazev, @Nullable String vyucujici, @Nullable String ucebna, @Nullable String skupina, @Nullable String trida) {
+    public Predmet(@Nullable String nazev, @Nullable String vyucujici, @Nullable String ucebna, @Nullable String skupina, @Nullable String trida) {
         this.nazev = nazev;
         this.vyucujici = vyucujici;
         this.ucebna = ucebna;

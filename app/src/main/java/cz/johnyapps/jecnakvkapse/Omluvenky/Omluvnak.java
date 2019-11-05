@@ -12,7 +12,7 @@ public class Omluvnak {
     /**
      * Inicializace
      */
-    Omluvnak() {
+    public Omluvnak() {
         omluvenky = new ArrayList<>();
     }
 

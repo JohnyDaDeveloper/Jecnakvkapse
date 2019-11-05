@@ -2,9 +2,12 @@ package cz.johnyapps.jecnakvkapse.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,12 +32,13 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování příchodů
  */
 public class MainFragment_Prichody extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
-    private static final String TAG = "MainFragment_Prichody: ";
+    private static final String TAG = "MainFragment_Prichody";
     private Context context;
     private User user;
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeLayout;
+    private View noItems;
 
     /**
      * Nastaví content view a supustí {@link #initialize()}
@@ -66,7 +70,7 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_prichody, container, false);
+        RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.fragment_main_prichody, container, false);
         recyclerView = view.findViewById(R.id.MainFragmentPrichody_recycler);
 
         FloatingActionButton button = view.findViewById(R.id.MainFragmentPrichody_button);
@@ -74,6 +78,9 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
 
         swipeLayout = view.findViewById(R.id.MainFragmentPrichody_swipeLayout);
         swipeLayout.setOnRefreshListener(this);
+
+        noItems = inflater.inflate(R.layout.no_items, view, false);
+        view.addView(noItems);
 
         return view;
     }
@@ -142,7 +149,7 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
      * @see PrichodyConvertor
      */
     private void prichody(@Nullable String obdobi) {
-        Crashlytics.log(TAG + "Downloading");
+        Crashlytics.log(Log.INFO, TAG, "Downloading");
 
         StahniPrichody stahniPrichody = new StahniPrichody() {
             @Override
@@ -152,7 +159,7 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
                 ResultErrorProcess process = new ResultErrorProcess(context);
 
                 if (process.process(result)) {
-                    Crashlytics.log(TAG + "Converting");
+                    Crashlytics.log(Log.INFO, TAG, "Converting");
 
                     PrichodyConvertor prichodyConvertor = new PrichodyConvertor();
                     Prichody prichody = prichodyConvertor.convert(result);
@@ -163,7 +170,7 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
 
                     displayPrichody();
                 } else {
-                    Crashlytics.log(TAG + "Downloading error: " + result);
+                    Crashlytics.log(Log.INFO, TAG, "Downloading error: " + result);
                 }
             }
         };
@@ -183,10 +190,21 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
         Prichody prichody = user.getPrichody();
 
         if (prichody != null) {
-            Crashlytics.log(TAG + "Displaying");
-            PrichodyRecyclerAdapter adapter = new PrichodyRecyclerAdapter(context, user.getPrichody());
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(adapter);
+            Crashlytics.log(Log.INFO, TAG, "Displaying");
+
+            if (prichody.getPrichody().size() > 0) {
+                noItems.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+
+                PrichodyRecyclerAdapter adapter = new PrichodyRecyclerAdapter(context, user.getPrichody());
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setAdapter(adapter);
+            } else {
+                recyclerView.setVisibility(View.GONE);
+                noItems.setVisibility(View.VISIBLE);
+
+                Toast.makeText(context, R.string.toasts_zadne_prichody, Toast.LENGTH_LONG).show();
+            }
         } else {
             prichody(null);
         }

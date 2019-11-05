@@ -46,7 +46,7 @@ public class Rozvrh {
      * Přidává den do rozvrhu
      * @param den   {@link Den}
      */
-    void addDen(Den den) {
+    public void addDen(Den den) {
         dny.add(den);
     }
 
@@ -64,7 +64,7 @@ public class Rozvrh {
      * @param periods  ArrayList časů hodin
      * @see Period
      */
-    void setPeriods(ArrayList<Period> periods) {
+    public void setPeriods(ArrayList<Period> periods) {
         this.periods = periods;
     }
 

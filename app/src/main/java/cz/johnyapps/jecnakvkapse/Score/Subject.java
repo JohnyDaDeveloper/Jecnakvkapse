@@ -14,7 +14,7 @@ public class Subject {
      * Inicializace
      * @param name  Název předmětu
      */
-    Subject(String name) {
+    public Subject(String name) {
         this.name = name;
         this.zaverecna = null;
         this.marks = new ArrayList<>();
@@ -49,7 +49,7 @@ public class Subject {
      * @param marks ArrayList známek
      * @see Mark
      */
-    void setMarks(ArrayList<Mark> marks) {
+    public void setMarks(ArrayList<Mark> marks) {
         this.marks = marks;
     }
 
