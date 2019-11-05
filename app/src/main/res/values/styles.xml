@@ -47,6 +47,7 @@
         <item name="colorPrimary">@color/dark_colorPrimary</item>
         <item name="colorPrimaryDark">@color/dark_colorPrimaryDark</item>
         <item name="colorAccent">@color/dark_colorAccent</item>
+        <item name="android:navigationBarColor">@color/dark_colorNavButtons</item>
 
         <item name="color_background">@color/dark_color_background</item>
         <item name="color_background_darker">@color/dark_color_background_darker</item>
@@ -69,6 +70,7 @@
         <item name="colorPrimary">@color/pink_colorPrimary</item>
         <item name="colorPrimaryDark">@color/pink_colorPrimaryDark</item>
         <item name="colorAccent">@color/pink_colorAccent</item>
+        <item name="android:navigationBarColor">@color/pink_colorNavButtons</item>
 
         <item name="color_background">@color/pink_color_background</item>
         <item name="color_background_darker">@color/pink_color_background_darker</item>
@@ -89,6 +91,7 @@
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splashscreen_background</item>
+        <item name="android:navigationBarColor">@color/light_colorPrimary</item>
     </style>
 
     <!-- AlertDialog -->

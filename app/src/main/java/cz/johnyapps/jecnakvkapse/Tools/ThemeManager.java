@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -18,7 +19,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Stará se o načítání témat (themes). <b>Je potřeba přidat do onCreate KAŽDÉ AKTIVITY před setContentView</b>.
  */
 public class ThemeManager {
-    private static final String TAG = "ThemeManager: ";
+    private static final String TAG = "ThemeManager";
     private Context context;
     private SharedPreferences prefs;
 
@@ -39,25 +40,25 @@ public class ThemeManager {
         int theme = prefs.getInt("selected_theme", R.id.SettingsTheme_light);
         switch (theme) {
             case R.id.SettingsTheme_dark: {
-                Crashlytics.log(TAG + "switching theme to Dark");
+                Crashlytics.log(Log.INFO, TAG, "switching theme to Dark");
                 context.setTheme(R.style.DarkTheme);
                 break;
             }
 
             case R.id.SettingsTheme_pink: {
-                Crashlytics.log(TAG + "switching theme to Pink");
+                Crashlytics.log(Log.INFO, TAG, "switching theme to Pink");
                 context.setTheme(R.style.PinkTheme);
                 break;
             }
 
             case R.id.SettingsTheme_red: {
-                Crashlytics.log(TAG + "switching theme to Code Red");
+                Crashlytics.log(Log.INFO, TAG, "switching theme to Code Red");
                 context.setTheme(R.style.RedTheme);
                 break;
             }
 
             default: {
-                Crashlytics.log(TAG + "switching theme to Default (light)");
+                Crashlytics.log(Log.INFO, TAG, "switching theme to Default (light)");
                 context.setTheme(R.style.LightTheme);
                 break;
             }
