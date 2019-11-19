@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
- * Aktivita která zobrazí iconu na tmavém pozadí během načítání {@link MainActivity}
+ * Aktivita která zobrazí iconu na modrém pozadí během načítání {@link MainActivity}
  */
 public class SplashActivity extends AppCompatActivity {
 
