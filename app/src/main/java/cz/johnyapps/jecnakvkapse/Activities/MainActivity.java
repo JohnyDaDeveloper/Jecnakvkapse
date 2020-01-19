@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Crashlytics.log(TAG + "Loading");
+        Crashlytics.log(Log.INFO, TAG, "Loading");
 
         context = this;
 
@@ -65,13 +66,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onResume() {
-        Crashlytics.log(TAG + "onResume");
+        Crashlytics.log(Log.INFO, TAG, "onResume");
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        Crashlytics.log(TAG + "onPause");
+        Crashlytics.log(Log.INFO, TAG, "onPause");
         super.onPause();
     }
 
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Crashlytics.log(TAG + "menu item selected (" + item.toString() + ")");
+        Crashlytics.log(Log.INFO, TAG, "menu item selected (" + item.toString() + ")");
 
         drawerLayout.closeDrawers();
 
@@ -220,42 +221,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.MenuMain_Znamky: {
-                Crashlytics.log(TAG + "switching fragment to Znamky");
+                Crashlytics.log(Log.INFO, TAG, "switching fragment to Znamky");
                 MainFragment_Znamky fragment = new MainFragment_Znamky();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
             case R.id.MenuMain_Rozvrh: {
-                Crashlytics.log(TAG + "switching fragment to Rozvrh");
+                Crashlytics.log(Log.INFO, TAG, "switching fragment to Rozvrh");
                 MainFragment_Rozvrh fragment = new MainFragment_Rozvrh();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
             case R.id.MenuMain_Prichody: {
-                Crashlytics.log(TAG + "switching fragment to Prichody");
+                Crashlytics.log(Log.INFO, TAG, "switching fragment to Prichody");
                 MainFragment_Prichody fragment = new MainFragment_Prichody();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
             case R.id.MenuMain_Omluvenky: {
-                Crashlytics.log(TAG + "switching fragment to Omluvenky");
+                Crashlytics.log(Log.INFO, TAG, "switching fragment to Omluvenky");
                 MainFragment_Omluvenky fragment = new MainFragment_Omluvenky();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
             case R.id.MenuMain_Suplarch: {
-                Crashlytics.log(TAG + "switching fragment to Suplarch");
+                Crashlytics.log(Log.INFO, TAG, "switching fragment to Suplarch");
                 MainFragment_Suplarch fragment = new MainFragment_Suplarch();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;
             }
 
             default: {
-                Crashlytics.log(TAG + "fragment not found. Loading default.");
+                Crashlytics.log(Log.INFO, TAG,  "fragment not found. Loading default.");
                 MainFragment_Znamky fragment = new MainFragment_Znamky();
                 transaction.replace(R.id.Main_fragment, fragment);
                 break;

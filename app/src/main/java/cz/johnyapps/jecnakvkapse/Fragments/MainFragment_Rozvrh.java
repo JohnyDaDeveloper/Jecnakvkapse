@@ -44,7 +44,7 @@ public class MainFragment_Rozvrh extends Fragment {
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Crashlytics.log(TAG + "Loading");
+        Crashlytics.log(Log.INFO, TAG, "Loading");
 
         super.onCreate(savedInstanceState);
         initialize();

@@ -3,11 +3,12 @@ package cz.johnyapps.jecnakvkapse.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
@@ -49,12 +50,6 @@ public class SettingsActivity extends AppCompatActivity {
         int selected = prefs.getInt("main_fragment", R.id.MenuMain_Znamky);
 
         switch (selected) {
-            case R.id.MenuMain_Znamky: {
-                RadioButton button = findViewById(R.id.FirstFragment_znamky);
-                button.setChecked(true);
-                break;
-            }
-
             case R.id.MenuMain_Rozvrh: {
                 RadioButton button = findViewById(R.id.FirstFragment_rozvrh);
                 button.setChecked(true);

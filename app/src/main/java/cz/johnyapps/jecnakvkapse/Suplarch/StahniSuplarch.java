@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -80,31 +81,31 @@ public class StahniSuplarch {
      * @see GenericFileProvider
      */
     private void openSuplarch(SuplarchLink link) {
-        Crashlytics.log(TAG + "Getting downloads directory");
+        Crashlytics.log(Log.INFO, TAG, "Getting downloads directory");
         File file = new File(context.getCacheDir(), link.getDocName());
 
-        Crashlytics.log(TAG + "Getting file provider");
+        Crashlytics.log(Log.INFO, TAG, "Getting file provider");
         Uri uri = GenericFileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
 
-        Crashlytics.log(TAG + "Creating intent");
+        Crashlytics.log(Log.INFO, TAG, "Creating intent");
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(uri, "application/vnd.ms-excel");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        Crashlytics.log(TAG + "Granting permissions");
+        Crashlytics.log(Log.INFO, TAG, "Granting permissions");
         List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         for (ResolveInfo resolveInfo : resInfoList) {
             String packageName = resolveInfo.activityInfo.packageName;
             context.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
 
-        Crashlytics.log(TAG + "Opening");
+        Crashlytics.log(Log.INFO, TAG, "Opening");
         try {
             context.startActivity(intent);
         }
         catch (ActivityNotFoundException e) {
-            Crashlytics.log(TAG + "Opening failed! No app found.");
+            Crashlytics.log(Log.INFO, TAG, "Opening failed! No app found.");
             Toast.makeText(context, "Nenalezena žádná app pro otevření suplarchu (.xls)", Toast.LENGTH_SHORT).show();
         }
     }

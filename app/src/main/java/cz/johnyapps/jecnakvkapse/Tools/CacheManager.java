@@ -2,6 +2,7 @@ package cz.johnyapps.jecnakvkapse.Tools;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -136,7 +137,7 @@ public class CacheManager {
                         os.close();
                     }
                 } catch (IOException e) {
-                    Crashlytics.log(TAG + "IOException occurred while writing " + rawFile.getFileName());
+                    Crashlytics.log(Log.INFO, TAG, "IOException occurred while writing " + rawFile.getFileName());
                 }
             }
 

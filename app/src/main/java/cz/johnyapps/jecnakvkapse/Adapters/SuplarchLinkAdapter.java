@@ -1,6 +1,7 @@
 package cz.johnyapps.jecnakvkapse.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,7 @@ public class SuplarchLinkAdapter extends RecyclerView.Adapter {
      * @see StahniSuplarch
      */
     private void downloadSuplarch(final SuplarchLink link) {
-        Crashlytics.log(TAG + "Suplarch download");
+        Crashlytics.log(Log.INFO, TAG, "Suplarch download");
         StahniSuplarch stahniSuplarch = new StahniSuplarch(context);
         stahniSuplarch.stahni(link);
     }

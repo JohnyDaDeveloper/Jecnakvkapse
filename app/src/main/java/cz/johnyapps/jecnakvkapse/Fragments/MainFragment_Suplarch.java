@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Crashlytics.log(TAG + "Loading");
+        Crashlytics.log(Log.INFO, TAG, "Loading");
 
         super.onCreate(savedInstanceState);
         initialize();
@@ -108,7 +109,7 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
      * Zeptá se na povolení (Čtení a zapisování do úlozíště)
      */
     private void askForPermissions() {
-        Crashlytics.log(TAG + "Asking for permissions");
+        Crashlytics.log(Log.INFO, TAG, "Asking for permissions");
         String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         requestPermissions(permissions, PERMISSION_REQUEST_CODE);
     }
@@ -123,15 +124,15 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        Crashlytics.log(TAG + "Handling permission request results");
+        Crashlytics.log(Log.INFO, TAG, "Handling permission request results");
 
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE: {
                 if (processPermision(Manifest.permission.WRITE_EXTERNAL_STORAGE, permissions, grantResults) && processPermision(Manifest.permission.READ_EXTERNAL_STORAGE, permissions, grantResults)) {
-                    Crashlytics.log(TAG + "Permission \"Write external storage\" guaranteed");
+                    Crashlytics.log(Log.INFO, TAG, "Permission \"Write external storage\" guaranteed");
                     displaySuplarchLinks();
                 } else {
-                    Crashlytics.log(TAG + "Permission \"Write external storage\" denied");
+                    Crashlytics.log(Log.INFO, TAG, "Permission \"Write external storage\" denied");
                     permissionDenied();
                 }
                 break;
@@ -156,7 +157,7 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
      * @return                  True - povoleno, False - zamítnuto
      */
     private boolean processPermision(String askedPermission, String[] permissions, int[] grantResult) {
-        Crashlytics.log(TAG + "Processing \"Write external storage\" permission");
+        Crashlytics.log(Log.INFO, TAG, "Processing \"Write external storage\" permission");
 
         if (permissions.length > 0) {
             for (int i = 0; i < permissions.length; i++) {
@@ -175,7 +176,7 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
      * @see SuplarchFindLink
      */
     public void suplarch() {
-        Crashlytics.log(TAG + "Downloading \"Suplarch linky\"");
+        Crashlytics.log(Log.INFO, TAG, "Downloading \"Suplarch linky\"");
 
         StahniSuplarchLinky stahniSuplarchLinky = new StahniSuplarchLinky() {
             @Override
@@ -185,7 +186,7 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
                 ResultErrorProcess process = new ResultErrorProcess(context);
 
                 if (process.process(result)) {
-                    Crashlytics.log(TAG + "Converting \"Suplarch linky\"");
+                    Crashlytics.log(Log.INFO, TAG, "Converting \"Suplarch linky\"");
                     SuplarchFindLink suplarchFindLink = new SuplarchFindLink();
                     ArrayList<SuplarchLink> links = suplarchFindLink.convert(result);
 
@@ -198,7 +199,7 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
 
                     displaySuplarchLinks();
                 } else {
-                    Crashlytics.log(TAG + "Downloading \"Suplarch linky\" error: " + result);
+                    Crashlytics.log(Log.INFO, TAG, "Downloading \"Suplarch linky\" error: " + result);
                 }
             }
         };
@@ -219,7 +220,7 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
         SuplarchHolder suplarchHolder = user.getSuplarchHolder();
 
         if (suplarchHolder != null) {
-            Crashlytics.log(TAG + "Displaying");
+            Crashlytics.log(Log.INFO, TAG, "Displaying");
 
             if (!user.getSuplarchHolder().getSuplarchLinks().isEmpty()) {
                 SuplarchLinkAdapter adapter = new SuplarchLinkAdapter(context, suplarchHolder.getSuplarchLinks());

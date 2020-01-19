@@ -46,7 +46,7 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Crashlytics.log(TAG + "Loading");
+        Crashlytics.log(Log.INFO, TAG, "Loading");
 
         super.onCreate(savedInstanceState);
         initialize();
