@@ -70,7 +70,7 @@ public class DialogChangePeriod {
      */
     private AlertDialog get(String obdobi) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.dialog_change_period)
+        builder.setTitle(R.string.dialog_change_period_title)
                 .setView(createDialogView(obdobi))
                 .setNegativeButton(R.string.zrusit, new DialogInterface.OnClickListener() {
                     @Override

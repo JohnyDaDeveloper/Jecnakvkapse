@@ -1,8 +1,11 @@
 package cz.johnyapps.jecnakvkapse.Dialogs;
 
-import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+
+import androidx.appcompat.app.AlertDialog;
+
+import cz.johnyapps.jecnakvkapse.R;
 
 /**
  * Dialog pro errory
@@ -25,9 +28,9 @@ public class DialogError {
      */
     public AlertDialog get(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Error")
+        builder.setTitle(R.string.dialog_error_title)
                 .setMessage(message)
-                .setNegativeButton("Zavřít", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.zavrit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
