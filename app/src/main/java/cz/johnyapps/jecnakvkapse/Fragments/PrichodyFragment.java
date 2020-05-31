@@ -2,7 +2,6 @@ package cz.johnyapps.jecnakvkapse.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import cz.johnyapps.jecnakvkapse.Adapters.PrichodyRecyclerAdapter;
@@ -27,12 +25,13 @@ import cz.johnyapps.jecnakvkapse.Prichody.PrichodyConvertor;
 import cz.johnyapps.jecnakvkapse.Prichody.StahniPrichody;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
+import cz.johnyapps.jecnakvkapse.Tools.Logger;
 
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování příchodů
  */
 public class PrichodyFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
-    private static final String TAG = "MainFragment_Prichody";
+    private static final String TAG = "PrichodyFragment";
     private Context context;
     private User user;
 
@@ -46,7 +45,7 @@ public class PrichodyFragment extends Fragment implements View.OnClickListener, 
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Crashlytics.log(Log.INFO, TAG, "Loading");
+        Logger.i(TAG, "Otevírám PrichodyFragment");
 
         super.onCreate(savedInstanceState);
         initialize();
@@ -112,7 +111,7 @@ public class PrichodyFragment extends Fragment implements View.OnClickListener, 
      */
     @Override
     public void onRefresh() {
-        prichody(null);
+        stahniPrichody(null);
     }
 
     /**
@@ -124,14 +123,14 @@ public class PrichodyFragment extends Fragment implements View.OnClickListener, 
             public void zobrazit(String obdobi) {
                 super.zobrazit(obdobi);
 
-                prichody(obdobi);
+                stahniPrichody(obdobi);
             }
 
             @Override
             public void aktualni() {
                 super.aktualni();
 
-                prichody(null);
+                stahniPrichody(null);
             }
         };
         dialogChangePeriod.getMesice().show();
@@ -143,8 +142,8 @@ public class PrichodyFragment extends Fragment implements View.OnClickListener, 
      * @see StahniPrichody
      * @see PrichodyConvertor
      */
-    private void prichody(@Nullable String obdobi) {
-        Crashlytics.log(Log.INFO, TAG, "Downloading");
+    private void stahniPrichody(@Nullable String obdobi) {
+        Logger.i(TAG, "stahniPrichody");
 
         StahniPrichody stahniPrichody = new StahniPrichody();
         stahniPrichody.setOnCompleteListener(new StahniData.OnCompleteListener() {
@@ -153,18 +152,17 @@ public class PrichodyFragment extends Fragment implements View.OnClickListener, 
                 ResultErrorProcess process = new ResultErrorProcess(context);
 
                 if (process.process(result)) {
-                    Crashlytics.log(Log.INFO, TAG, "Converting");
+                    Logger.v(TAG, "Příchody staženy");
 
                     PrichodyConvertor prichodyConvertor = new PrichodyConvertor();
                     Prichody prichody = prichodyConvertor.convert(result);
 
                     user.setPrichody(prichody);
-
                     swipeLayout.setRefreshing(false);
 
                     displayPrichody();
                 } else {
-                    Crashlytics.log(Log.INFO, TAG, "Downloading error: " + result);
+                    Logger.w(TAG, "Chyba při stahování: " + result);
                 }
             }
         });
@@ -176,7 +174,7 @@ public class PrichodyFragment extends Fragment implements View.OnClickListener, 
 
     /**
      * Pokud jsou příchody staženy, zobrazí je, pokud ne, stáhne je
-     * @see #prichody(String)
+     * @see #stahniPrichody(String)
      * @see PrichodyRecyclerAdapter
      * @see Prichody
      */
@@ -184,7 +182,7 @@ public class PrichodyFragment extends Fragment implements View.OnClickListener, 
         Prichody prichody = user.getPrichody();
 
         if (prichody != null) {
-            Crashlytics.log(Log.INFO, TAG, "Displaying");
+            Logger.i(TAG, "Zobrazuji příchody");
 
             if (prichody.getPrichody().size() > 0) {
                 noItems.setVisibility(View.GONE);
@@ -198,7 +196,7 @@ public class PrichodyFragment extends Fragment implements View.OnClickListener, 
                 noItems.setVisibility(View.VISIBLE);
             }
         } else {
-            prichody(null);
+            stahniPrichody(null);
         }
     }
 }

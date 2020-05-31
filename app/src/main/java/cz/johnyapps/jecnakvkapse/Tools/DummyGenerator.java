@@ -1,9 +1,5 @@
 package cz.johnyapps.jecnakvkapse.Tools;
 
-import android.util.Log;
-
-import com.crashlytics.android.Crashlytics;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -73,7 +69,7 @@ public class DummyGenerator {
      * @see ZnamkyFragment
      */
     private void generateScore() {
-        Crashlytics.log(Log.INFO, TAG, "generateScore");
+        Logger.v(TAG, "generateScore");
 
         ArrayList<Subject> subjects = new ArrayList<>();
         String[] subNames = new String[]{"Český jazyk", "Anglický jazyk", "Matematika", "Tělesná výchova",
@@ -97,7 +93,7 @@ public class DummyGenerator {
      * @return  ArrayList známek
      */
     private ArrayList<Mark> generateMarks() {
-        Crashlytics.log(Log.INFO, TAG, "generateMarks");
+        Logger.v(TAG, "generateMarks");
 
         ArrayList<Mark> marks = new ArrayList<>();
 
@@ -115,7 +111,7 @@ public class DummyGenerator {
      * @return  Známka
      */
     private Mark generateMark() {
-        Crashlytics.log(Log.INFO, TAG, "generateMark");
+        Logger.v(TAG, "generateMark");
 
         String employee = "Uč";
         int value = random.nextInt((MAX_MARK_VALUE - MIN_MARK_VALUE) + 1) + MIN_MARK_VALUE;
@@ -130,6 +126,8 @@ public class DummyGenerator {
      * @see RozvrhFragment
      */
     private void generateRozvrh() {
+        Logger.v(TAG, "generateRozvrh");
+
         Locale locale = new Locale("cs", "CZ");
         SimpleDateFormat format = new SimpleDateFormat("kk:mm dd.MM.yyyy", locale);
         String datum = format.format(Calendar.getInstance().getTime());

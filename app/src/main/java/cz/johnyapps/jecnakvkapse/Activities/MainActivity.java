@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -15,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.material.navigation.NavigationView;
 
 import cz.johnyapps.jecnakvkapse.Actions.BaseAction;
@@ -30,13 +28,14 @@ import cz.johnyapps.jecnakvkapse.Fragments.ZnamkyFragment;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 import cz.johnyapps.jecnakvkapse.Tools.CacheManager;
+import cz.johnyapps.jecnakvkapse.Tools.Logger;
 import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
 
 /**
  * Hlavní aktivita. Otevře se při spuštění app.
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG = "MainActivity: ";
+    private static final String TAG = "MainActivity";
 
     private Context context;
     private SharedPreferences prefs;
@@ -53,8 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Crashlytics.log(Log.INFO, TAG, "Loading");
-
         context = this;
 
         ThemeManager themeManager = new ThemeManager(context);
@@ -68,13 +65,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onResume() {
-        Crashlytics.log(Log.INFO, TAG, "onResume");
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        Crashlytics.log(Log.INFO, TAG, "onPause");
         super.onPause();
     }
 
@@ -152,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Crashlytics.log(Log.INFO, TAG, "menu item selected (" + item.toString() + ")");
+        Logger.v(TAG, "onNavigationItemSelected: " + item.getTitle());
 
         drawerLayout.closeDrawers();
 
@@ -223,38 +218,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment;
 
         switch (id) {
-            case R.id.MenuMain_Znamky: {
-                Crashlytics.log(Log.INFO, TAG, "switching fragment to Znamky");
-                fragment = new ZnamkyFragment();
-                break;
-            }
-
             case R.id.MenuMain_Rozvrh: {
-                Crashlytics.log(Log.INFO, TAG, "switching fragment to Rozvrh");
+                Logger.i(TAG, "switching fragment to RozvrhFragment");
                 fragment = new RozvrhFragment();
                 break;
             }
 
             case R.id.MenuMain_Prichody: {
-                Crashlytics.log(Log.INFO, TAG, "switching fragment to Prichody");
+                Logger.i(TAG, "switching fragment to PrichodyFragment");
                 fragment = new PrichodyFragment();
                 break;
             }
 
             case R.id.MenuMain_Omluvenky: {
-                Crashlytics.log(Log.INFO, TAG, "switching fragment to Omluvenky");
+                Logger.i(TAG, "switching fragment to OmluvenkyFragment");
                 fragment = new OmluvenkyFragment();
                 break;
             }
 
             case R.id.MenuMain_Suplarch: {
-                Crashlytics.log(Log.INFO, TAG, "switching fragment to Suplarch");
+                Logger.i(TAG, "switching fragment to SuplarchFragment");
                 fragment = new SuplarchFragment();
                 break;
             }
 
             default: {
-                Crashlytics.log(Log.INFO, TAG,  "fragment not found. Loading default.");
+                Logger.i(TAG, "switching fragment to ZnamkyFragment");
                 fragment = new ZnamkyFragment();
                 break;
             }

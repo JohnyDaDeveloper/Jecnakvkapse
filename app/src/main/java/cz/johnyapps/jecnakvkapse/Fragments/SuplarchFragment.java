@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.crashlytics.android.Crashlytics;
-
 import java.util.ArrayList;
 
 import cz.johnyapps.jecnakvkapse.Adapters.SuplarchLinkAdapter;
@@ -31,12 +28,13 @@ import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchHolder;
 import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchLinky.StahniSuplarchLinky;
 import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchLinky.SuplarchFindLink;
 import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchLinky.SuplarchLink;
+import cz.johnyapps.jecnakvkapse.Tools.Logger;
 
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování odkazů na suplování
  */
 public class SuplarchFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    private static final String TAG = "MainFragment_Suplarch: ";
+    private static final String TAG = "RozvrhFragment: ";
     private static final int PERMISSION_REQUEST_CODE = 749;
 
     private Context context;
@@ -52,7 +50,7 @@ public class SuplarchFragment extends Fragment implements SwipeRefreshLayout.OnR
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Crashlytics.log(Log.INFO, TAG, "Loading");
+        Logger.i(TAG, "Otevírám SuplarchFragment");
 
         super.onCreate(savedInstanceState);
         initialize();
@@ -98,19 +96,16 @@ public class SuplarchFragment extends Fragment implements SwipeRefreshLayout.OnR
         askForPermissions();
     }
 
-    /**
-     * Stará se o obnovení suplarlinků potažením dolů
-     */
     @Override
     public void onRefresh() {
-        suplarch();
+        stahniSuplarchLinky();
     }
 
     /**
      * Zeptá se na povolení (Čtení a zapisování do úlozíště)
      */
     private void askForPermissions() {
-        Crashlytics.log(Log.INFO, TAG, "Asking for permissions");
+        Logger.i(TAG, "askForPermissions");
         String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         requestPermissions(permissions, PERMISSION_REQUEST_CODE);
     }
@@ -125,14 +120,12 @@ public class SuplarchFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        Crashlytics.log(Log.INFO, TAG, "Handling permission request results");
-
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (processPermision(Manifest.permission.WRITE_EXTERNAL_STORAGE, permissions, grantResults) && processPermision(Manifest.permission.READ_EXTERNAL_STORAGE, permissions, grantResults)) {
-                Crashlytics.log(Log.INFO, TAG, "Permission \"Write external storage\" guaranteed");
+                Logger.i(TAG, "Permission \"Write external storage\" guaranteed");
                 displaySuplarchLinks();
             } else {
-                Crashlytics.log(Log.INFO, TAG, "Permission \"Write external storage\" denied");
+                Logger.i(TAG, "Permission \"Write external storage\" denied");
                 permissionDenied();
             }
         }
@@ -153,8 +146,6 @@ public class SuplarchFragment extends Fragment implements SwipeRefreshLayout.OnR
      * @return                  True - povoleno, False - zamítnuto
      */
     private boolean processPermision(String askedPermission, String[] permissions, int[] grantResult) {
-        Crashlytics.log(Log.INFO, TAG, "Processing \"Write external storage\" permission");
-
         if (permissions.length > 0) {
             for (int i = 0; i < permissions.length; i++) {
                 if (permissions[i].equals(askedPermission)) {
@@ -171,8 +162,8 @@ public class SuplarchFragment extends Fragment implements SwipeRefreshLayout.OnR
      * @see StahniSuplarchLinky
      * @see SuplarchFindLink
      */
-    public void suplarch() {
-        Crashlytics.log(Log.INFO, TAG, "Downloading \"Suplarch linky\"");
+    public void stahniSuplarchLinky() {
+        Logger.i(TAG, "stahniSuplarchLinky");
 
         StahniSuplarchLinky stahniSuplarchLinky = new StahniSuplarchLinky();
         stahniSuplarchLinky.setOnCompleteListener(new StahniData.OnCompleteListener() {
@@ -181,7 +172,7 @@ public class SuplarchFragment extends Fragment implements SwipeRefreshLayout.OnR
                 ResultErrorProcess process = new ResultErrorProcess(context);
 
                 if (process.process(result)) {
-                    Crashlytics.log(Log.INFO, TAG, "Converting \"Suplarch linky\"");
+                    Logger.v(TAG, "Stahování odkazů na suplarchy dokončeno");
                     SuplarchFindLink suplarchFindLink = new SuplarchFindLink();
                     ArrayList<SuplarchLink> links = suplarchFindLink.convert(result);
 
@@ -194,7 +185,7 @@ public class SuplarchFragment extends Fragment implements SwipeRefreshLayout.OnR
 
                     displaySuplarchLinks();
                 } else {
-                    Crashlytics.log(Log.INFO, TAG, "Downloading \"Suplarch linky\" error: " + result);
+                    Logger.w(TAG, "Chyba při stahování: " + result);
                 }
             }
         });
@@ -206,7 +197,7 @@ public class SuplarchFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     /**
      * Pokud jsou linky staženy, zobrazí je, pokud ne, stáhne je
-     * @see #suplarch()
+     * @see #stahniSuplarchLinky()
      * @see SuplarchLinkAdapter
      * @see SuplarchLink
      * @see SuplarchHolder
@@ -215,7 +206,7 @@ public class SuplarchFragment extends Fragment implements SwipeRefreshLayout.OnR
         SuplarchHolder suplarchHolder = user.getSuplarchHolder();
 
         if (suplarchHolder != null) {
-            Crashlytics.log(Log.INFO, TAG, "Displaying");
+            Logger.i(TAG, "Zobrazuji suplarch linky");
 
             if (!user.getSuplarchHolder().getSuplarchLinks().isEmpty()) {
                 SuplarchLinkAdapter adapter = new SuplarchLinkAdapter(context, suplarchHolder.getSuplarchLinks());
@@ -226,7 +217,7 @@ public class SuplarchFragment extends Fragment implements SwipeRefreshLayout.OnR
                 noItems.setVisibility(View.VISIBLE);
             }
         } else {
-            suplarch();
+            stahniSuplarchLinky();
         }
     }
 }

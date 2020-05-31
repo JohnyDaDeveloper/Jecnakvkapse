@@ -2,7 +2,6 @@ package cz.johnyapps.jecnakvkapse.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import cz.johnyapps.jecnakvkapse.Adapters.ScoreRecyclerAdapter;
@@ -26,12 +24,13 @@ import cz.johnyapps.jecnakvkapse.Score.Score;
 import cz.johnyapps.jecnakvkapse.Score.ScoreConvertor;
 import cz.johnyapps.jecnakvkapse.Score.StahniScore;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
+import cz.johnyapps.jecnakvkapse.Tools.Logger;
 
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování odkazů na suplování
  */
 public class ZnamkyFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
-    private static final String TAG = "MainFragment_Znamky";
+    private static final String TAG = "ZnamkyFragment";
 
     private Context context;
     private User user;
@@ -45,7 +44,7 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Crashlytics.log(Log.INFO, TAG, "Loading");
+        Logger.i(TAG, "Otevírám ZnamkyFragment");
 
         super.onCreate(savedInstanceState);
         initialize();
@@ -111,7 +110,7 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
             displayMarks();
         } else {
             swipeLayout.setRefreshing(false);
-            marks(null);
+            stahniMarks(null);
         }
     }
 
@@ -123,14 +122,14 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
             @Override
             public void zobrazit(String obdobi) {
                 super.zobrazit(obdobi);
-                marks(obdobi);
+                stahniMarks(obdobi);
             }
 
             @Override
             public void aktualni() {
                 super.aktualni();
 
-                marks(null);
+                stahniMarks(null);
             }
         };
         dialogChangePeriod.getPololeti().show();
@@ -142,8 +141,8 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
      * @see StahniScore
      * @see ScoreConvertor
      */
-    public void marks(@Nullable String obdobi) {
-        Crashlytics.log(Log.INFO, TAG, "Downloading");
+    public void stahniMarks(@Nullable String obdobi) {
+        Logger.i(TAG, "stahniMarks");
         String sessionId = user.getSessionId();
 
         if (sessionId != null) {
@@ -154,7 +153,7 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
                     ResultErrorProcess error = new ResultErrorProcess(context);
 
                     if (error.process(result)) {
-                        Crashlytics.log(Log.INFO, TAG,"Converting");
+                        Logger.v(TAG, "Známky staženy");
                         ScoreConvertor scoreConvertor = new ScoreConvertor();
                         Score score = scoreConvertor.convert(result);
 
@@ -164,7 +163,7 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
 
                         displayMarks();
                     } else {
-                        Crashlytics.log(Log.INFO, TAG, "Download error: " + result);
+                        Logger.w(TAG, "Chyba při stahování: " + result);
                     }
                 }
             });
@@ -176,7 +175,7 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
 
     /**
      * Pokud jsou známky staženy, zobrazí je, pokud ne, stáhne je
-     * @see #marks(String)
+     * @see #stahniMarks(String)
      * @see ScoreRecyclerAdapter
      * @see Score
      */
@@ -184,13 +183,12 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
         Score score = user.getScore();
 
         if (score != null) {
-            Crashlytics.log(Log.INFO, TAG, "Displaying");
+            Logger.i(TAG, "Zobrazuji známky");
             ScoreRecyclerAdapter adapter = new ScoreRecyclerAdapter(context, score);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(adapter);
         } else {
-            Crashlytics.log(Log.INFO, TAG, "No marks");
-            marks(null);
+            stahniMarks(null);
         }
     }
 }

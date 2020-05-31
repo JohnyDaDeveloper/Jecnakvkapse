@@ -4,8 +4,6 @@ import android.content.Context;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.crashlytics.android.Crashlytics;
-
 import java.util.ArrayList;
 
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogLoading;
@@ -17,11 +15,14 @@ import cz.johnyapps.jecnakvkapse.HttpConnection.StahniData;
 import cz.johnyapps.jecnakvkapse.Profil.ProfilConvertor;
 import cz.johnyapps.jecnakvkapse.Profil.StahniProfil;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
+import cz.johnyapps.jecnakvkapse.Tools.Logger;
 
 /**
  * Slouží k obstarání sessionID
  */
 public class Prihlaseni extends BaseAction {
+    private static final String TAG = "Prihlaseni";
+
     private Context context;
     private User user;
 
@@ -45,7 +46,7 @@ public class Prihlaseni extends BaseAction {
             DialogLoading dialogLoading = new DialogLoading(context);
             AlertDialog dialog = dialogLoading.get("Přihlašování...");
 
-            Crashlytics.log("logging in");
+            Logger.v(TAG, "prihlas");
 
             ArrayList<Data> data = new ArrayList<>();
             data.add(new Data("user", user));

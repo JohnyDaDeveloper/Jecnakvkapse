@@ -2,7 +2,6 @@ package cz.johnyapps.jecnakvkapse.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import com.crashlytics.android.Crashlytics;
 
 import cz.johnyapps.jecnakvkapse.Adapters.RozvrhAdaper;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogError;
@@ -25,13 +22,14 @@ import cz.johnyapps.jecnakvkapse.Rozvrh.Rozvrh;
 import cz.johnyapps.jecnakvkapse.Rozvrh.RozvrhConventor;
 import cz.johnyapps.jecnakvkapse.Rozvrh.StahniRozvrh;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
+import cz.johnyapps.jecnakvkapse.Tools.Logger;
 import cz.johnyapps.jecnakvkapse.Tools.OfflineMode;
 
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování rozvrhu
  */
 public class RozvrhFragment extends Fragment {
-    private static final String TAG = "MainFragment_Rozvrh";
+    private static final String TAG = "RozvrhFragment";
     private Context context;
     private User user;
     private OfflineMode offlineMode;
@@ -45,7 +43,7 @@ public class RozvrhFragment extends Fragment {
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Crashlytics.log(Log.INFO, TAG, "Loading");
+        Logger.i(TAG, "Otevírám RozvrhFragment");
 
         super.onCreate(savedInstanceState);
         initialize();
@@ -94,8 +92,9 @@ public class RozvrhFragment extends Fragment {
      * @see StahniRozvrh
      * @see RozvrhConventor
      */
-    public void rozvrh() {
-        Crashlytics.log(Log.INFO, TAG, "Downloading");
+    public void stahniRozvrh() {
+        Logger.i(TAG, "stahniRozvrh");
+
         String[] rozvrhStr = offlineMode.read("rozvrh");
 
         NetworkState networkState = new NetworkState();
@@ -121,7 +120,7 @@ public class RozvrhFragment extends Fragment {
                     ResultErrorProcess error = new ResultErrorProcess(context);
 
                     if (error.process(result)) {
-                        Crashlytics.log(Log.INFO, TAG, "Converting");
+                        Logger.v(TAG, "Rozrh stažen");
                         RozvrhConventor conventor = new RozvrhConventor();
                         Rozvrh rozvrh = conventor.convert(result);
 
@@ -130,7 +129,7 @@ public class RozvrhFragment extends Fragment {
 
                         displayRozvrh();
                     } else {
-                        Crashlytics.log(Log.INFO, TAG, "Downloading error: " + error);
+                        Logger.w(TAG, "Chyba při stahování: " + error);
                     }
 
                     progressBar.setVisibility(View.GONE);
@@ -141,8 +140,8 @@ public class RozvrhFragment extends Fragment {
     }
 
     /**
-     * Pokud je rozvrh stažen, zobrazí se, pokud ne, zavolá se {@link #rozvrh()}
-     * @see #rozvrh()
+     * Pokud je rozvrh stažen, zobrazí se, pokud ne, zavolá se {@link #stahniRozvrh()}
+     * @see #stahniRozvrh()
      * @see RozvrhAdaper
      * @see Rozvrh
      * @see RozvrhConventor
@@ -151,12 +150,11 @@ public class RozvrhFragment extends Fragment {
         Rozvrh rozvrh = user.getRozvrh();
 
         if (rozvrh != null) {
-            Crashlytics.log(Log.INFO, TAG, "Displaying");
+            Logger.v(TAG, "Zobraz rozvrh");
             RozvrhAdaper rozvrhAdaper = new RozvrhAdaper(context, rozvrh);
             rozvrhAdaper.adapt(rozvrhLayout);
         } else {
-            Crashlytics.log(Log.INFO, TAG, "No data");
-            rozvrh();
+            stahniRozvrh();
         }
     }
 }

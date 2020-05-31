@@ -2,7 +2,6 @@ package cz.johnyapps.jecnakvkapse.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.crashlytics.android.Crashlytics;
-
 import cz.johnyapps.jecnakvkapse.Adapters.OmluvenkyRecyclerAdapter;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
 import cz.johnyapps.jecnakvkapse.HttpConnection.StahniData;
@@ -25,12 +22,13 @@ import cz.johnyapps.jecnakvkapse.Omluvenky.Omluvnak;
 import cz.johnyapps.jecnakvkapse.Omluvenky.StahniOmluvenky;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
+import cz.johnyapps.jecnakvkapse.Tools.Logger;
 
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování omluvenek
  */
 public class OmluvenkyFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    private static final String TAG = "MainFragment_Omluvenky";
+    private static final String TAG = "OmluvenkyFragment";
     private Context context;
     private User user;
 
@@ -44,7 +42,7 @@ public class OmluvenkyFragment extends Fragment implements SwipeRefreshLayout.On
      */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Crashlytics.log(Log.INFO, TAG, "Loading");
+        Logger.i(TAG, "Otevírám OmluvenkyFragment");
 
         super.onCreate(savedInstanceState);
         initialize();
@@ -96,7 +94,7 @@ public class OmluvenkyFragment extends Fragment implements SwipeRefreshLayout.On
      */
     @Override
     public void onRefresh() {
-        omluvenky();
+        stahniOmluvenky();
     }
 
     /**
@@ -104,8 +102,8 @@ public class OmluvenkyFragment extends Fragment implements SwipeRefreshLayout.On
      * @see StahniOmluvenky
      * @see OmluvenkyConvertor
      */
-    public void omluvenky() {
-        Crashlytics.log(Log.INFO, TAG, "Downloading");
+    public void stahniOmluvenky() {
+        Logger.i(TAG, "stahniOmluvenky");
 
         StahniOmluvenky stahniOmluvenky = new StahniOmluvenky();
         stahniOmluvenky.setOnCompleteListener(new StahniData.OnCompleteListener() {
@@ -114,7 +112,8 @@ public class OmluvenkyFragment extends Fragment implements SwipeRefreshLayout.On
                 ResultErrorProcess process = new ResultErrorProcess(context);
 
                 if (process.process(result)) {
-                    Crashlytics.log(Log.INFO, TAG, "Converting");
+                    Logger.v(TAG, "Omluvenky staženy");
+
                     OmluvenkyConvertor omluvenkyConvertor = new OmluvenkyConvertor();
                     Omluvnak omluvnak = omluvenkyConvertor.convert(result);
 
@@ -123,7 +122,7 @@ public class OmluvenkyFragment extends Fragment implements SwipeRefreshLayout.On
 
                     displayOmluvenky();
                 } else {
-                    Crashlytics.log(Log.INFO, TAG, "Downloading error: " + result);
+                    Logger.v(TAG, "Chyba při stahování: " + result);
                 }
             }
         });
@@ -135,7 +134,7 @@ public class OmluvenkyFragment extends Fragment implements SwipeRefreshLayout.On
 
     /**
      * Pokud jsou omluvenky staženy, zobrazí je, pokud ne, stáhne je
-     * @see #omluvenky()
+     * @see #stahniOmluvenky()
      * @see OmluvenkyRecyclerAdapter
      * @see Omluvnak
      */
@@ -144,7 +143,7 @@ public class OmluvenkyFragment extends Fragment implements SwipeRefreshLayout.On
 
         if (omluvnak != null) {
             if (omluvnak.getOmluvenky().size() > 0) {
-                Crashlytics.log(Log.INFO, TAG, "Displaying");
+                Logger.v(TAG, "Zobrazuji omluvenky");
 
                 noItems.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
@@ -157,7 +156,7 @@ public class OmluvenkyFragment extends Fragment implements SwipeRefreshLayout.On
                 noItems.setVisibility(View.VISIBLE);
             }
         } else {
-            omluvenky();
+            stahniOmluvenky();
         }
     }
 }

@@ -1,7 +1,6 @@
 package cz.johnyapps.jecnakvkapse.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.crashlytics.android.Crashlytics;
-
 import java.util.ArrayList;
 
 import cz.johnyapps.jecnakvkapse.Fragments.SuplarchFragment;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Suplarch.StahniSuplarch;
 import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchLinky.SuplarchLink;
+import cz.johnyapps.jecnakvkapse.Tools.Logger;
 
 /**
  * Adapter pro odkazy na stažení Suplarchu
@@ -53,7 +51,7 @@ public class SuplarchLinkAdapter extends RecyclerView.Adapter<SuplarchLinkAdapte
         holder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadSuplarch((SuplarchLink) v.getTag());
+                stahniSuplarch((SuplarchLink) v.getTag());
             }
         });
     }
@@ -64,8 +62,8 @@ public class SuplarchLinkAdapter extends RecyclerView.Adapter<SuplarchLinkAdapte
      * @see SuplarchLink
      * @see StahniSuplarch
      */
-    private void downloadSuplarch(final SuplarchLink link) {
-        Crashlytics.log(Log.INFO, TAG, "Suplarch download");
+    private void stahniSuplarch(final SuplarchLink link) {
+        Logger.i(TAG, "stahniSuplarch");
         StahniSuplarch stahniSuplarch = new StahniSuplarch(context);
         stahniSuplarch.stahni(link);
     }
@@ -121,7 +119,7 @@ public class SuplarchLinkAdapter extends RecyclerView.Adapter<SuplarchLinkAdapte
         }
 
         /**
-         * Nastaví onClickListener (ten pak spoští stahování {@link #downloadSuplarch(SuplarchLink)})
+         * Nastaví onClickListener (ten pak spoští stahování {@link #stahniSuplarch(SuplarchLink)})
          * @param listener  Listener
          */
         void setOnClickListener(View.OnClickListener listener) {

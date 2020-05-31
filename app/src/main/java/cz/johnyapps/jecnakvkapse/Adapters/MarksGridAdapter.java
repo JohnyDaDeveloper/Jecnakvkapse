@@ -43,43 +43,21 @@ public class MarksGridAdapter extends BaseAdapter {
         this.marks = marks;
         this.inflater = (LayoutInflater.from(context));
     }
-
-    /**
-     * Vrací známku na pozici
-     * @param position  Pozice
-     * @return          Známka
-     */
     @Override
     public Mark getItem(int position) {
         return marks.get(position);
     }
 
-    /**
-     * Vrací id známky na pozici
-     * @param position  Pozice
-     * @return          Pozice (bere se jako id)
-     */
     @Override
     public long getItemId(int position) {
         return position;
     }
 
-    /**
-     * Vrací velikost ArrayListu se známkami
-     * @return  Velikost
-     */
     @Override
     public int getCount() {
         return marks.size();
     }
 
-    /**
-     * Vrátí view na pozici
-     * @param position      Pozice
-     * @param convertView   Předchozí view (Pokud není prázdné je zbytečné ho předělávat, stačí změnit data)
-     * @param parent        Paret
-     * @return              View s odpovídajícími daty
-     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Mark mark = getItem(position);
@@ -134,36 +112,42 @@ public class MarksGridAdapter extends BaseAdapter {
                 public boolean onLongClick(View v) {
                     Mark mark = (Mark) v.getTag();
 
-                    if (mark.getValue().equals("5")) {
-                        boolean pink = prefs.getBoolean("enable_pink", false);
+                    switch (mark.getValue()) {
+                        case "5":
+                            boolean pink = prefs.getBoolean("enable_pink", false);
 
-                        if (pink) {
-                            prefs.edit().putBoolean("enable_pink", false).apply();
-                            Toast.makeText(context, "Růžové téma zakázáno", Toast.LENGTH_LONG).show();
-                        } else {
-                            prefs.edit().putBoolean("enable_pink", true).apply();
-                            Toast.makeText(context, "Růžové téma povoleno", Toast.LENGTH_LONG).show();
-                        }
-                    } else  if (mark.getValue().equals("DT") || mark.getValue().equals("DŘ")) {
-                        boolean red = prefs.getBoolean("enable_red", false);
+                            if (pink) {
+                                prefs.edit().putBoolean("enable_pink", false).apply();
+                                Toast.makeText(context, "Růžové téma zakázáno", Toast.LENGTH_LONG).show();
+                            } else {
+                                prefs.edit().putBoolean("enable_pink", true).apply();
+                                Toast.makeText(context, "Růžové téma povoleno", Toast.LENGTH_LONG).show();
+                            }
+                            break;
+                        case "DT":
+                        case "DŘ":
+                            boolean red = prefs.getBoolean("enable_red", false);
 
-                        if (red) {
-                            prefs.edit().putBoolean("enable_red", false).apply();
-                            Toast.makeText(context, "Code red téma zakázáno", Toast.LENGTH_LONG).show();
-                        } else {
-                            prefs.edit().putBoolean("enable_red", true).apply();
-                            Toast.makeText(context, "Code red téma povoleno", Toast.LENGTH_LONG).show();
-                        }
-                    } else if (mark.getValue().equals("PT") || mark.getValue().equals("PŘ")) {
-                        boolean cato = prefs.getBoolean("enable_catos", false);
+                            if (red) {
+                                prefs.edit().putBoolean("enable_red", false).apply();
+                                Toast.makeText(context, "Code red téma zakázáno", Toast.LENGTH_LONG).show();
+                            } else {
+                                prefs.edit().putBoolean("enable_red", true).apply();
+                                Toast.makeText(context, "Code red téma povoleno", Toast.LENGTH_LONG).show();
+                            }
+                            break;
+                        case "PT":
+                        case "PŘ":
+                            boolean cato = prefs.getBoolean("enable_catos", false);
 
-                        if (cato) {
-                            prefs.edit().putBoolean("enable_catos", false).apply();
-                            Toast.makeText(context, "Cato známky zakázány", Toast.LENGTH_LONG).show();
-                        } else {
-                            prefs.edit().putBoolean("enable_catos", true).apply();
-                            Toast.makeText(context, "Cato známky povoleny", Toast.LENGTH_LONG).show();
-                        }
+                            if (cato) {
+                                prefs.edit().putBoolean("enable_catos", false).apply();
+                                Toast.makeText(context, "Cato známky zakázány", Toast.LENGTH_LONG).show();
+                            } else {
+                                prefs.edit().putBoolean("enable_catos", true).apply();
+                                Toast.makeText(context, "Cato známky povoleny", Toast.LENGTH_LONG).show();
+                            }
+                            break;
                     }
 
                     return false;

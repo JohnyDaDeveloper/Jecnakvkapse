@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "758312081254-ii4v4kbsil1nb5p4ik5qm8fumbkn24aa.apps.googleusercontent.com",
+          "client_id": "758312081254-3bhpa04f50bro4o7s8bpmrql7rlkpk9s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "cz.johnyapps.jecnakvkapse",
-            "certificate_hash": "e4b3e39688506a2183f6d2d17ec1652cc12f486f"
+            "certificate_hash": "54dd77a055355a327bfd68ae5d2b284b82f4d32b"
           }
         },
         {
@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "758312081254-ii4v4kbsil1nb5p4ik5qm8fumbkn24aa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cz.johnyapps.jecnakvkapse",
+            "certificate_hash": "e4b3e39688506a2183f6d2d17ec1652cc12f486f"
+          }
+        },
+        {
           "client_id": "758312081254-ditv0prpjqs62umcifef66gpn29t81pm.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -41,54 +49,15 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "758312081254-ditv0prpjqs62umcifef66gpn29t81pm.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:758312081254:android:433186b5f89a212c",
-        "android_client_info": {
-          "package_name": "cz.jonnyapps.jecnakvkapse"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "758312081254-ditv0prpjqs62umcifef66gpn29t81pm.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAh1lf-Axy1Lback6XqducBMf5DE5uIiko"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      },
-      "admob_app_id": "ca-app-pub-1057046269547048~5690415079"
     }
   ],
   "configuration_version": "1"

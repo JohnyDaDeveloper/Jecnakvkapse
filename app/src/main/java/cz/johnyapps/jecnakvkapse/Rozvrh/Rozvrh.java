@@ -1,12 +1,13 @@
 package cz.johnyapps.jecnakvkapse.Rozvrh;
 
-import com.crashlytics.android.Crashlytics;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+
+import cz.johnyapps.jecnakvkapse.Tools.Logger;
 
 /**
  * Slouží k uchovávání rozvrhu
@@ -31,7 +32,7 @@ public class Rozvrh {
         this.periods = new ArrayList<>();
         this.locale = new Locale("cs", "CZ");
 
-        Setup_calendar();
+        setupCalendar();
     }
 
     /**
@@ -110,10 +111,6 @@ public class Rozvrh {
                 return -1;
             }
 
-            case Calendar.SUNDAY: {
-                return -1;
-            }
-
             default: return -1;
         }
     }
@@ -156,14 +153,20 @@ public class Rozvrh {
         return -1;
     }
 
-    private void Setup_calendar() {
+    private void setupCalendar() {
         calendar = Calendar.getInstance();
 
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm", locale);
-            calendar.setTime(format.parse(format.format(calendar.getTime())));
+            Date date = format.parse(format.format(calendar.getTime()));
+
+            if (date == null) {
+                throw new ParseException("Parsing error", 0);
+            }
+
+            calendar.setTime(date);
         } catch (ParseException e) {
-            Crashlytics.log(TAG + "Date parse failed");
+            Logger.w(TAG, "setupCalendar: Date parse failed");
         }
     }
 }
