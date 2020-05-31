@@ -8,6 +8,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
+import cz.johnyapps.jecnakvkapse.AnalyticsNames;
 import cz.johnyapps.jecnakvkapse.PrefsNames;
 import cz.johnyapps.jecnakvkapse.R;
 
@@ -38,24 +41,28 @@ public class ThemeManager {
         int theme = prefs.getInt(PrefsNames.SELECTED_THEME, R.id.SettingsTheme_light);
         switch (theme) {
             case R.id.SettingsTheme_dark: {
+                FirebaseAnalytics.getInstance(context).setUserProperty(AnalyticsNames.THEME, AnalyticsNames.THEME_DARK);
                 Logger.i(TAG, "loadTheme: Dark");
                 context.setTheme(R.style.DarkTheme);
                 break;
             }
 
             case R.id.SettingsTheme_pink: {
+                FirebaseAnalytics.getInstance(context).setUserProperty(AnalyticsNames.THEME, AnalyticsNames.THEME_PINK);
                 Logger.i(TAG, "loadTheme: Pink");
                 context.setTheme(R.style.PinkTheme);
                 break;
             }
 
             case R.id.SettingsTheme_red: {
+                FirebaseAnalytics.getInstance(context).setUserProperty(AnalyticsNames.THEME, AnalyticsNames.THEME_CODE_RED);
                 Logger.i(TAG, "loadTheme: Code Red");
                 context.setTheme(R.style.RedTheme);
                 break;
             }
 
             default: {
+                FirebaseAnalytics.getInstance(context).setUserProperty(AnalyticsNames.THEME, AnalyticsNames.THEME_DEFAULT);
                 Logger.i(TAG, "loadTheme: Default (Light)");
                 context.setTheme(R.style.LightTheme);
                 break;
