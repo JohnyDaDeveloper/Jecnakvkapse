@@ -32,6 +32,8 @@ import cz.johnyapps.jecnakvkapse.Tools.Logger;
  */
 public class PrichodyFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "PrichodyFragment";
+    private static final String ZOBRAZOVANE_OBDOBI = "obdobi";
+
     private Context context;
     private User user;
 
@@ -39,8 +41,10 @@ public class PrichodyFragment extends Fragment implements View.OnClickListener, 
     private SwipeRefreshLayout swipeLayout;
     private View noItems;
 
+    private String zobrazovaneObdobi;
+
     /**
-     * Nastaví content view a supustí {@link #initialize()}
+     * Nastaví content view a supustí {@link #initialize(Bundle)}
      * @param savedInstanceState    Uložená instance
      */
     @Override
@@ -48,15 +52,19 @@ public class PrichodyFragment extends Fragment implements View.OnClickListener, 
         Logger.i(TAG, "Otevírám PrichodyFragment");
 
         super.onCreate(savedInstanceState);
-        initialize();
+        initialize(savedInstanceState);
     }
 
     /**
      * Načte globální proměnné
      */
-    private void initialize() {
+    private void initialize(Bundle savedInstanceState) {
         context = getContext();
         user = User.getUser();
+
+        if (savedInstanceState != null) {
+            zobrazovaneObdobi = savedInstanceState.getString(ZOBRAZOVANE_OBDOBI, null);
+        }
     }
 
     /**
@@ -118,22 +126,19 @@ public class PrichodyFragment extends Fragment implements View.OnClickListener, 
      * Zobrazí dialog na změnu období
      */
     private void zmenitObdobi() {
-        DialogChangePeriod dialogChangePeriod = new DialogChangePeriod(context) {
+        DialogChangePeriod dialogChangePeriod = new DialogChangePeriod(context);
+        dialogChangePeriod.setOnZmenObdobiListener(new DialogChangePeriod.OnZmenObdobiListener() {
             @Override
-            public void zobrazit(String obdobi) {
-                super.zobrazit(obdobi);
-
+            public void zobrazitObdobi(String obdobi) {
                 stahniPrichody(obdobi);
             }
 
             @Override
-            public void aktualni() {
-                super.aktualni();
-
+            public void zobrazitAktualni() {
                 stahniPrichody(null);
             }
-        };
-        dialogChangePeriod.getMesice().show();
+        });
+        dialogChangePeriod.getMesice(zobrazovaneObdobi).show();
     }
 
     /**
@@ -152,6 +157,8 @@ public class PrichodyFragment extends Fragment implements View.OnClickListener, 
                 ResultErrorProcess process = new ResultErrorProcess(context);
 
                 if (process.process(result)) {
+                    zobrazovaneObdobi = obdobi;
+
                     Logger.v(TAG, "Příchody staženy");
 
                     PrichodyConvertor prichodyConvertor = new PrichodyConvertor();

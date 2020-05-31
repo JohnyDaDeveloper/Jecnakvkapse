@@ -1,10 +1,10 @@
 package cz.johnyapps.jecnakvkapse.HttpConnection;
 
 import android.content.Context;
-import android.util.Log;
 
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogError;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
+import cz.johnyapps.jecnakvkapse.Tools.Logger;
 
 /**
  * Zprocesuje výsledek čtení a vykoná příslušnou akci
@@ -29,28 +29,28 @@ public class ResultErrorProcess {
 
         switch (result) {
             case "TIMEOUT": {
-                Log.w(TAG, "Connection Timeout");
+                Logger.w(TAG, "Connection Timeout");
 
                 dialogError.get("Vypršel čas spojení").show();
                 return false;
             }
 
             case "ERROR": {
-                Log.w(TAG, "Connection Error");
+                Logger.w(TAG, "Connection Error");
 
                 dialogError.get("Chyba připojení").show();
                 return false;
             }
 
             case "FILE_NOT_FOUND": {
-                Log.w(TAG, "File not found");
+                Logger.w(TAG, "File not found");
 
                 dialogError.get("Soubor nenalezen").show();
                 return false;
             }
 
             case "": {
-                Log.w(TAG, "Login Error");
+                Logger.w(TAG, "Login Error");
 
                 User.getUser().setLogged(false);
 
@@ -64,7 +64,7 @@ public class ResultErrorProcess {
         }
 
         if (result.contains("Přihlášení se nezdařilo")) {
-            Log.w(TAG, "Chyba přihlášení");
+            Logger.w(TAG, "Chyba přihlášení");
 
             User.getUser().setLogged(false);
 

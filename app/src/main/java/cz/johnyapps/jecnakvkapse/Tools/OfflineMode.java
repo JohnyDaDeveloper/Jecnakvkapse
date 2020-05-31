@@ -1,7 +1,6 @@
 package cz.johnyapps.jecnakvkapse.Tools;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,13 +43,13 @@ public class OfflineMode {
             outputStreamWriter.write(object.toString());
             outputStreamWriter.close();
 
-            Log.i(TAG, what.toUpperCase() + " write succesfull");
+            Logger.i(TAG, what.toUpperCase() + " write succesfull");
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e(TAG, what.toUpperCase() + " write: IOException");
+            Logger.e(TAG, what.toUpperCase() + " write: IOException");
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.e(TAG, what.toUpperCase() + " write: JSONException");
+            Logger.e(TAG, what.toUpperCase() + " write: JSONException");
         }
     }
 
@@ -81,20 +80,20 @@ public class OfflineMode {
                 output[0] = object.getString("html");
                 output[1] = object.getString("datum");
 
-                Log.i(TAG, what.toUpperCase() + " read succesfull");
+                Logger.i(TAG, what.toUpperCase() + " read succesfull");
                 return output;
             } else {
-                Log.e(TAG, what.toUpperCase() + " read: Null input stream");
+                Logger.e(TAG, what.toUpperCase() + " read: Null input stream");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Log.e(TAG, what.toUpperCase() + " read: File not found");
+            Logger.e(TAG, what.toUpperCase() + " read: File not found");
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e(TAG, what.toUpperCase() + " read: IOException");
+            Logger.e(TAG, what.toUpperCase() + " read: IOException");
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.e(TAG, what.toUpperCase() + " read: JSONException");
+            Logger.e(TAG, what.toUpperCase() + " read: JSONException");
         }
 
         String[] output = new String[1];

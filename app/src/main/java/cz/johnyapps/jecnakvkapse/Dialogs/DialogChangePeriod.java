@@ -2,7 +2,6 @@ package cz.johnyapps.jecnakvkapse.Dialogs;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,11 +14,19 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import cz.johnyapps.jecnakvkapse.R;
+import cz.johnyapps.jecnakvkapse.Tools.Logger;
 
 /**
  * Dialog sloužící ke změně zobrazeného období
  */
 public class DialogChangePeriod {
+    private static final String TAG = "DialogChangePeriod";
+    private static final String TYP_POLOLETI = "pololeti";
+    private static final String TYP_MESICE = "mesice";
+    private static final int FIRST_HALF_YEAR = 21;
+    private static final int SECOND_HALF_YEAR = 22;
+    private static final int START_YEAR = 2008;
+
     private Context context;
     private LayoutInflater inflater;
 
@@ -29,55 +36,58 @@ public class DialogChangePeriod {
      * Inicializace
      * @param context   Context
      */
-    protected DialogChangePeriod(Context context) {
+    public DialogChangePeriod(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
 
-        typ = "pololeti";
+        typ = TYP_POLOLETI;
     }
 
     /**
      * Vrátí dialog pro změnu roku a pololetí
+     * @param obdobi    Období na které se má dialog přednastavit
      * @return  Dialog
      */
-    public AlertDialog getPololeti() {
-        typ = "pololeti";
-        return get();
+    public AlertDialog getPololeti(String obdobi) {
+        typ = TYP_POLOLETI;
+        return get(obdobi);
     }
 
     /**
      * Vrátí dialog pro změnu roku a měsíce
+     * @param obdobi    Období na které se má dialog přednastavit
      * @return  Dialog
      */
-    public AlertDialog getMesice() {
-        typ = "mesice";
-        return get();
+    public AlertDialog getMesice(String obdobi) {
+        typ = TYP_MESICE;
+        return get(obdobi);
     }
 
     /**
-     * Vytvoří dialog podle specifikací z {@link #getPololeti()} nebo {@link #getMesice()}
+     * Vytvoří dialog podle specifikací z {@link #getPololeti(String)} nebo {@link #getMesice(String)}
+     * @param obdobi    Období na které se má dialog přednastavit
      * @return  Dialog
      */
-    private AlertDialog get() {
+    private AlertDialog get(String obdobi) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Výběr období")
-                .setView(Setup_dialogView())
-                .setNegativeButton("Zrušit", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.dialog_change_period)
+                .setView(createDialogView(obdobi))
+                .setNegativeButton(R.string.zrusit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 })
-                .setPositiveButton("Zobrazit", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.zobrazit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         processResult((AlertDialog) dialog);
                     }
                 })
-                .setNeutralButton("Aktuální", new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.dialog_change_period_aktualni, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        aktualni();
+                        aktualniObdobi();
                     }
                 });
 
@@ -92,48 +102,58 @@ public class DialogChangePeriod {
         Spinner rok = dialog.findViewById(R.id.DialogPeriodChange_spinnerRok);
         Spinner pololeti = dialog.findViewById(R.id.DialogPeriodChange_spinnerPololeti);
 
+        assert rok != null;
+        assert pololeti != null;
+
         String strRok = rok.getSelectedItem().toString();
         int intRok = Integer.parseInt(strRok.split("/")[0]);
-        intRok -= 2008;
+        intRok -= START_YEAR;
 
-        if (typ.equals("pololeti")) {
-            int halfId = 22;
+        if (typ.equals(TYP_POLOLETI)) {
+            int halfId = SECOND_HALF_YEAR;
             if (pololeti.getSelectedItemPosition() != 1) {
-                halfId = 21;
+                halfId = FIRST_HALF_YEAR;
             }
 
             String obdobi = "schoolYearId=" + intRok + "&schoolYearHalfId=" + halfId;
-            zobrazit(obdobi);
+            zobrazitObdobi(obdobi);
         } else {
             int selected = pololeti.getSelectedItemPosition();
             if (selected < 4) selected += 9;
             else selected -= 3;
 
             String obdobi = "schoolYearId=" + intRok + "&schoolYearPartMonthId=" + selected;
-            zobrazit(obdobi);
+            zobrazitObdobi(obdobi);
         }
     }
 
     /**
-     * Spustí akci po zmáčknutí tlačítka "Zobrazit"
+     * Uživatel chce zobrazit dané období
      * @param obdobi    Zformátovaná data přes {@link #processResult(AlertDialog)}
      */
-    public void zobrazit(String obdobi) {
-        Log.i("DialogChangePeriod", obdobi);
+    private void zobrazitObdobi(String obdobi) {
+        Logger.i(TAG, "zobrazitObdobi: " + obdobi);
+
+        if (onZmenObdobiListener != null) {
+            onZmenObdobiListener.zobrazitObdobi(obdobi);
+        }
     }
 
     /**
-     * Spustí akci po zmáčknutí tlačítka "Aktuální"
+     * Uživatel chce zobrazit aktuální období
      */
-    public void aktualni() {
-
+    private void aktualniObdobi() {
+        if (onZmenObdobiListener != null) {
+            onZmenObdobiListener.zobrazitAktualni();
+        }
     }
 
     /**
-     * Nastaví dialog view
+     * Vytvoří dialog view
+     * @param obdobi    Období na které se má dialog přednastavit
      * @return  View
      */
-    private View Setup_dialogView() {
+    private View createDialogView(String obdobi) {
         View view = inflater.inflate(R.layout.dialog_period_change, null, false);
         Spinner rok = view.findViewById(R.id.DialogPeriodChange_spinnerRok);
         Spinner pololeti = view.findViewById(R.id.DialogPeriodChange_spinnerPololeti);
@@ -142,26 +162,61 @@ public class DialogChangePeriod {
         rokAdapter.setDropDownViewResource(R.layout.item_spinner);
         rok.setAdapter(rokAdapter);
 
-        if (typ.equals("pololeti")) {
+        if (typ.equals(TYP_POLOLETI)) {
             ArrayAdapter<CharSequence> pololetiAdapter = ArrayAdapter.createFromResource(context, R.array.pololeti, R.layout.item_spinner);
             pololetiAdapter.setDropDownViewResource(R.layout.item_spinner);
             pololeti.setAdapter(pololetiAdapter);
-            pololeti.setSelection(pololeti());
+            pololeti.setSelection(obdobi == null ? getPololeti() : getPololetiFromString(obdobi));
         } else {
             ArrayAdapter<CharSequence> pololetiAdapter = ArrayAdapter.createFromResource(context, R.array.mesice, R.layout.item_spinner);
             pololetiAdapter.setDropDownViewResource(R.layout.item_spinner);
             pololeti.setAdapter(pololetiAdapter);
-            pololeti.setSelection(getMesic());
+            pololeti.setSelection(obdobi == null ? getMesic() : getMesicFromString(obdobi));
         }
 
         return view;
+    }
+
+    private int getPololetiFromString(String obdobi) {
+        try {
+            String[] data = obdobi.split("&");
+            data = data[1].split("=");
+
+            int value = Integer.parseInt(data[1]);
+
+            if (value == SECOND_HALF_YEAR) {
+                return 1;
+            }
+        } catch (Exception e) {
+            Logger.w(TAG, "getPololetiFromString: chyba při parsování " + obdobi);
+        }
+
+        return 0;
+    }
+
+    private int getMesicFromString(String obdobi) {
+        try {
+            String[] data = obdobi.split("&");
+            data = data[1].split("=");
+            int value = Integer.parseInt(data[1]);
+
+            if (value < 9) {
+                return value + 3;
+            } else {
+                return value - 9;
+            }
+        } catch (Exception e) {
+            Logger.w(TAG, "getPololetiFromString: chyba při parsování " + obdobi);
+        }
+
+        return 0;
     }
 
     /**
      * Rozhodne zda je první pololetí (=0) nebo druhé (=1)
      * @return  Číslo pololetí
      */
-    private int pololeti() {
+    private int getPololeti() {
         Locale locale = new Locale("cs", "CZ");
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat month = new SimpleDateFormat("MM", locale);
@@ -187,7 +242,7 @@ public class DialogChangePeriod {
         int intYear = Integer.parseInt(year.format(calendar.getTime()));
 
         String[] roky = new String[4];
-        if (pololeti() == 1) {
+        if (getPololeti() == 1) {
             for (int i = 0; i < 4; i++) {
                 roky[i] = (intYear - i - 1) + "/" + (intYear - i);
             }
@@ -262,5 +317,15 @@ public class DialogChangePeriod {
             default:
                 return 0;
         }
+    }
+
+    private OnZmenObdobiListener onZmenObdobiListener;
+    public interface OnZmenObdobiListener {
+        void zobrazitObdobi(String obdobi);
+        void zobrazitAktualni();
+    }
+
+    public void setOnZmenObdobiListener(OnZmenObdobiListener onZmenObdobiListener) {
+        this.onZmenObdobiListener = onZmenObdobiListener;
     }
 }

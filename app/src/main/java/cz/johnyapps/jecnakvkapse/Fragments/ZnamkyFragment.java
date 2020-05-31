@@ -31,6 +31,7 @@ import cz.johnyapps.jecnakvkapse.Tools.Logger;
  */
 public class ZnamkyFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "ZnamkyFragment";
+    private static final String ZOBRAZOVANE_OBDOBI = "obdobi";
 
     private Context context;
     private User user;
@@ -38,33 +39,31 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeLayout;
 
-    /**
-     * Nastaví content view a supustí {@link #initialize()}
-     * @param savedInstanceState    Uložená instance
-     */
+    private String zobrazovaneObdobi;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Logger.i(TAG, "Otevírám ZnamkyFragment");
 
         super.onCreate(savedInstanceState);
-        initialize();
+        initialize(savedInstanceState);
     }
 
-    /**
-     * Inicializace
-     */
-    private void initialize() {
+    private void initialize(Bundle savedInstanceState) {
         this.context = getContext();
         this.user = User.getUser();
+
+        if (savedInstanceState != null) {
+            zobrazovaneObdobi = savedInstanceState.getString(ZOBRAZOVANE_OBDOBI, null);
+        }
     }
 
-    /**
-     * Nastaví layout a načte hlaví views
-     * @param inflater              Inflater
-     * @param container             Container
-     * @param savedInstanceState    Uložená instance
-     * @return                      Hlavní layout
-     */
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(ZOBRAZOVANE_OBDOBI, zobrazovaneObdobi);
+        super.onSaveInstanceState(outState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -80,10 +79,6 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
         return view;
     }
 
-    /**
-     * Zobrazí odkazy na suplování
-     * @see #displayMarks()
-     */
     @Override
     public void onStart() {
         super.onStart();
@@ -118,21 +113,27 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
      * Zobrazí dialog na změnu období
      */
     private void zmenitObdobi() {
-        DialogChangePeriod dialogChangePeriod = new DialogChangePeriod(context) {
+        DialogChangePeriod dialogChangePeriod = new DialogChangePeriod(context);
+        dialogChangePeriod.setOnZmenObdobiListener(new DialogChangePeriod.OnZmenObdobiListener() {
             @Override
-            public void zobrazit(String obdobi) {
-                super.zobrazit(obdobi);
+            public void zobrazitObdobi(String obdobi) {
                 stahniMarks(obdobi);
             }
 
             @Override
-            public void aktualni() {
-                super.aktualni();
-
-                stahniMarks(null);
+            public void zobrazitAktualni() {
+                stahniMarks();
             }
-        };
-        dialogChangePeriod.getPololeti().show();
+        });
+        dialogChangePeriod.getPololeti(zobrazovaneObdobi).show();
+    }
+
+    /**
+     * Stáhne známky
+     * @see #stahniMarks(String)
+     */
+    private void stahniMarks() {
+        stahniMarks(null);
     }
 
     /**
@@ -153,6 +154,8 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
                     ResultErrorProcess error = new ResultErrorProcess(context);
 
                     if (error.process(result)) {
+                        zobrazovaneObdobi = obdobi;
+
                         Logger.v(TAG, "Známky staženy");
                         ScoreConvertor scoreConvertor = new ScoreConvertor();
                         Score score = scoreConvertor.convert(result);

@@ -11,6 +11,7 @@
     <string name="prihlasit">Přihlásit</string>
     <string name="ano">Ano</string>
     <string name="zrusit">Zrušit</string>
+    <string name="zobrazit">Zobrazit</string>
 
     <string name="menu_prihlasit">Přihásit</string>
     <string name="menu_odhlasit">Odhlásit</string>
@@ -26,6 +27,9 @@
     <string name="theme_pink_disabled">Růžové téma zakázáno</string>
     <string name="theme_code_red_enabled">Code red téma povoleno</string>
     <string name="theme_code_red_disabled">Code red téma zakázáno</string>
+
+    <string name="dialog_change_period">Výběr období</string>
+    <string name="dialog_change_period_aktualni">Aktuální</string>
 
     <string name="dialog_odhlasit_title">Odhlásit?</string>
     <string name="dialog_odhlasit_odhlaseno">Odhlášeno</string>
