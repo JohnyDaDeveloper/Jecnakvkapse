@@ -7,11 +7,13 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
+import cz.johnyapps.jecnakvkapse.Fragments.PrichodyFragment;
+
 /**
  * Konvertuje HTML na příchody
  * @see Prichody
  * @see cz.johnyapps.jecnakvkapse.Singletons.User
- * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Prichody
+ * @see PrichodyFragment
  */
 public class PrichodyConvertor {
     /**

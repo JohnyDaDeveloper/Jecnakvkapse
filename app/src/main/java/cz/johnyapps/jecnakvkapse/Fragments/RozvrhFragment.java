@@ -30,7 +30,7 @@ import cz.johnyapps.jecnakvkapse.Tools.OfflineMode;
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování rozvrhu
  */
-public class MainFragment_Rozvrh extends Fragment {
+public class RozvrhFragment extends Fragment {
     private static final String TAG = "MainFragment_Rozvrh";
     private Context context;
     private User user;

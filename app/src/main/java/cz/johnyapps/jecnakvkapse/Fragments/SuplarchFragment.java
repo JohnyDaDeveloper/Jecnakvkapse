@@ -35,7 +35,7 @@ import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchLinky.SuplarchLink;
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování odkazů na suplování
  */
-public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class SuplarchFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "MainFragment_Suplarch: ";
     private static final int PERMISSION_REQUEST_CODE = 749;
 

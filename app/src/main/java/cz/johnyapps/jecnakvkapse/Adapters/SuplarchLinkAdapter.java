@@ -14,15 +14,16 @@ import com.crashlytics.android.Crashlytics;
 
 import java.util.ArrayList;
 
+import cz.johnyapps.jecnakvkapse.Fragments.SuplarchFragment;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Suplarch.StahniSuplarch;
 import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchLinky.SuplarchLink;
 
 /**
  * Adapter pro odkazy na stažení Suplarchu
- * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Suplarch
+ * @see SuplarchFragment
  */
-public class SuplarchLinkAdapter extends RecyclerView.Adapter {
+public class SuplarchLinkAdapter extends RecyclerView.Adapter<SuplarchLinkAdapter.CustomViewHolder> {
     private static final String TAG = "SuplarchLinkAdapter: ";
 
     private Context context;
@@ -42,21 +43,14 @@ public class SuplarchLinkAdapter extends RecyclerView.Adapter {
         this.links = links;
     }
 
-    /**
-     * Při zobrazení view načte příslušný link
-     * @param holder    ViewHolder
-     * @param position  Pozice
-     * @see CustomViewHolder
-     */
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        CustomViewHolder customHolder = (CustomViewHolder) holder;
+    public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         SuplarchLink link = links.get(position);
 
-        customHolder.setTitle(link.getNazev());
-        customHolder.setLink(link.getDocName());
-        customHolder.setTag(link);
-        customHolder.setOnClickListener(new View.OnClickListener() {
+        holder.setTitle(link.getNazev());
+        holder.setLink(link.getDocName());
+        holder.setTag(link);
+        holder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 downloadSuplarch((SuplarchLink) v.getTag());
@@ -76,25 +70,14 @@ public class SuplarchLinkAdapter extends RecyclerView.Adapter {
         stahniSuplarch.stahni(link);
     }
 
-    /**
-     * Vrátí počet linků
-     * @return  Počet
-     */
     @Override
     public int getItemCount() {
         return links.size();
     }
 
-    /**
-     * Vytvoří ViewHolder
-     * @param parent    Parent
-     * @param viewType  View type
-     * @return          ViewHolder
-     * @see CustomViewHolder
-     */
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.item_suplarch_link, parent, false);
         return new CustomViewHolder(view);
     }
@@ -102,7 +85,7 @@ public class SuplarchLinkAdapter extends RecyclerView.Adapter {
     /**
      * Vlastní ViewHolder
      */
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+    public static class CustomViewHolder extends RecyclerView.ViewHolder {
         private View view;
 
         private TextView title;

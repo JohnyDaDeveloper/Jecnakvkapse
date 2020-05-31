@@ -30,7 +30,7 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování odkazů na suplování
  */
-public class MainFragment_Znamky extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class ZnamkyFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "MainFragment_Znamky";
 
     private Context context;

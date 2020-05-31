@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import cz.johnyapps.jecnakvkapse.Fragments.RozvrhFragment;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Rozvrh.Den;
 import cz.johnyapps.jecnakvkapse.Rozvrh.Hodina;
@@ -21,7 +22,7 @@ import cz.johnyapps.jecnakvkapse.Tools.ColorUtils;
 
 /**
  * Adapter pro rozvrh
- * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Rozvrh
+ * @see RozvrhFragment
  */
 public class RozvrhAdaper {
     private Context context;

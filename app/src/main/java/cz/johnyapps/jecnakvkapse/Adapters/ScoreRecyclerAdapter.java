@@ -19,6 +19,7 @@ import cz.johnyapps.catoslibrary.Catos.Entity.Cato;
 import cz.johnyapps.catoslibrary.Catos.View.CatoView;
 import cz.johnyapps.jecnakvkapse.CustomViews.ZnamkyGridView;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogMarkBuilder;
+import cz.johnyapps.jecnakvkapse.Fragments.ZnamkyFragment;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Score.Mark;
 import cz.johnyapps.jecnakvkapse.Score.Score;
@@ -29,9 +30,9 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * Adapter pro známky - Předměty
  * @see MarksGridAdapter
- * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Znamky
+ * @see ZnamkyFragment
  */
-public class ScoreRecyclerAdapter extends RecyclerView.Adapter {
+public class ScoreRecyclerAdapter extends RecyclerView.Adapter<ScoreRecyclerAdapter.CustomViewHolder> {
     private SharedPreferences prefs;
 
     private ArrayList<Subject> subjects;
@@ -54,56 +55,30 @@ public class ScoreRecyclerAdapter extends RecyclerView.Adapter {
         this.inflater = LayoutInflater.from(context);
     }
 
-    /**
-     * Vrátí počet předmětů
-     * @return  Počet
-     */
     @Override
     public int getItemCount() {
         return subjects.size();
     }
 
-    /**
-     * Vrátí předmět na pozici
-     * @param position  Pozice
-     * @return          Pŕedmět
-     * @see Subject
-     */
     private Subject getItem(int position) {
         return subjects.get(position);
     }
 
-    /**
-     * Při zobrazení view načte příslušný předmět
-     * @param holder    ViewHolder
-     * @param position  Pozice
-     * @see CustomViewHolder
-     */
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         Subject subject = getItem(position);
-
-        CustomViewHolder customHolder = (CustomViewHolder) holder;
-
-        customHolder.textView.setText(subject.getName());
+        holder.textView.setText(subject.getName());
 
         MarksGridAdapter adapter = new MarksGridAdapter(context, subject.getMarks());
-        customHolder.gridView.setAdapter(adapter);
+        holder.gridView.setAdapter(adapter);
 
-        Setup_zaverecna(customHolder, subject.getZaverecna());
+        Setup_zaverecna(holder, subject.getZaverecna());
     }
 
-    /**
-     * Vytvoří ViewHolder
-     * @param parent    Parent
-     * @param viewType  View type
-     * @return          ViewHolder
-     * @see CustomViewHolder
-     */
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = inflater.inflate(R.layout.item_score, parent, false);
         return new CustomViewHolder(itemView);
     }
@@ -220,7 +195,7 @@ public class ScoreRecyclerAdapter extends RecyclerView.Adapter {
     /**
      * Vlastní view holder
      */
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+    public static class CustomViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         ZnamkyGridView gridView;
         LinearLayout layout_bottom;

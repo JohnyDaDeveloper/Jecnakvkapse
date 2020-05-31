@@ -7,11 +7,13 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
+import cz.johnyapps.jecnakvkapse.Fragments.ZnamkyFragment;
+
 /**
  * Konvetuje HTML na známky
  * @see Score
  * @see cz.johnyapps.jecnakvkapse.Singletons.User
- * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Znamky
+ * @see ZnamkyFragment
  */
 public class ScoreConvertor {
     /**

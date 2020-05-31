@@ -7,11 +7,13 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
+import cz.johnyapps.jecnakvkapse.Fragments.SuplarchFragment;
+
 /**
  * Hledá linky/odkazy na suplování v HTML
  * @see cz.johnyapps.jecnakvkapse.Suplarch.SuplarchHolder
  * @see cz.johnyapps.jecnakvkapse.Singletons.User
- * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Suplarch
+ * @see SuplarchFragment
  */
 public class SuplarchFindLink {
     /**

@@ -5,9 +5,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import cz.johnyapps.jecnakvkapse.Fragments.OmluvenkyFragment;
+
 /**
  * Konvertuje HTML na omluvekny
- * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Omluvenky
+ * @see OmluvenkyFragment
  * @see Omluvnak
  * @see cz.johnyapps.jecnakvkapse.Singletons.User
  */

@@ -11,6 +11,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,11 +22,11 @@ import cz.johnyapps.jecnakvkapse.Actions.BaseAction;
 import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogLogin;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogOdhlasit;
-import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Omluvenky;
-import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Prichody;
-import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Rozvrh;
-import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Suplarch;
-import cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Znamky;
+import cz.johnyapps.jecnakvkapse.Fragments.OmluvenkyFragment;
+import cz.johnyapps.jecnakvkapse.Fragments.PrichodyFragment;
+import cz.johnyapps.jecnakvkapse.Fragments.RozvrhFragment;
+import cz.johnyapps.jecnakvkapse.Fragments.SuplarchFragment;
+import cz.johnyapps.jecnakvkapse.Fragments.ZnamkyFragment;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 import cz.johnyapps.jecnakvkapse.Tools.CacheManager;
@@ -219,51 +220,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void SwitchFragments(int id) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
+        Fragment fragment;
 
         switch (id) {
             case R.id.MenuMain_Znamky: {
                 Crashlytics.log(Log.INFO, TAG, "switching fragment to Znamky");
-                MainFragment_Znamky fragment = new MainFragment_Znamky();
-                transaction.replace(R.id.Main_fragment, fragment);
+                fragment = new ZnamkyFragment();
                 break;
             }
 
             case R.id.MenuMain_Rozvrh: {
                 Crashlytics.log(Log.INFO, TAG, "switching fragment to Rozvrh");
-                MainFragment_Rozvrh fragment = new MainFragment_Rozvrh();
-                transaction.replace(R.id.Main_fragment, fragment);
+                fragment = new RozvrhFragment();
                 break;
             }
 
             case R.id.MenuMain_Prichody: {
                 Crashlytics.log(Log.INFO, TAG, "switching fragment to Prichody");
-                MainFragment_Prichody fragment = new MainFragment_Prichody();
-                transaction.replace(R.id.Main_fragment, fragment);
+                fragment = new PrichodyFragment();
                 break;
             }
 
             case R.id.MenuMain_Omluvenky: {
                 Crashlytics.log(Log.INFO, TAG, "switching fragment to Omluvenky");
-                MainFragment_Omluvenky fragment = new MainFragment_Omluvenky();
-                transaction.replace(R.id.Main_fragment, fragment);
+                fragment = new OmluvenkyFragment();
                 break;
             }
 
             case R.id.MenuMain_Suplarch: {
                 Crashlytics.log(Log.INFO, TAG, "switching fragment to Suplarch");
-                MainFragment_Suplarch fragment = new MainFragment_Suplarch();
-                transaction.replace(R.id.Main_fragment, fragment);
+                fragment = new SuplarchFragment();
                 break;
             }
 
             default: {
                 Crashlytics.log(Log.INFO, TAG,  "fragment not found. Loading default.");
-                MainFragment_Znamky fragment = new MainFragment_Znamky();
-                transaction.replace(R.id.Main_fragment, fragment);
+                fragment = new ZnamkyFragment();
                 break;
             }
         }
 
+        transaction.replace(R.id.Main_fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
         fragment_selected = id;

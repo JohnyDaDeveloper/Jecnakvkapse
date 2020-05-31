@@ -10,11 +10,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import cz.johnyapps.jecnakvkapse.Fragments.RozvrhFragment;
+
 /**
  * Konvertuje HTML na rozvrh
  * @see Rozvrh
  * @see cz.johnyapps.jecnakvkapse.Singletons.User
- * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Rozvrh
+ * @see RozvrhFragment
  */
 public class RozvrhConventor {
     /**

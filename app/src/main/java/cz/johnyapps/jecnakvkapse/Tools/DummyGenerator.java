@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
 
+import cz.johnyapps.jecnakvkapse.Fragments.RozvrhFragment;
+import cz.johnyapps.jecnakvkapse.Fragments.ZnamkyFragment;
 import cz.johnyapps.jecnakvkapse.Omluvenky.Omluvnak;
 import cz.johnyapps.jecnakvkapse.Prichody.Prichod;
 import cz.johnyapps.jecnakvkapse.Prichody.Prichody;
@@ -68,7 +70,7 @@ public class DummyGenerator {
 
     /**
      * Generace skóre (známky v předmětech)
-     * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Znamky
+     * @see ZnamkyFragment
      */
     private void generateScore() {
         Crashlytics.log(Log.INFO, TAG, "generateScore");
@@ -125,7 +127,7 @@ public class DummyGenerator {
 
     /**
      * Generuje rozvrh
-     * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Rozvrh
+     * @see RozvrhFragment
      */
     private void generateRozvrh() {
         Locale locale = new Locale("cs", "CZ");

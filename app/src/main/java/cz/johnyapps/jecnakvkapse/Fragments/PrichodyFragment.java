@@ -32,7 +32,7 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
 /**
  * Fragment aktivity {@link cz.johnyapps.jecnakvkapse.Activities.MainActivity} pro zobrazování příchodů
  */
-public class MainFragment_Prichody extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class PrichodyFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "MainFragment_Prichody";
     private Context context;
     private User user;

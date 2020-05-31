@@ -11,15 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import cz.johnyapps.jecnakvkapse.Fragments.PrichodyFragment;
 import cz.johnyapps.jecnakvkapse.Prichody.Prichod;
 import cz.johnyapps.jecnakvkapse.Prichody.Prichody;
 import cz.johnyapps.jecnakvkapse.R;
 
 /**
  * Adapter pro příchody
- * @see cz.johnyapps.jecnakvkapse.Fragments.MainFragment_Prichody
+ * @see PrichodyFragment
  */
-public class PrichodyRecyclerAdapter extends RecyclerView.Adapter {
+public class PrichodyRecyclerAdapter extends RecyclerView.Adapter<PrichodyRecyclerAdapter.CustomViewHolder> {
     private LayoutInflater inflater;
 
     private ArrayList<Prichod> prichody;
@@ -37,19 +38,12 @@ public class PrichodyRecyclerAdapter extends RecyclerView.Adapter {
         this.prichody = prichody.getPrichody();
     }
 
-    /**
-     * Při zobrazení view načte příslušný příchod
-     * @param holder    Holder
-     * @param position  Pozice
-     * @see CustomViewHolder
-     */
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        CustomViewHolder customHolder = (CustomViewHolder) holder;
+    public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         Prichod prichod = prichody.get(position);
 
-        customHolder.textDatum.setText(prichod.getDatum());
-        customHolder.textPocet.setText(convertCasy(prichod.getCasy()));
+        holder.textDatum.setText(prichod.getDatum());
+        holder.textPocet.setText(convertCasy(prichod.getCasy()));
     }
 
     /**
@@ -70,25 +64,14 @@ public class PrichodyRecyclerAdapter extends RecyclerView.Adapter {
         return strCasy.toString();
     }
 
-    /**
-     * Vrátí počet příchodů
-     * @return  Počet
-     */
     @Override
     public int getItemCount() {
         return prichody.size();
     }
 
-    /**
-     * Vytvoří ViewHolder
-     * @param parent    Parent
-     * @param viewType  View type
-     * @return          ViewHolder
-     * @see CustomViewHolder
-     */
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.item_prichod, parent, false);
         return new CustomViewHolder(view);
     }
@@ -96,7 +79,7 @@ public class PrichodyRecyclerAdapter extends RecyclerView.Adapter {
     /**
      * Vlastní view holder
      */
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+    public static class CustomViewHolder extends RecyclerView.ViewHolder {
         TextView textDatum;
         TextView textPocet;
 
