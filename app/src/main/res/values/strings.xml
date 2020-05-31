@@ -14,6 +14,12 @@
     <string name="menu_nastaveni">Nastavení</string>
     <string name="menu_o_aplikaci">O aplikaci</string>
 
+    <string name="povolit">Povolit</string>
+    <string name="zakazat">Zakázat</string>
+
+    <string name="dialog_enable_crashlytics">Povolit Crashlytics</string>
+    <string name="dialog_enable_crashlytics_message">Povolit aplikaci Ječná v kapse sběr dat o běhu apliakce?\n\nPovolením této služby usnadňujete vývojářům dostraňování případných chyb. Odeslaná data <b>neobsahují</b> Vaše přihlašovací údaje nebo jakákoliv jiná citlivá data.</string>
+
     <string name="easter_egg_code_red_enabled">Code red téma povoleno</string>
     <string name="easter_egg_code_red_disabled">Code red téma zakázáno</string>
 

@@ -4,12 +4,22 @@ import android.util.Log;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
+@SuppressWarnings("unused")
 public class Logger {
+    private static final String TAG = "Logger";
+
     public static final Logger instance = new Logger();
     private boolean crashlyticsEnabled = false;
 
     public Logger() {
 
+    }
+
+    public void initialize(boolean enableCrashlytics) {
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(enableCrashlytics);
+        this.crashlyticsEnabled = enableCrashlytics;
+
+        Logger.i(TAG, "Crashlytics " + (enableCrashlytics ? "enabled" : "disabled"));
     }
 
     public void enableCrashlytics() {
@@ -31,17 +41,17 @@ public class Logger {
     public static void v(String tag, String message) {
         if (Logger.getInstance().isCrashlyticsEnabled()) {
             FirebaseCrashlytics.getInstance().log(tag + ": " + message);
-        } else {
-            Log.v(tag, message);
         }
+
+        Log.v(tag, message);
     }
 
     public static void i(String tag, String message) {
         if (Logger.getInstance().isCrashlyticsEnabled()) {
             FirebaseCrashlytics.getInstance().log(tag + ": " + message);
-        } else {
-            Log.i(tag, message);
         }
+
+        Log.i(tag, message);
     }
 
     public static void d(String tag, String message) {
@@ -51,34 +61,34 @@ public class Logger {
     public static void w(String tag, String message) {
         if (Logger.getInstance().isCrashlyticsEnabled()) {
             FirebaseCrashlytics.getInstance().log(tag + ": " + message);
-        } else {
-            Log.w(tag, message);
         }
+
+        Log.w(tag, message);
     }
 
     public static void w(String tag, String message, Exception exception) {
         if (Logger.getInstance().isCrashlyticsEnabled()) {
             FirebaseCrashlytics.getInstance().log(tag + ": " + message);
             FirebaseCrashlytics.getInstance().recordException(exception);
-        } else {
-            Log.w(tag, message, exception);
         }
+
+        Log.w(tag, message, exception);
     }
 
     public static void e(String tag, String message) {
         if (Logger.getInstance().isCrashlyticsEnabled()) {
             FirebaseCrashlytics.getInstance().log(tag + ": " + message);
-        } else {
-            Log.e(tag, message);
         }
+
+        Log.e(tag, message);
     }
 
     public static void e(String tag, String message, Exception exception) {
         if (Logger.getInstance().isCrashlyticsEnabled()) {
             FirebaseCrashlytics.getInstance().log(tag + ": " + message);
             FirebaseCrashlytics.getInstance().recordException(exception);
-        } else {
-            Log.e(tag, message, exception);
         }
+
+        Log.e(tag, message, exception);
     }
 }

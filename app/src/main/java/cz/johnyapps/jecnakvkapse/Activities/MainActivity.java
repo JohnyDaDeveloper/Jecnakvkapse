@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import cz.johnyapps.jecnakvkapse.Actions.BaseAction;
 import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
+import cz.johnyapps.jecnakvkapse.Dialogs.DialogEnableCrashlytics;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogLogin;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogOdhlasit;
 import cz.johnyapps.jecnakvkapse.Fragments.OmluvenkyFragment;
@@ -25,6 +26,7 @@ import cz.johnyapps.jecnakvkapse.Fragments.PrichodyFragment;
 import cz.johnyapps.jecnakvkapse.Fragments.RozvrhFragment;
 import cz.johnyapps.jecnakvkapse.Fragments.SuplarchFragment;
 import cz.johnyapps.jecnakvkapse.Fragments.ZnamkyFragment;
+import cz.johnyapps.jecnakvkapse.PrefsNames;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 import cz.johnyapps.jecnakvkapse.Tools.CacheManager;
@@ -63,21 +65,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initialize();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
     /**
-     * Načte globální proměnné, reklamu, menu {@link #Setup_Menu()} a fragment
+     * Načte globální proměnné, reklamu, menu {@link #setupMenu()} a fragment
      */
     private void initialize() {
-        prefs = getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
+        prefs = getSharedPreferences(PrefsNames.PREFS_NAME, MODE_PRIVATE);
         user = User.getUser();
 
         drawerLayout = findViewById(R.id.Main_layoutMain);
@@ -85,15 +77,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         fragment_selected = prefs.getInt("main_fragment", R.id.MenuMain_Znamky);
 
-        Setup_Menu();
-        ClearChache();
-        AutoLogin();
+        setupMenu();
+        clearChache();
+        setupCrashlytics();
+        autoLogin();
+    }
+
+    private void setupCrashlytics() {
+        boolean ask = prefs.getBoolean(PrefsNames.ASK_FOR_CRASHLYTICS, true);
+
+        if (ask) {
+            DialogEnableCrashlytics dialogEnableCrashlytics = new DialogEnableCrashlytics(context);
+            dialogEnableCrashlytics.setOnCompleteListener(new DialogEnableCrashlytics.OnCompleteListener() {
+                @Override
+                public void onComplete(boolean enabled) {
+                    Logger.getInstance().initialize(enabled);
+                }
+            });
+            dialogEnableCrashlytics.show();
+        } else {
+            Logger.getInstance().initialize(prefs.getBoolean(PrefsNames.CRASHLYTICS_ENABLED, false));
+        }
     }
 
     /**
      * Nastaví menu
      */
-    private void Setup_Menu() {
+    private void setupMenu() {
         navigationView.setNavigationItemSelectedListener(this);
 
         user.setLoggedListener(new User.LoggedListener() {
@@ -113,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * Vymaže cache
      */
-    private void ClearChache() {
+    private void clearChache() {
         CacheManager cacheManager = new CacheManager(context);
         cacheManager.clearAll();
     }
@@ -121,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * Automatické přihlášení s uloženými daty
      */
-    private void AutoLogin() {
+    private void autoLogin() {
         String login = prefs.getString("login", "NEULOZENO");
         String heslo = prefs.getString("pass", "NEULOZENO");
 
