@@ -3,7 +3,6 @@ package cz.johnyapps.jecnakvkapse.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import cz.johnyapps.catoslibrary.Catos.Entity.Cato;
-import cz.johnyapps.catoslibrary.Catos.View.CatoView;
 import cz.johnyapps.jecnakvkapse.CustomViews.ZnamkyGridView;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogMarkBuilder;
 import cz.johnyapps.jecnakvkapse.Fragments.ZnamkyFragment;
@@ -25,16 +22,12 @@ import cz.johnyapps.jecnakvkapse.Score.Mark;
 import cz.johnyapps.jecnakvkapse.Score.Score;
 import cz.johnyapps.jecnakvkapse.Score.Subject;
 
-import static android.content.Context.MODE_PRIVATE;
-
 /**
  * Adapter pro známky - Předměty
  * @see MarksGridAdapter
  * @see ZnamkyFragment
  */
 public class ScoreRecyclerAdapter extends RecyclerView.Adapter<ScoreRecyclerAdapter.CustomViewHolder> {
-    private SharedPreferences prefs;
-
     private ArrayList<Subject> subjects;
 
     private Context context;
@@ -48,7 +41,6 @@ public class ScoreRecyclerAdapter extends RecyclerView.Adapter<ScoreRecyclerAdap
      * @see cz.johnyapps.jecnakvkapse.Singletons.User
      */
     public ScoreRecyclerAdapter(Context context, Score score) {
-        prefs = context.getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
         this.subjects = score.geSubjects();
 
         this.context = context;
@@ -90,14 +82,7 @@ public class ScoreRecyclerAdapter extends RecyclerView.Adapter<ScoreRecyclerAdap
      */
     private void Setup_zaverecna(CustomViewHolder customHolder, Mark mark) {
         if (mark != null) {
-            boolean catos_enabled = prefs.getBoolean("enable_catos", false);
-
-            View view;
-            if (catos_enabled) {
-                view = loadCatoView(customHolder.layout_bottom, mark);
-            } else {
-                view = loadMarkView(customHolder.layout_bottom, mark);
-            }
+            View view = loadMarkView(customHolder.layout_bottom, mark);
 
             Setup_OnClick(view, mark);
 
@@ -115,49 +100,6 @@ public class ScoreRecyclerAdapter extends RecyclerView.Adapter<ScoreRecyclerAdap
         TextView zaverecna = view.findViewById(R.id.Mark_txtMark);
         zaverecna.setText(mark.getValue());
         zaverecna.setBackgroundColor(mark.getColor());
-
-        return view;
-    }
-
-    /**
-     * Načte cato view
-     * @param parent        parent
-     * @param mark          mark
-     */
-    private View loadCatoView(ViewGroup parent, Mark mark) {
-        CatoView view = (CatoView) inflater.inflate(R.layout.item_score_cato, parent, false);
-        Cato cato = new Cato();
-
-        switch (mark.getValue()) {
-            case "1": {
-                cato.loadFromRawResources(context, "greencato");
-                break;
-            }
-
-            case "2": {
-                cato.loadFromRawResources(context, "cato2");
-                break;
-            }
-
-            case "3": {
-                cato.loadFromRawResources(context, "cato3");
-                break;
-            }
-
-            case "4": {
-                cato.loadFromRawResources(context, "cato4");
-                break;
-            }
-
-            case "5": {
-                cato.loadFromRawResources(context, "redcato");
-                break;
-            }
-
-            default: break;
-        }
-
-        view.setCato(cato);
 
         return view;
     }

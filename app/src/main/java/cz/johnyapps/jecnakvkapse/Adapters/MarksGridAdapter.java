@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import cz.johnyapps.catoslibrary.Catos.View.CatoView;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogMarkBuilder;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Score.Mark;
@@ -66,7 +65,7 @@ public class MarksGridAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.item_score_mark, parent, false);
         }
 
-        loadMarkView(convertView, parent, mark);
+        loadMarkView(convertView, mark);
 
         Setup_OnClick(convertView, mark);
         return convertView;
@@ -75,14 +74,9 @@ public class MarksGridAdapter extends BaseAdapter {
     /**
      * Načte mark view
      * @param convertView   convertView
-     * @param parent        parent
      * @param mark          mark
      */
-    private void loadMarkView(View convertView, ViewGroup parent, Mark mark) {
-        if (convertView instanceof CatoView) {
-            convertView = inflater.inflate(R.layout.item_score_mark, parent, false);
-        }
-
+    private void loadMarkView(View convertView, Mark mark) {
         TextView txtMark = convertView.findViewById(R.id.Mark_txtMark);
         txtMark.setText(mark.getValue());
         txtMark.setBackgroundColor(mark.getColor());
@@ -114,40 +108,13 @@ public class MarksGridAdapter extends BaseAdapter {
 
                     switch (mark.getValue()) {
                         case "5":
-                            boolean pink = prefs.getBoolean("enable_pink", false);
-
-                            if (pink) {
-                                prefs.edit().putBoolean("enable_pink", false).apply();
-                                Toast.makeText(context, "Růžové téma zakázáno", Toast.LENGTH_LONG).show();
-                            } else {
-                                prefs.edit().putBoolean("enable_pink", true).apply();
-                                Toast.makeText(context, "Růžové téma povoleno", Toast.LENGTH_LONG).show();
-                            }
+                            handlePinkThemeChange();
                             break;
                         case "DT":
-                        case "DŘ":
-                            boolean red = prefs.getBoolean("enable_red", false);
-
-                            if (red) {
-                                prefs.edit().putBoolean("enable_red", false).apply();
-                                Toast.makeText(context, "Code red téma zakázáno", Toast.LENGTH_LONG).show();
-                            } else {
-                                prefs.edit().putBoolean("enable_red", true).apply();
-                                Toast.makeText(context, "Code red téma povoleno", Toast.LENGTH_LONG).show();
-                            }
+                        case "DŘ": {
+                            handleCodeRedChange();
                             break;
-                        case "PT":
-                        case "PŘ":
-                            boolean cato = prefs.getBoolean("enable_catos", false);
-
-                            if (cato) {
-                                prefs.edit().putBoolean("enable_catos", false).apply();
-                                Toast.makeText(context, "Cato známky zakázány", Toast.LENGTH_LONG).show();
-                            } else {
-                                prefs.edit().putBoolean("enable_catos", true).apply();
-                                Toast.makeText(context, "Cato známky povoleny", Toast.LENGTH_LONG).show();
-                            }
-                            break;
+                        }
                     }
 
                     return false;
@@ -157,28 +124,55 @@ public class MarksGridAdapter extends BaseAdapter {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Mark mark = (Mark) v.getTag();
-                    String title = mark.getValue();
-
-                    if (mark.isSmall() && mark.rozlisovatVelikost()) {
-                        title += " Malá";
-                    } else if (mark.rozlisovatVelikost()) {
-                        title += " Velká";
-                    }
-
-                    DialogMarkBuilder builder = new DialogMarkBuilder(context);
-                    builder.setTitle(title)
-                            .setHeaderColor(mark.getColor())
-                            .setNegativeButton("Zavřít", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setMessage(mark.getTitle())
-                            .create().show();
+                    showMarkDialog((Mark) v.getTag());
                 }
             });
+        }
+    }
+
+    private void showMarkDialog(Mark mark) {
+        String title = mark.getValue();
+
+        if (mark.isSmall() && mark.rozlisovatVelikost()) {
+            title += " Malá";
+        } else if (mark.rozlisovatVelikost()) {
+            title += " Velká";
+        }
+
+        DialogMarkBuilder builder = new DialogMarkBuilder(context);
+        builder.setTitle(title)
+                .setHeaderColor(mark.getColor())
+                .setNegativeButton("Zavřít", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setMessage(mark.getTitle())
+                .create().show();
+    }
+
+    private void handlePinkThemeChange() {
+        boolean pink = prefs.getBoolean("enable_pink", false);
+
+        if (pink) {
+            prefs.edit().putBoolean("enable_pink", false).apply();
+            Toast.makeText(context, "Růžové téma zakázáno", Toast.LENGTH_LONG).show();
+        } else {
+            prefs.edit().putBoolean("enable_pink", true).apply();
+            Toast.makeText(context, "Růžové téma povoleno", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void handleCodeRedChange() {
+        boolean red = prefs.getBoolean("enable_red", false);
+
+        if (red) {
+            prefs.edit().putBoolean("enable_red", false).apply();
+            Toast.makeText(context, context.getString(R.string.easter_egg_code_red_disabled), Toast.LENGTH_LONG).show();
+        } else {
+            prefs.edit().putBoolean("enable_red", true).apply();
+            Toast.makeText(context, context.getString(R.string.easter_egg_code_red_enabled), Toast.LENGTH_LONG).show();
         }
     }
 }

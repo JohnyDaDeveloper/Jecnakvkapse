@@ -1,3 +1,0 @@
-# catoslibrary
-
-Cato creator
