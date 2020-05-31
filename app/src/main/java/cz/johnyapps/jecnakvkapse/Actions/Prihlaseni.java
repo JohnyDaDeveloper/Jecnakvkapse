@@ -14,6 +14,7 @@ import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
 import cz.johnyapps.jecnakvkapse.HttpConnection.StahniData;
 import cz.johnyapps.jecnakvkapse.Profil.ProfilConvertor;
 import cz.johnyapps.jecnakvkapse.Profil.StahniProfil;
+import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 import cz.johnyapps.jecnakvkapse.Tools.Logger;
 
@@ -44,7 +45,7 @@ public class Prihlaseni extends BaseAction {
     public void prihlas(String user, String pass) {
         if (!User.getUser().isDummy()) {
             DialogLoading dialogLoading = new DialogLoading(context);
-            AlertDialog dialog = dialogLoading.get("Přihlašování...");
+            AlertDialog dialog = dialogLoading.get(R.string.dialog_loading_prihlasovani);
 
             Logger.v(TAG, "prihlas");
 

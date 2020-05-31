@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (!login.equals("NEULOZENO") && !heslo.equals("NEULOZENO")) {
             login(login, heslo);
         } else {
-            ShowDialog_Login();
+            showLoginDialog();
         }
     }
 
@@ -173,12 +174,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId()) {
             case R.id.MenuMain_Prihlasit: {
-                ShowDialog_Login();
+                showLoginDialog();
                 break;
             }
 
             case R.id.MenuMain_Odhlasit: {
                 DialogOdhlasit odhlasit = new DialogOdhlasit(context);
+                odhlasit.setOnOdhlasenListener(new DialogOdhlasit.OnOdhlasenListener() {
+                    @Override
+                    public void onOdhlasen() {
+                        setName(null);
+                    }
+                });
                 odhlasit.get().show();
                 break;
             }
@@ -197,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             default: {
                 if (item.getItemId() != fragment_selected) {
-                    SwitchFragments(item.getItemId());
+                    switchFragments(item.getItemId());
                 }
 
                 break;
@@ -207,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void ShowDialog_Login() {
+    public void showLoginDialog() {
         DialogLogin login = new DialogLogin(context) {
             @Override
             public void login(String login, String pass, boolean remember) {
@@ -232,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * Přepíná fragmenty
      * @param id    ID fragmentu na který se má přepnout
      */
-    private void SwitchFragments(int id) {
+    private void switchFragments(int id) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         Fragment fragment;
@@ -277,6 +284,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /**
+     * Nastaví jméno ve vysouvacím menu
+     * @param name  Jméno
+     */
+    private void setName(String name) {
+        TextView txtName = findViewById(R.id.menuHeaderName);
+        txtName.setText(name);
+    }
+
+    /**
      * Přihlásí uživatele
      * @param login Login
      * @param pass  Heslo
@@ -286,12 +302,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         prihlaseni.setOnCompleteListener(new BaseAction.OnCompleteListener() {
             @Override
             public void onComplete() {
-                SwitchFragments(fragment_selected);
+                setName(User.getUser().getLogin());
+                switchFragments(fragment_selected);
             }
 
             @Override
             public void onError() {
-                SwitchFragments(fragment_selected);
+                switchFragments(fragment_selected);
             }
         });
         prihlaseni.prihlas(login, pass);

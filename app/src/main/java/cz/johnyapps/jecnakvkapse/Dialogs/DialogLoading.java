@@ -1,8 +1,10 @@
 package cz.johnyapps.jecnakvkapse.Dialogs;
 
-import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.widget.ProgressBar;
+
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 
 /**
  * Dialog pro načítání
@@ -16,6 +18,11 @@ public class DialogLoading {
      */
     public DialogLoading(Context context) {
         this.context = context;
+    }
+
+
+    public AlertDialog get(@StringRes int message) {
+        return get(context.getResources().getString(message));
     }
 
     /**

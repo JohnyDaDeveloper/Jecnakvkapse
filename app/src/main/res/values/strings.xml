@@ -28,6 +28,8 @@
     <string name="theme_code_red_enabled">Code red téma povoleno</string>
     <string name="theme_code_red_disabled">Code red téma zakázáno</string>
 
+    <string name="dialog_loading_prihlasovani">Přihlašování…</string>
+
     <string name="dialog_error_title">Error</string>
 
     <string name="dialog_change_period_title">Výběr období</string>

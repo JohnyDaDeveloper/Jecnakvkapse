@@ -60,6 +60,20 @@ public class DialogOdhlasit {
     private void odhlasit() {
         prefs.edit().remove(PrefsNames.PASSWORD).apply();
         user.setLogged(false);
+
+        if (onOdhlasenListener != null ) {
+            onOdhlasenListener.onOdhlasen();
+        }
+
         Toast.makeText(context, R.string.dialog_odhlasit_odhlaseno, Toast.LENGTH_SHORT).show();
+    }
+
+    private OnOdhlasenListener onOdhlasenListener;
+    public interface OnOdhlasenListener {
+        void onOdhlasen();
+    }
+
+    public void setOnOdhlasenListener(OnOdhlasenListener onOdhlasenListener) {
+        this.onOdhlasenListener = onOdhlasenListener;
     }
 }

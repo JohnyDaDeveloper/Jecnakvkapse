@@ -1,6 +1,5 @@
 package cz.johnyapps.jecnakvkapse.Suplarch;
 
-import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -49,18 +48,17 @@ public class StahniSuplarch {
         DialogLoading dialog = new DialogLoading(context);
         Request request = new Request(link.getLink(), "GET", new File(context.getCacheDir(), link.getDocName()));
 
-        @SuppressLint("StaticFieldLeak") DownloadFile download = new DownloadFile(dialog.get(link.getDocName())) {
+        DownloadFile download = new DownloadFile(dialog.get(link.getDocName()));
+        download.setOnCompleteListener(new DownloadFile.OnCompleteListener() {
             @Override
-            public void nextAction(String result) {
-                super.nextAction(result);
-
+            public void onComplete(String result) {
                 ResultErrorProcess process = new ResultErrorProcess(context);
 
                 if (process.process(result)) {
                     onResult();
                 }
             }
-        };
+        });
         download.execute(request);
     }
 
