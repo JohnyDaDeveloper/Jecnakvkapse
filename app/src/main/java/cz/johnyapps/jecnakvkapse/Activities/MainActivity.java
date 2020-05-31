@@ -15,9 +15,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import cz.johnyapps.jecnakvkapse.Actions.BaseAction;
 import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
+import cz.johnyapps.jecnakvkapse.AnalyticsNames;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogEnableCrashlytics;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogLogin;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogOdhlasit;
@@ -71,11 +73,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initialize() {
         prefs = getSharedPreferences(PrefsNames.PREFS_NAME, MODE_PRIVATE);
         user = User.getUser();
-
         drawerLayout = findViewById(R.id.Main_layoutMain);
         navigationView = findViewById(R.id.Main_menu);
+        fragment_selected = prefs.getInt(PrefsNames.MAIN_FRAGMENT, R.id.MenuMain_Znamky);
 
-        fragment_selected = prefs.getInt("main_fragment", R.id.MenuMain_Znamky);
+        FirebaseAnalytics.getInstance(context).setAnalyticsCollectionEnabled(true);
 
         setupMenu();
         clearChache();
@@ -92,12 +94,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void onComplete(boolean enabled) {
                     Logger.getInstance().initialize(enabled);
+                    reportCrashlyticsStatus(enabled);
                 }
             });
             dialogEnableCrashlytics.show();
         } else {
-            Logger.getInstance().initialize(prefs.getBoolean(PrefsNames.CRASHLYTICS_ENABLED, false));
+            boolean enabled = prefs.getBoolean(PrefsNames.CRASHLYTICS_ENABLED, false);
+            Logger.getInstance().initialize(enabled);
+            reportCrashlyticsStatus(enabled);
         }
+    }
+
+    private void reportCrashlyticsStatus(boolean enabled) {
+        String crashlyticsStatus = enabled ? AnalyticsNames.ENABLED : AnalyticsNames.DISABLED;
+        FirebaseAnalytics.getInstance(context).setUserProperty(AnalyticsNames.CRASHLYTICS, crashlyticsStatus);
     }
 
     /**
@@ -132,8 +142,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * Automatické přihlášení s uloženými daty
      */
     private void autoLogin() {
-        String login = prefs.getString("login", "NEULOZENO");
-        String heslo = prefs.getString("pass", "NEULOZENO");
+        String login = prefs.getString(PrefsNames.LOGIN, "NEULOZENO");
+        String heslo = prefs.getString(PrefsNames.PASSWORD, "NEULOZENO");
 
         if (!login.equals("NEULOZENO") && !heslo.equals("NEULOZENO")) {
             login(login, heslo);

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogMarkBuilder;
+import cz.johnyapps.jecnakvkapse.PrefsNames;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Score.Mark;
 
@@ -37,7 +38,7 @@ public class MarksGridAdapter extends BaseAdapter {
      */
     MarksGridAdapter(Context context, ArrayList<Mark> marks) {
         this.context = context;
-        this.prefs = context.getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
+        this.prefs = context.getSharedPreferences(PrefsNames.PREFS_NAME, MODE_PRIVATE);
 
         this.marks = marks;
         this.inflater = (LayoutInflater.from(context));
@@ -131,18 +132,18 @@ public class MarksGridAdapter extends BaseAdapter {
     }
 
     private void showMarkDialog(Mark mark) {
-        String title = mark.getValue();
+        String title = mark.getValue() + " ";
 
         if (mark.isSmall() && mark.rozlisovatVelikost()) {
-            title += " Malá";
+            title += context.getString(R.string.mala);
         } else if (mark.rozlisovatVelikost()) {
-            title += " Velká";
+            title += context.getString(R.string.velka);
         }
 
         DialogMarkBuilder builder = new DialogMarkBuilder(context);
         builder.setTitle(title)
                 .setHeaderColor(mark.getColor())
-                .setNegativeButton("Zavřít", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.zavrit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -153,26 +154,26 @@ public class MarksGridAdapter extends BaseAdapter {
     }
 
     private void handlePinkThemeChange() {
-        boolean pink = prefs.getBoolean("enable_pink", false);
+        boolean pink = prefs.getBoolean(PrefsNames.ENABLE_PINK, false);
 
         if (pink) {
-            prefs.edit().putBoolean("enable_pink", false).apply();
-            Toast.makeText(context, "Růžové téma zakázáno", Toast.LENGTH_LONG).show();
+            prefs.edit().putBoolean(PrefsNames.ENABLE_PINK, false).apply();
+            Toast.makeText(context, R.string.theme_pink_disabled, Toast.LENGTH_LONG).show();
         } else {
-            prefs.edit().putBoolean("enable_pink", true).apply();
-            Toast.makeText(context, "Růžové téma povoleno", Toast.LENGTH_LONG).show();
+            prefs.edit().putBoolean(PrefsNames.ENABLE_PINK, true).apply();
+            Toast.makeText(context, R.string.theme_pink_enabled, Toast.LENGTH_LONG).show();
         }
     }
 
     private void handleCodeRedChange() {
-        boolean red = prefs.getBoolean("enable_red", false);
+        boolean red = prefs.getBoolean(PrefsNames.ENABLE_CODE_RED, false);
 
         if (red) {
-            prefs.edit().putBoolean("enable_red", false).apply();
-            Toast.makeText(context, context.getString(R.string.easter_egg_code_red_disabled), Toast.LENGTH_LONG).show();
+            prefs.edit().putBoolean(PrefsNames.ENABLE_CODE_RED, false).apply();
+            Toast.makeText(context, R.string.theme_code_red_disabled, Toast.LENGTH_LONG).show();
         } else {
-            prefs.edit().putBoolean("enable_red", true).apply();
-            Toast.makeText(context, context.getString(R.string.easter_egg_code_red_enabled), Toast.LENGTH_LONG).show();
+            prefs.edit().putBoolean(PrefsNames.ENABLE_CODE_RED, true).apply();
+            Toast.makeText(context, R.string.theme_code_red_enabled, Toast.LENGTH_LONG).show();
         }
     }
 }

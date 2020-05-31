@@ -1,11 +1,14 @@
 package cz.johnyapps.jecnakvkapse.Dialogs;
 
-import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
+import cz.johnyapps.jecnakvkapse.PrefsNames;
+import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -24,7 +27,7 @@ public class DialogOdhlasit {
      */
     public DialogOdhlasit(Context context) {
         this.context = context;
-        prefs = context.getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
+        prefs = context.getSharedPreferences(PrefsNames.PREFS_NAME, MODE_PRIVATE);
         user = User.getUser();
     }
 
@@ -34,14 +37,14 @@ public class DialogOdhlasit {
      */
     public AlertDialog get() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Odhlásit?")
-                .setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.dialog_odhlasit_title)
+                .setPositiveButton(R.string.ano, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         odhlasit();
                     }
                 })
-                .setNegativeButton("Zrušit", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.zrusit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -55,8 +58,8 @@ public class DialogOdhlasit {
      * Odhlásí uživatele po kliknutí na tlačítko odhlásit v dialogu z {@link #get()}
      */
     private void odhlasit() {
-        prefs.edit().remove("pass").apply();
+        prefs.edit().remove(PrefsNames.PASSWORD).apply();
         user.setLogged(false);
-        Toast.makeText(context, "Odhášeno", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, R.string.dialog_odhlasit_odhlaseno, Toast.LENGTH_SHORT).show();
     }
 }

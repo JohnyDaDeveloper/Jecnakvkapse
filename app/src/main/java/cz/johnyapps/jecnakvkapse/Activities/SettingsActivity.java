@@ -12,6 +12,9 @@ import android.widget.RadioGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
+import cz.johnyapps.jecnakvkapse.AnalyticsNames;
 import cz.johnyapps.jecnakvkapse.PrefsNames;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Tools.Logger;
@@ -41,7 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
      * Inicializace
      */
     private void initialize() {
-        prefs = getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
+        prefs = getSharedPreferences(PrefsNames.PREFS_NAME, MODE_PRIVATE);
 
         setupHlavniFragment();
         setupTheme();
@@ -94,27 +97,27 @@ public class SettingsActivity extends AppCompatActivity {
 
                 switch (checkedId) {
                     case R.id.FirstFragment_rozvrh: {
-                        editor.putInt("main_fragment", R.id.MenuMain_Rozvrh);
+                        editor.putInt(PrefsNames.MAIN_FRAGMENT, R.id.MenuMain_Rozvrh);
                         break;
                     }
 
                     case R.id.FirstFragment_prichody: {
-                        editor.putInt("main_fragment", R.id.MenuMain_Prichody);
+                        editor.putInt(PrefsNames.MAIN_FRAGMENT, R.id.MenuMain_Prichody);
                         break;
                     }
 
                     case R.id.FirstFragment_omluvenky: {
-                        editor.putInt("main_fragment", R.id.MenuMain_Omluvenky);
+                        editor.putInt(PrefsNames.MAIN_FRAGMENT, R.id.MenuMain_Omluvenky);
                         break;
                     }
 
                     case R.id.FirstFragment_suplovani: {
-                        editor.putInt("main_fragment", R.id.MenuMain_Suplarch);
+                        editor.putInt(PrefsNames.MAIN_FRAGMENT, R.id.MenuMain_Suplarch);
                         break;
                     }
 
                     default: {
-                        editor.putInt("main_fragment", R.id.MenuMain_Znamky);
+                        editor.putInt(PrefsNames.MAIN_FRAGMENT, R.id.MenuMain_Znamky);
                         break;
                     }
                 }
@@ -128,9 +131,9 @@ public class SettingsActivity extends AppCompatActivity {
      * Nastavení volby motivu
      */
     private void setupTheme() {
-        int theme = prefs.getInt("selected_theme", R.id.SettingsTheme_light);
-        boolean pink = prefs.getBoolean("enable_pink", false);
-        boolean red = prefs.getBoolean("enable_red", false);
+        int theme = prefs.getInt(PrefsNames.SELECTED_THEME, R.id.SettingsTheme_light);
+        boolean pink = prefs.getBoolean(PrefsNames.ENABLE_PINK, false);
+        boolean red = prefs.getBoolean(PrefsNames.ENABLE_CODE_RED, false);
 
         if (pink) {
             RadioButton button = findViewById(R.id.SettingsTheme_pink);
@@ -146,12 +149,12 @@ public class SettingsActivity extends AppCompatActivity {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                int theme = prefs.getInt("selected_theme", R.id.SettingsTheme_light);
+                int theme = prefs.getInt(PrefsNames.SELECTED_THEME, R.id.SettingsTheme_light);
 
                 switch (checkedId) {
                     case R.id.SettingsTheme_dark: {
                         if (theme != R.id.SettingsTheme_dark) {
-                            prefs.edit().putInt("selected_theme", R.id.SettingsTheme_dark).apply();
+                            prefs.edit().putInt(PrefsNames.SELECTED_THEME, R.id.SettingsTheme_dark).apply();
                             restart();
                         }
 
@@ -160,7 +163,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                     case R.id.SettingsTheme_pink: {
                         if (theme != R.id.SettingsTheme_pink) {
-                            prefs.edit().putInt("selected_theme", R.id.SettingsTheme_pink).apply();
+                            prefs.edit().putInt(PrefsNames.SELECTED_THEME, R.id.SettingsTheme_pink).apply();
                             restart();
                         }
 
@@ -226,8 +229,10 @@ public class SettingsActivity extends AppCompatActivity {
 
                 if (b) {
                     Logger.getInstance().enableCrashlytics();
+                    FirebaseAnalytics.getInstance(context).setUserProperty(AnalyticsNames.CRASHLYTICS, AnalyticsNames.ENABLED);
                 } else {
                     Logger.getInstance().disableCrashlytics();
+                    FirebaseAnalytics.getInstance(context).setUserProperty(AnalyticsNames.CRASHLYTICS, AnalyticsNames.DISABLED);
                 }
             }
         });

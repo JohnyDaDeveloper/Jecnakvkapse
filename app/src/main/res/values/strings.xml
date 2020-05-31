@@ -1,8 +1,16 @@
 <resources>
     <string name="app_name">Ječňák v kapse</string>
+    <string name="demo">Demo</string>
 
-    <string name="dialog_prihlasit">Přihlásit</string>
-    <string name="dialog_demo">Demo</string>
+    <string name="mala">Malá</string>
+    <string name="velka">Velká</string>
+
+    <string name="povolit">Povolit</string>
+    <string name="zakazat">Zakázat</string>
+    <string name="zavrit">Zavřít</string>
+    <string name="prihlasit">Přihlásit</string>
+    <string name="ano">Ano</string>
+    <string name="zrusit">Zrušit</string>
 
     <string name="menu_prihlasit">Přihásit</string>
     <string name="menu_odhlasit">Odhlásit</string>
@@ -14,14 +22,18 @@
     <string name="menu_nastaveni">Nastavení</string>
     <string name="menu_o_aplikaci">O aplikaci</string>
 
-    <string name="povolit">Povolit</string>
-    <string name="zakazat">Zakázat</string>
+    <string name="theme_pink_enabled">Růžové téma povoleno</string>
+    <string name="theme_pink_disabled">Růžové téma zakázáno</string>
+    <string name="theme_code_red_enabled">Code red téma povoleno</string>
+    <string name="theme_code_red_disabled">Code red téma zakázáno</string>
+
+    <string name="dialog_odhlasit_title">Odhlásit?</string>
+    <string name="dialog_odhlasit_odhlaseno">Odhlášeno</string>
+
+    <string name="dialog_login_title">Přihlášení</string>
 
     <string name="dialog_enable_crashlytics">Povolit Crashlytics</string>
     <string name="dialog_enable_crashlytics_message">Povolit aplikaci Ječná v kapse sběr dat o běhu apliakce?\n\nPovolením této služby usnadňujete vývojářům dostraňování případných chyb. Odeslaná data <b>neobsahují</b> Vaše přihlašovací údaje nebo jakákoliv jiná citlivá data.\n\nLze později upravit v nastavení.</string>
-
-    <string name="easter_egg_code_red_enabled">Code red téma povoleno</string>
-    <string name="easter_egg_code_red_disabled">Code red téma zakázáno</string>
 
     <string name="settings_fragment_first_title">Hlavní okno</string>
     <string name="settings_fragment_first_subtext">Okno které se otevře jako první při zapnutí aplikace</string>

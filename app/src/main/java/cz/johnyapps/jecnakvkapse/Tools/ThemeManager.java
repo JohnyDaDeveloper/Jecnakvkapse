@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 
+import cz.johnyapps.jecnakvkapse.PrefsNames;
 import cz.johnyapps.jecnakvkapse.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -27,14 +28,14 @@ public class ThemeManager {
     public ThemeManager(Context context) {
         this.context = context;
 
-        prefs = context.getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
+        prefs = context.getSharedPreferences(PrefsNames.PREFS_NAME, MODE_PRIVATE);
     }
 
     /**
      *  Načte nastavené téma z paměti zařízení
      */
     public void loadTheme(Activity activity) {
-        int theme = prefs.getInt("selected_theme", R.id.SettingsTheme_light);
+        int theme = prefs.getInt(PrefsNames.SELECTED_THEME, R.id.SettingsTheme_light);
         switch (theme) {
             case R.id.SettingsTheme_dark: {
                 Logger.i(TAG, "loadTheme: Dark");

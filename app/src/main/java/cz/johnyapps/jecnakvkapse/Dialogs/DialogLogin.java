@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 
+import cz.johnyapps.jecnakvkapse.PrefsNames;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Tools.DummyGenerator;
 
@@ -29,7 +30,7 @@ public class DialogLogin {
      */
     protected DialogLogin(Context context) {
         this.context = context;
-        prefs = context.getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
+        prefs = context.getSharedPreferences(PrefsNames.PREFS_NAME, MODE_PRIVATE);
     }
 
     /**
@@ -40,8 +41,8 @@ public class DialogLogin {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.dialog_login, null, false);
 
-        final String login = prefs.getString("login", "NEULOZENO");
-        String pass = prefs.getString("pass", "NEULOZENO");
+        final String login = prefs.getString(PrefsNames.LOGIN, "NEULOZENO");
+        String pass = prefs.getString(PrefsNames.PASSWORD, "NEULOZENO");
 
         if (!login.equals("NEULOZENO")) {
             EditText edtName = view.findViewById(R.id.DialogLogIn_edtName);
@@ -57,9 +58,9 @@ public class DialogLogin {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Přihlášení")
+        builder.setTitle(R.string.dialog_login_title)
                 .setView(view)
-                .setPositiveButton(R.string.dialog_prihlasit, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.prihlasit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         AlertDialog alertDialog = (AlertDialog) dialog;
@@ -77,7 +78,7 @@ public class DialogLogin {
                         login(login, pass, remember);
                     }
                 })
-                .setNeutralButton(R.string.dialog_demo, new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.demo, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         DummyGenerator generator = new DummyGenerator();
@@ -98,7 +99,7 @@ public class DialogLogin {
      * @see #get()
      */
     public void login(String login, String pass, boolean remember) {
-        prefs.edit().putString("login", login).apply();
-        if (remember) prefs.edit().putString("pass", pass).apply();
+        prefs.edit().putString(PrefsNames.LOGIN, login).apply();
+        if (remember) prefs.edit().putString(PrefsNames.PASSWORD, pass).apply();
     }
 }
