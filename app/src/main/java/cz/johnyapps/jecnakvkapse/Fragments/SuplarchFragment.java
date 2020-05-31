@@ -224,8 +224,6 @@ public class SuplarchFragment extends Fragment implements SwipeRefreshLayout.OnR
             } else {
                 recyclerView.setVisibility(View.GONE);
                 noItems.setVisibility(View.VISIBLE);
-
-                Toast.makeText(context, R.string.toasts_zadna_suplovani, Toast.LENGTH_LONG).show();
             }
         } else {
             suplarch();

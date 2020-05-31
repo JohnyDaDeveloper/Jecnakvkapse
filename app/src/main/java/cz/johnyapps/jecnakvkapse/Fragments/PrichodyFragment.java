@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -197,8 +196,6 @@ public class PrichodyFragment extends Fragment implements View.OnClickListener, 
             } else {
                 recyclerView.setVisibility(View.GONE);
                 noItems.setVisibility(View.VISIBLE);
-
-                Toast.makeText(context, R.string.toasts_zadne_prichody, Toast.LENGTH_LONG).show();
             }
         } else {
             prichody(null);
