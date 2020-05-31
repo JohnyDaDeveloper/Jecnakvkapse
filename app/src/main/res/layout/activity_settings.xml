@@ -46,4 +46,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        style="@style/Jecnak.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/Settings_Crashlytics"
+            layout="@layout/settings_crashlytics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

@@ -24,10 +24,12 @@ public class Logger {
 
     public void enableCrashlytics() {
         crashlyticsEnabled = true;
+        Logger.i(TAG, "enableCrashlytics");
     }
 
     public void disableCrashlytics() {
         crashlyticsEnabled = false;
+        Logger.i(TAG, "disableCrashlytics");
     }
 
     public boolean isCrashlyticsEnabled() {

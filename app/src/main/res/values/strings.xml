@@ -18,7 +18,7 @@
     <string name="zakazat">Zakázat</string>
 
     <string name="dialog_enable_crashlytics">Povolit Crashlytics</string>
-    <string name="dialog_enable_crashlytics_message">Povolit aplikaci Ječná v kapse sběr dat o běhu apliakce?\n\nPovolením této služby usnadňujete vývojářům dostraňování případných chyb. Odeslaná data <b>neobsahují</b> Vaše přihlašovací údaje nebo jakákoliv jiná citlivá data.</string>
+    <string name="dialog_enable_crashlytics_message">Povolit aplikaci Ječná v kapse sběr dat o běhu apliakce?\n\nPovolením této služby usnadňujete vývojářům dostraňování případných chyb. Odeslaná data <b>neobsahují</b> Vaše přihlašovací údaje nebo jakákoliv jiná citlivá data.\n\nLze později upravit v nastavení.</string>
 
     <string name="easter_egg_code_red_enabled">Code red téma povoleno</string>
     <string name="easter_egg_code_red_disabled">Code red téma zakázáno</string>
@@ -32,6 +32,8 @@
     <string name="settings_theme_dark">Tmavý motiv</string>
     <string name="settings_theme_pink">Růžový motiv</string>
     <string name="settings_theme_red">Code red motiv</string>
+    <string name="settings_crashlytics_title">Crashlytics</string>
+    <string name="settings_crashlytics">Povolit sběr dat o chybách</string>
 
     <string name="oaplikaci_vyvojar_title">Vývojář</string>
     <string name="oaplikaci_vyvojar_jmeno">Johny Da Developer</string>

@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
+import cz.johnyapps.jecnakvkapse.PrefsNames;
 import cz.johnyapps.jecnakvkapse.R;
+import cz.johnyapps.jecnakvkapse.Tools.Logger;
 import cz.johnyapps.jecnakvkapse.Tools.ThemeManager;
 
 /**
@@ -39,14 +43,15 @@ public class SettingsActivity extends AppCompatActivity {
     private void initialize() {
         prefs = getSharedPreferences("jecnakvkapse", MODE_PRIVATE);
 
-        Setup_HlavniFragment();
-        Setup_Theme();
+        setupHlavniFragment();
+        setupTheme();
+        setupCrashlytics();
     }
 
     /**
      * Nastavení volby hlavního okna
      */
-    private void Setup_HlavniFragment() {
+    private void setupHlavniFragment() {
         int selected = prefs.getInt("main_fragment", R.id.MenuMain_Znamky);
 
         switch (selected) {
@@ -88,11 +93,6 @@ public class SettingsActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = prefs.edit();
 
                 switch (checkedId) {
-                    case R.id.FirstFragment_znamky: {
-                        editor.putInt("main_fragment", R.id.MenuMain_Znamky);
-                        break;
-                    }
-
                     case R.id.FirstFragment_rozvrh: {
                         editor.putInt("main_fragment", R.id.MenuMain_Rozvrh);
                         break;
@@ -127,7 +127,7 @@ public class SettingsActivity extends AppCompatActivity {
     /**
      * Nastavení volby motivu
      */
-    private void Setup_Theme() {
+    private void setupTheme() {
         int theme = prefs.getInt("selected_theme", R.id.SettingsTheme_light);
         boolean pink = prefs.getBoolean("enable_pink", false);
         boolean red = prefs.getBoolean("enable_red", false);
@@ -214,6 +214,23 @@ public class SettingsActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    private void setupCrashlytics() {
+        SwitchCompat crashlyticsSwitch = findViewById(R.id.crashlyticsEnabledSwitch);
+        crashlyticsSwitch.setChecked(prefs.getBoolean(PrefsNames.CRASHLYTICS_ENABLED, false));
+        crashlyticsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                prefs.edit().putBoolean(PrefsNames.CRASHLYTICS_ENABLED, b).apply();
+
+                if (b) {
+                    Logger.getInstance().enableCrashlytics();
+                } else {
+                    Logger.getInstance().disableCrashlytics();
+                }
+            }
+        });
     }
 
     /**
