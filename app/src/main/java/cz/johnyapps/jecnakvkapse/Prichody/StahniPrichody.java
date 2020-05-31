@@ -1,20 +1,20 @@
 package cz.johnyapps.jecnakvkapse.Prichody;
 
-import android.annotation.SuppressLint;
 import androidx.annotation.Nullable;
 
 import cz.johnyapps.jecnakvkapse.HttpConnection.Connection;
 import cz.johnyapps.jecnakvkapse.HttpConnection.Request;
+import cz.johnyapps.jecnakvkapse.HttpConnection.StahniData;
 
 /**
  * Stáhne příchody
  * @see Connection
  */
-public class StahniPrichody {
+public class StahniPrichody extends StahniData {
     /**
      * Inicializace
      */
-    protected StahniPrichody() {
+    public StahniPrichody() {
 
     }
 
@@ -29,23 +29,13 @@ public class StahniPrichody {
             request.addObdobi(obdobi);
         }
 
-        @SuppressLint("StaticFieldLeak") Connection connection = new Connection() {
+        Connection connection = new Connection();
+        connection.setOnCompleteListener(new Connection.OnCompleteListener() {
             @Override
-            public void nextAction(String result) {
-                super.nextAction(result);
-                onResult(result);
+            public void onComplete(String result) {
+                completed(result);
             }
-        };
-
+        });
         connection.execute(request);
-    }
-
-    /**
-     * Spustí se při dokončení stahování
-     * @param result    Výsledek
-     * @see PrichodyConvertor
-     */
-    public void onResult(String result) {
-
     }
 }

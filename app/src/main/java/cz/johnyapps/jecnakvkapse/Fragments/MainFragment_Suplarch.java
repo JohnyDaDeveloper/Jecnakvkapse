@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import cz.johnyapps.jecnakvkapse.Adapters.SuplarchLinkAdapter;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
+import cz.johnyapps.jecnakvkapse.HttpConnection.StahniData;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
 import cz.johnyapps.jecnakvkapse.Suplarch.SuplarchHolder;
@@ -126,19 +127,14 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
 
         Crashlytics.log(Log.INFO, TAG, "Handling permission request results");
 
-        switch (requestCode) {
-            case PERMISSION_REQUEST_CODE: {
-                if (processPermision(Manifest.permission.WRITE_EXTERNAL_STORAGE, permissions, grantResults) && processPermision(Manifest.permission.READ_EXTERNAL_STORAGE, permissions, grantResults)) {
-                    Crashlytics.log(Log.INFO, TAG, "Permission \"Write external storage\" guaranteed");
-                    displaySuplarchLinks();
-                } else {
-                    Crashlytics.log(Log.INFO, TAG, "Permission \"Write external storage\" denied");
-                    permissionDenied();
-                }
-                break;
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (processPermision(Manifest.permission.WRITE_EXTERNAL_STORAGE, permissions, grantResults) && processPermision(Manifest.permission.READ_EXTERNAL_STORAGE, permissions, grantResults)) {
+                Crashlytics.log(Log.INFO, TAG, "Permission \"Write external storage\" guaranteed");
+                displaySuplarchLinks();
+            } else {
+                Crashlytics.log(Log.INFO, TAG, "Permission \"Write external storage\" denied");
+                permissionDenied();
             }
-
-            default: break;
         }
     }
 
@@ -178,11 +174,10 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
     public void suplarch() {
         Crashlytics.log(Log.INFO, TAG, "Downloading \"Suplarch linky\"");
 
-        StahniSuplarchLinky stahniSuplarchLinky = new StahniSuplarchLinky() {
+        StahniSuplarchLinky stahniSuplarchLinky = new StahniSuplarchLinky();
+        stahniSuplarchLinky.setOnCompleteListener(new StahniData.OnCompleteListener() {
             @Override
-            public void onResult(String result) {
-                super.onResult(result);
-
+            public void onComplete(String result) {
                 ResultErrorProcess process = new ResultErrorProcess(context);
 
                 if (process.process(result)) {
@@ -202,7 +197,7 @@ public class MainFragment_Suplarch extends Fragment implements SwipeRefreshLayou
                     Crashlytics.log(Log.INFO, TAG, "Downloading \"Suplarch linky\" error: " + result);
                 }
             }
-        };
+        });
 
         swipeLayout.setRefreshing(true);
 

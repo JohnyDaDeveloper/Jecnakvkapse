@@ -18,6 +18,7 @@ import com.crashlytics.android.Crashlytics;
 import cz.johnyapps.jecnakvkapse.Adapters.RozvrhAdaper;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogError;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
+import cz.johnyapps.jecnakvkapse.HttpConnection.StahniData;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Receivers.NetworkState;
 import cz.johnyapps.jecnakvkapse.Rozvrh.Rozvrh;
@@ -113,10 +114,10 @@ public class MainFragment_Rozvrh extends Fragment {
         if (networkState.isConnected(context)) {
             progressBar.setVisibility(View.VISIBLE);
 
-            StahniRozvrh stahniRozvrh = new StahniRozvrh() {
+            StahniRozvrh stahniRozvrh = new StahniRozvrh();
+            stahniRozvrh.setOnCompleteListener(new StahniData.OnCompleteListener() {
                 @Override
-                public void onResult(String result) {
-                    super.onResult(result);
+                public void onComplete(String result) {
                     ResultErrorProcess error = new ResultErrorProcess(context);
 
                     if (error.process(result)) {
@@ -134,8 +135,7 @@ public class MainFragment_Rozvrh extends Fragment {
 
                     progressBar.setVisibility(View.GONE);
                 }
-            };
-
+            });
             stahniRozvrh.stahni();
         }
     }

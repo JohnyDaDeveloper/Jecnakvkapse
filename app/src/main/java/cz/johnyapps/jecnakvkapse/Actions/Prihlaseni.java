@@ -1,6 +1,5 @@
 package cz.johnyapps.jecnakvkapse.Actions;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 
 import androidx.appcompat.app.AlertDialog;
@@ -14,6 +13,7 @@ import cz.johnyapps.jecnakvkapse.HttpConnection.Connection;
 import cz.johnyapps.jecnakvkapse.HttpConnection.Data;
 import cz.johnyapps.jecnakvkapse.HttpConnection.Request;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
+import cz.johnyapps.jecnakvkapse.HttpConnection.StahniData;
 import cz.johnyapps.jecnakvkapse.Profil.ProfilConvertor;
 import cz.johnyapps.jecnakvkapse.Profil.StahniProfil;
 import cz.johnyapps.jecnakvkapse.Singletons.User;
@@ -21,7 +21,7 @@ import cz.johnyapps.jecnakvkapse.Singletons.User;
 /**
  * Slouží k obstarání sessionID
  */
-public class Prihlaseni {
+public class Prihlaseni extends BaseAction {
     private Context context;
     private User user;
 
@@ -29,7 +29,7 @@ public class Prihlaseni {
      * Inicializace
      * @param context   Context
      */
-    protected Prihlaseni(Context context) {
+    public Prihlaseni(Context context) {
         this.context = context;
         user = User.getUser();
     }
@@ -56,20 +56,17 @@ public class Prihlaseni {
             Request request = new Request("user/login", "POST");
             request.putData(data);
 
-            @SuppressLint("StaticFieldLeak") Connection connection = new Connection(dialog) {
+            Connection connection = new Connection(dialog);
+            connection.setOnCompleteListener(new Connection.OnCompleteListener() {
                 @Override
-                public void nextAction(String result) {
-                    super.nextAction(result);
-
+                public void onComplete(String result) {
                     User.getUser().setLogged(true);
-
                     stahniProfil();
                 }
-            };
-
+            });
             connection.execute(request);
         } else {
-            onResult();
+            completed();
         }
     }
 
@@ -77,17 +74,15 @@ public class Prihlaseni {
      * Stáhne údaje z profilu
      */
     private void stahniProfil() {
-        StahniProfil stahniProfil = new StahniProfil() {
+        StahniProfil stahniProfil = new StahniProfil();
+        stahniProfil.setOnCompleteListener(new StahniData.OnCompleteListener() {
             @Override
-            public void onResult(String result) {
-                super.onResult(result);
-
+            public void onComplete(String result) {
                 ResultErrorProcess process = new ResultErrorProcess(context);
                 if (process.process(result)) {
                     ProfilConvertor profilConvertor = new ProfilConvertor();
                     user.setProfil(profilConvertor.convert(result));
-
-                    Prihlaseni.this.onResult();
+                    completed();
                 } else {
                     error();
                 }
@@ -96,18 +91,7 @@ public class Prihlaseni {
                     user.setLogged(false);
                 }
             }
-        };
+        });
         stahniProfil.stahni();
-    }
-
-    /**
-     * Spustí se po přihlášení {@link #prihlas(String, String)}
-     */
-    public void onResult() {
-        Crashlytics.log("logged in");
-    }
-
-    public void error() {
-        Crashlytics.log("login failed");
     }
 }

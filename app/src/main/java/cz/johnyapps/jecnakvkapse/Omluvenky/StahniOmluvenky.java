@@ -1,19 +1,18 @@
 package cz.johnyapps.jecnakvkapse.Omluvenky;
 
-import android.annotation.SuppressLint;
-
 import cz.johnyapps.jecnakvkapse.HttpConnection.Connection;
 import cz.johnyapps.jecnakvkapse.HttpConnection.Request;
+import cz.johnyapps.jecnakvkapse.HttpConnection.StahniData;
 
 /**
  * Stáhne omluvenky
  * @see Connection
  */
-public class StahniOmluvenky {
+public class StahniOmluvenky extends StahniData {
     /**
      * Inicializace
      */
-    protected StahniOmluvenky() {
+    public StahniOmluvenky() {
 
     }
 
@@ -23,23 +22,13 @@ public class StahniOmluvenky {
     public void stahni() {
         Request request = new Request("absence/student", "POST");
 
-        @SuppressLint("StaticFieldLeak") Connection connection = new Connection() {
+        Connection connection = new Connection();
+        connection.setOnCompleteListener(new Connection.OnCompleteListener() {
             @Override
-            public void nextAction(String result) {
-                super.nextAction(result);
-                onResult(result);
+            public void onComplete(String result) {
+                completed(result);
             }
-        };
-
+        });
         connection.execute(request);
-    }
-
-    /**
-     * Spustí se při dokončení stahování
-     * @param result    Výsledek
-     * @see OmluvenkyConvertor
-     */
-    public void onResult(String result) {
-
     }
 }

@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import cz.johnyapps.jecnakvkapse.Adapters.ScoreRecyclerAdapter;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogChangePeriod;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
+import cz.johnyapps.jecnakvkapse.HttpConnection.StahniData;
 import cz.johnyapps.jecnakvkapse.R;
 import cz.johnyapps.jecnakvkapse.Score.Score;
 import cz.johnyapps.jecnakvkapse.Score.ScoreConvertor;
@@ -96,13 +97,8 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
      */
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.MainFragmentZnamky_button: {
-                zmenitObdobi();
-                break;
-            }
-
-            default: break;
+        if (view.getId() == R.id.MainFragmentZnamky_button) {
+            zmenitObdobi();
         }
     }
 
@@ -151,10 +147,10 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
         String sessionId = user.getSessionId();
 
         if (sessionId != null) {
-            StahniScore stahniScore = new StahniScore() {
+            StahniScore stahniScore = new StahniScore();
+            stahniScore.setOnCompleteListener(new StahniData.OnCompleteListener() {
                 @Override
-                public void onResult(String result) {
-                    super.onResult(result);
+                public void onComplete(String result) {
                     ResultErrorProcess error = new ResultErrorProcess(context);
 
                     if (error.process(result)) {
@@ -171,7 +167,7 @@ public class MainFragment_Znamky extends Fragment implements View.OnClickListene
                         Crashlytics.log(Log.INFO, TAG, "Download error: " + result);
                     }
                 }
-            };
+            });
 
             swipeLayout.setRefreshing(true);
             stahniScore.stahni(obdobi);

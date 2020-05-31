@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.material.navigation.NavigationView;
 
+import cz.johnyapps.jecnakvkapse.Actions.BaseAction;
 import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogLogin;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogOdhlasit;
@@ -275,20 +276,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * @param pass  Heslo
      */
     public void login(final String login, final String pass) {
-        Prihlaseni prihlaseni = new Prihlaseni(context) {
+        Prihlaseni prihlaseni = new Prihlaseni(context);
+        prihlaseni.setOnCompleteListener(new BaseAction.OnCompleteListener() {
             @Override
-            public void onResult() {
-                super.onResult();
+            public void onComplete() {
                 SwitchFragments(fragment_selected);
             }
 
             @Override
-            public void error() {
-                super.error();
+            public void onError() {
                 SwitchFragments(fragment_selected);
             }
-        };
-
+        });
         prihlaseni.prihlas(login, pass);
     }
 }

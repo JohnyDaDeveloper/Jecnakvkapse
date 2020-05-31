@@ -22,6 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import cz.johnyapps.jecnakvkapse.Adapters.PrichodyRecyclerAdapter;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogChangePeriod;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
+import cz.johnyapps.jecnakvkapse.HttpConnection.StahniData;
 import cz.johnyapps.jecnakvkapse.Prichody.Prichody;
 import cz.johnyapps.jecnakvkapse.Prichody.PrichodyConvertor;
 import cz.johnyapps.jecnakvkapse.Prichody.StahniPrichody;
@@ -102,13 +103,8 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
      */
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.MainFragmentPrichody_button: {
-                zmenitObdobi();
-                break;
-            }
-
-            default: break;
+        if (view.getId() == R.id.MainFragmentPrichody_button) {
+            zmenitObdobi();
         }
     }
 
@@ -151,11 +147,10 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
     private void prichody(@Nullable String obdobi) {
         Crashlytics.log(Log.INFO, TAG, "Downloading");
 
-        StahniPrichody stahniPrichody = new StahniPrichody() {
+        StahniPrichody stahniPrichody = new StahniPrichody();
+        stahniPrichody.setOnCompleteListener(new StahniData.OnCompleteListener() {
             @Override
-            public void onResult(String result) {
-                super.onResult(result);
-
+            public void onComplete(String result) {
                 ResultErrorProcess process = new ResultErrorProcess(context);
 
                 if (process.process(result)) {
@@ -173,7 +168,7 @@ public class MainFragment_Prichody extends Fragment implements View.OnClickListe
                     Crashlytics.log(Log.INFO, TAG, "Downloading error: " + result);
                 }
             }
-        };
+        });
 
         swipeLayout.setRefreshing(true);
 

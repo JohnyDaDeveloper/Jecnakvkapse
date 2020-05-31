@@ -15,7 +15,7 @@ import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,7 +36,7 @@ public class Connection extends AsyncTask<Request, Request, String> {
      * Inicializace
      * @param dialog    Dialog zobrazený během stahování
      */
-    protected Connection(AlertDialog dialog) {
+    public Connection(AlertDialog dialog) {
         this.dialog = dialog;
         this.user = User.getUser();
     }
@@ -44,7 +44,7 @@ public class Connection extends AsyncTask<Request, Request, String> {
     /**
      * Inicializace
      */
-    protected Connection() {
+    public Connection() {
         this.user = User.getUser();
     }
 
@@ -89,7 +89,7 @@ public class Connection extends AsyncTask<Request, Request, String> {
                 connection.setDoOutput(true);
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 connection.setRequestProperty("charset", "utf-8");
-                connection.setRequestProperty("Content-Length", Integer.toString(r.getData().getBytes(Charset.forName("UTF-8")).length));
+                connection.setRequestProperty("Content-Length", Integer.toString(r.getData().getBytes(StandardCharsets.UTF_8).length));
             }
             if (user.getSessionId() != null) {
                 connection.setRequestProperty("Cookie", user.getSessionId());
@@ -182,24 +182,25 @@ public class Connection extends AsyncTask<Request, Request, String> {
         }
     }
 
-    /**
-     * Schová dialog po dokončení stahování a pošle data k dalšímu zpracování {@link #nextAction(String)}
-     * @param result    Výsledek čtení
-     */
     @Override
     protected void onPostExecute(String result) {
-        if (dialog != null) dialog.dismiss();
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+
+        if (onCompleteListener != null) {
+            onCompleteListener.onComplete(result);
+        }
 
         super.onPostExecute(result);
-        nextAction(result);
     }
 
-    /**
-     * Další zpracování dat
-     * @param result    Výsledek čtení
-     * @see ResultErrorProcess
-     */
-    public void nextAction(String result) {
+    private OnCompleteListener onCompleteListener;
+    public interface OnCompleteListener {
+        void onComplete(String result);
+    }
 
+    public void setOnCompleteListener(OnCompleteListener onCompleteListener) {
+        this.onCompleteListener = onCompleteListener;
     }
 }

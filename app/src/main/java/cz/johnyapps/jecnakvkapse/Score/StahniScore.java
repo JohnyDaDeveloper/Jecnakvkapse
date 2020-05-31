@@ -1,20 +1,20 @@
 package cz.johnyapps.jecnakvkapse.Score;
 
-import android.annotation.SuppressLint;
 import androidx.annotation.Nullable;
 
 import cz.johnyapps.jecnakvkapse.HttpConnection.Connection;
 import cz.johnyapps.jecnakvkapse.HttpConnection.Request;
+import cz.johnyapps.jecnakvkapse.HttpConnection.StahniData;
 
 /**
  * Stáhne rozvrh
  * @see Connection
  */
-public class StahniScore {
+public class StahniScore extends StahniData {
     /**
      * Inicializace
      */
-    protected StahniScore() {
+    public StahniScore() {
 
     }
 
@@ -30,23 +30,13 @@ public class StahniScore {
             request.addObdobi(obdobi);
         }
 
-        @SuppressLint("StaticFieldLeak") Connection connection = new Connection() {
+        Connection connection = new Connection();
+        connection.setOnCompleteListener(new Connection.OnCompleteListener() {
             @Override
-            public void nextAction(String result) {
-                super.nextAction(result);
-                onResult(result);
+            public void onComplete(String result) {
+                completed(result);
             }
-        };
-
+        });
         connection.execute(request);
-    }
-
-    /**
-     * Spustí se při dokončení stahování
-     * @param result    Výsledek
-     * @see ScoreConvertor
-     */
-    public void onResult(String result) {
-
     }
 }

@@ -20,6 +20,7 @@ import com.crashlytics.android.Crashlytics;
 
 import cz.johnyapps.jecnakvkapse.Adapters.OmluvenkyRecyclerAdapter;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
+import cz.johnyapps.jecnakvkapse.HttpConnection.StahniData;
 import cz.johnyapps.jecnakvkapse.Omluvenky.OmluvenkyConvertor;
 import cz.johnyapps.jecnakvkapse.Omluvenky.Omluvnak;
 import cz.johnyapps.jecnakvkapse.Omluvenky.StahniOmluvenky;
@@ -107,10 +108,10 @@ public class MainFragment_Omluvenky extends Fragment implements SwipeRefreshLayo
     public void omluvenky() {
         Crashlytics.log(Log.INFO, TAG, "Downloading");
 
-        StahniOmluvenky stahniOmluvenky = new StahniOmluvenky() {
+        StahniOmluvenky stahniOmluvenky = new StahniOmluvenky();
+        stahniOmluvenky.setOnCompleteListener(new StahniData.OnCompleteListener() {
             @Override
-            public void onResult(String result) {
-                super.onResult(result);
+            public void onComplete(String result) {
                 ResultErrorProcess process = new ResultErrorProcess(context);
 
                 if (process.process(result)) {
@@ -119,7 +120,6 @@ public class MainFragment_Omluvenky extends Fragment implements SwipeRefreshLayo
                     Omluvnak omluvnak = omluvenkyConvertor.convert(result);
 
                     user.setOmluvnak(omluvnak);
-
                     swipeLayout.setRefreshing(false);
 
                     displayOmluvenky();
@@ -127,7 +127,7 @@ public class MainFragment_Omluvenky extends Fragment implements SwipeRefreshLayo
                     Crashlytics.log(Log.INFO, TAG, "Downloading error: " + result);
                 }
             }
-        };
+        });
 
         swipeLayout.setRefreshing(true);
 
