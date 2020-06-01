@@ -61,6 +61,7 @@
     <string name="oaplikaci_vyvojar_github">Kód aplikace (GitHub)</string>
     <string name="oaplikaci_app_title">Aplikace</string>
     <string name="oaplikaci_app_verze">Verze</string>
+    <string name="oaplikaci_app_build">Build</string>
     <string name="oaplikaci_app_library_catoslibrary">CatosLibrary</string>
     <string name="oaplikaci_info_title">Dodatečné informace</string>
     <string name="oaplikaci_info_suplarch">Suplování se stahuje do cache aplikace. Při každém zapnutí aplikace se cache vymaže.</string>

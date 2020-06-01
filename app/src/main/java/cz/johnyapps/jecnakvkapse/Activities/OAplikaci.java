@@ -4,10 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import cz.johnyapps.jecnakvkapse.BuildConfig;
 import cz.johnyapps.jecnakvkapse.R;
@@ -35,7 +36,7 @@ public class OAplikaci extends AppCompatActivity {
      */
     private void initialize() {
         context = this;
-        Setup_aplikace();
+        setupAplikace();
     }
 
 
@@ -43,9 +44,12 @@ public class OAplikaci extends AppCompatActivity {
      * Nastaví kartu "Aplikace"
      */
     @SuppressLint("SetTextI18n")
-    private void Setup_aplikace() {
+    private void setupAplikace() {
         TextView verze = findViewById(R.id.OAplikaci_appVerze);
         verze.setText(context.getResources().getString(R.string.oaplikaci_app_verze) + ": " + BuildConfig.VERSION_NAME);
+
+        TextView build = findViewById(R.id.OAplikaci_appBuild);
+        build.setText(context.getString(R.string.oaplikaci_app_build) + ": " + BuildConfig.VERSION_CODE);
     }
 
     /**
@@ -74,16 +78,6 @@ public class OAplikaci extends AppCompatActivity {
      */
     public void gitHub(View V) {
         Uri uri = Uri.parse("https://github.com/JohnyDaDeveloper/Jecnakvkapse");
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
-    }
-
-    /**
-     * Po kliknutí na View otevře github
-     * @param V View
-     */
-    public void catosLibrary(View V) {
-        Uri uri = Uri.parse("https://github.com/JohnyDaDeveloper/CatosLibrary");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }

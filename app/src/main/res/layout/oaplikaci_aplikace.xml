@@ -26,13 +26,13 @@
             android:text="@string/oaplikaci_app_verze"/>
 
         <TextView
-            style="@style/LinkText"
+            android:id="@+id/OAplikaci_appBuild"
+            style="@style/Text_Subtext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/book"
+            android:drawableStart="@drawable/build"
             android:gravity="center_vertical"
             android:drawablePadding="5dp"
-            android:text="@string/oaplikaci_app_library_catoslibrary"
-            android:onClick="catosLibrary" />
+            android:text="@string/oaplikaci_app_build"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -159,7 +159,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/notification/ic_do_not_disturb_off_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/build/baseline_build_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -169,8 +169,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="828282" />
-                            <entry key="outputName" value="no_items" />
+                            <entry key="outputName" value="build" />
                             <entry key="sourceFile" value="C:\Users\Johny\AndroidStudioProjects\Jecnakvkapse\Jecnak icon foreground.svg" />
                           </map>
                         </option>
