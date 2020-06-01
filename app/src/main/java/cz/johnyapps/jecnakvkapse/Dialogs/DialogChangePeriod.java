@@ -158,9 +158,12 @@ public class DialogChangePeriod {
         Spinner rok = view.findViewById(R.id.DialogPeriodChange_spinnerRok);
         Spinner pololeti = view.findViewById(R.id.DialogPeriodChange_spinnerPololeti);
 
-        ArrayAdapter<CharSequence> rokAdapter = new ArrayAdapter<>(context, R.layout.item_spinner, getRoky());
+        String[] roky = getRoky();
+
+        ArrayAdapter<CharSequence> rokAdapter = new ArrayAdapter<>(context, R.layout.item_spinner, roky);
         rokAdapter.setDropDownViewResource(R.layout.item_spinner);
         rok.setAdapter(rokAdapter);
+        rok.setSelection(obdobi == null ? 0 : getRokFromString(obdobi, roky));
 
         if (typ.equals(TYP_POLOLETI)) {
             ArrayAdapter<CharSequence> pololetiAdapter = ArrayAdapter.createFromResource(context, R.array.pololeti, R.layout.item_spinner);
@@ -189,6 +192,7 @@ public class DialogChangePeriod {
             }
         } catch (Exception e) {
             Logger.w(TAG, "getPololetiFromString: chyba při parsování " + obdobi);
+            e.printStackTrace();
         }
 
         return 0;
@@ -206,7 +210,29 @@ public class DialogChangePeriod {
                 return value - 9;
             }
         } catch (Exception e) {
-            Logger.w(TAG, "getPololetiFromString: chyba při parsování " + obdobi);
+            Logger.w(TAG, "getMesicFromString: chyba při parsování " + obdobi);
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    private int getRokFromString(String obdobi, String[] roky) {
+        try {
+            String[] data = obdobi.split("&");
+            data = data[0].split("=");
+
+            int rok = START_YEAR + Integer.parseInt(data[1]);
+            String strRok = String.valueOf(rok);
+
+            for (int i = 0; i < roky.length; i++) {
+                if (roky[i].startsWith(strRok)) {
+                    return i;
+                }
+            }
+        } catch (Exception e) {
+            Logger.w(TAG, "getRokFromString: chyba při parsování " + obdobi);
+            e.printStackTrace();
         }
 
         return 0;
@@ -234,7 +260,7 @@ public class DialogChangePeriod {
      * Vrátí 4 školní roky. Od aktuálního zpět do historie
      * @return  Roky
      */
-    private CharSequence[] getRoky() {
+    private String[] getRoky() {
         Locale locale = new Locale("cs", "CZ");
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat year = new SimpleDateFormat("yyyy", locale);
