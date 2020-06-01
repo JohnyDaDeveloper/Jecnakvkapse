@@ -41,7 +41,7 @@
     <string name="dialog_login_title">Přihlášení</string>
 
     <string name="dialog_enable_crashlytics">Povolit Crashlytics</string>
-    <string name="dialog_enable_crashlytics_message">Povolit aplikaci Ječná v kapse sběr dat o běhu apliakce?\n\nPovolením této služby usnadňujete vývojářům dostraňování případných chyb. Odeslaná data <b>neobsahují</b> Vaše přihlašovací údaje nebo jakákoliv jiná citlivá data.\n\nLze později upravit v nastavení.</string>
+    <string name="dialog_enable_crashlytics_message">Povolit aplikaci <i>Ječňák v kapse</i> odesílat zprávy o chybách?\n\nOdeslaná data <b>neobsahují</b> Vaše přihlašovací údaje nebo jakákoliv jiná citlivá data.\n\nLze později upravit v nastavení.</string>
 
     <string name="settings_fragment_first_title">Hlavní okno</string>
     <string name="settings_fragment_first_subtext">Okno které se otevře jako první při zapnutí aplikace</string>
