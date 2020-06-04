@@ -10,6 +10,7 @@ public class Logger {
 
     public static final Logger instance = new Logger();
     private boolean crashlyticsEnabled = false;
+    private boolean initialized = false;
 
     public Logger() {
 
@@ -19,6 +20,7 @@ public class Logger {
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(enableCrashlytics);
         this.crashlyticsEnabled = enableCrashlytics;
 
+        initialized = true;
         Logger.i(TAG, "Crashlytics " + (enableCrashlytics ? "enabled" : "disabled"));
     }
 
@@ -40,7 +42,15 @@ public class Logger {
         return instance;
     }
 
+    private void checkIfInitialized() {
+        if (!initialized) {
+            Logger.w(TAG, "Logger is not initialized! It may not work correctly");
+        }
+    }
+
     public static void v(String tag, String message) {
+        Logger.getInstance().checkIfInitialized();
+
         if (Logger.getInstance().isCrashlyticsEnabled()) {
             FirebaseCrashlytics.getInstance().log(tag + ": " + message);
         }
@@ -48,7 +58,14 @@ public class Logger {
         Log.v(tag, message);
     }
 
+    public static void d(String tag, String message) {
+        Logger.getInstance().checkIfInitialized();
+        Log.d(tag, message);
+    }
+
     public static void i(String tag, String message) {
+        Logger.getInstance().checkIfInitialized();
+
         if (Logger.getInstance().isCrashlyticsEnabled()) {
             FirebaseCrashlytics.getInstance().log(tag + ": " + message);
         }
@@ -56,11 +73,9 @@ public class Logger {
         Log.i(tag, message);
     }
 
-    public static void d(String tag, String message) {
-        Log.d(tag, message);
-    }
-
     public static void w(String tag, String message) {
+        Logger.getInstance().checkIfInitialized();
+
         if (Logger.getInstance().isCrashlyticsEnabled()) {
             FirebaseCrashlytics.getInstance().log(tag + ": " + message);
         }
@@ -69,6 +84,8 @@ public class Logger {
     }
 
     public static void w(String tag, String message, Exception exception) {
+        Logger.getInstance().checkIfInitialized();
+
         if (Logger.getInstance().isCrashlyticsEnabled()) {
             FirebaseCrashlytics.getInstance().log(tag + ": " + message);
             FirebaseCrashlytics.getInstance().recordException(exception);
@@ -78,6 +95,8 @@ public class Logger {
     }
 
     public static void e(String tag, String message) {
+        Logger.getInstance().checkIfInitialized();
+
         if (Logger.getInstance().isCrashlyticsEnabled()) {
             FirebaseCrashlytics.getInstance().log(tag + ": " + message);
         }
@@ -86,6 +105,8 @@ public class Logger {
     }
 
     public static void e(String tag, String message, Exception exception) {
+        Logger.getInstance().checkIfInitialized();
+
         if (Logger.getInstance().isCrashlyticsEnabled()) {
             FirebaseCrashlytics.getInstance().log(tag + ": " + message);
             FirebaseCrashlytics.getInstance().recordException(exception);
