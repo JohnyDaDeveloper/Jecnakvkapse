@@ -44,7 +44,7 @@ public class Logger {
 
     private void checkIfInitialized() {
         if (!initialized) {
-            Logger.w(TAG, "Logger is not initialized! It may not work correctly");
+            Log.w(TAG, "Logger is not initialized! It may not work correctly");
         }
     }
 
