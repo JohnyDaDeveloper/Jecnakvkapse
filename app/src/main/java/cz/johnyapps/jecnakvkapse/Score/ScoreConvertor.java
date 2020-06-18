@@ -16,6 +16,8 @@ import cz.johnyapps.jecnakvkapse.Fragments.ZnamkyFragment;
  * @see ZnamkyFragment
  */
 public class ScoreConvertor {
+    public static final String ERROR_TABLE_NOT_FOUND = "table not found";
+
     /**
      * Inicializace
      */
@@ -26,15 +28,40 @@ public class ScoreConvertor {
     /**
      * Konvetuje HTML na známky.
      * @param data  HTML
-     * @return      Známky
      * @see Score
      * @see #convertRow(Elements, String)
      * @see #convertZaverecna(Element, String)
      */
-    public Score convert(String data) {
-        Document doc = Jsoup.parse(data);
-        Element table = doc.selectFirst("table[class$=score]").selectFirst("tbody");
-        Elements rows = table.select("tr");
+    public void convert(String data) {
+        try {
+            Document doc = Jsoup.parse(data);
+            Element table = doc.selectFirst("table[class$=score]");
+
+            if (table != null) {
+                if (onCompleteListener != null) {
+                    onCompleteListener.onSuccess(convertTable(table));
+                }
+            } else {
+                if (onCompleteListener != null) {
+                    onCompleteListener.onFailure(ERROR_TABLE_NOT_FOUND);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            if (onCompleteListener != null) {
+                onCompleteListener.onFailure(e.getMessage() == null ? "null" : e.getMessage());
+            }
+        }
+
+        if (onCompleteListener != null) {
+            onCompleteListener.onComplete();
+        }
+    }
+
+    private Score convertTable(Element table) {
+        Element tableBody = table.selectFirst("tbody");
+        Elements rows = tableBody.select("tr");
 
         ArrayList<Subject> subjects = new ArrayList<>();
 
@@ -167,5 +194,16 @@ public class ScoreConvertor {
         }
 
         return null;
+    }
+
+    private OnCompleteListener onCompleteListener;
+    public interface OnCompleteListener {
+        void onComplete();
+        void onSuccess(Score score);
+        void onFailure(String message);
+    }
+
+    public void setOnCompleteListener(OnCompleteListener onCompleteListener) {
+        this.onCompleteListener = onCompleteListener;
     }
 }

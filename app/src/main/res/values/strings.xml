@@ -23,6 +23,9 @@
     <string name="menu_nastaveni">Nastavení</string>
     <string name="menu_o_aplikaci">O aplikaci</string>
 
+    <string name="error_no_score_table">Tabulka známek nenalezena</string>
+    <string name="error_score_convert">Známky se nepodařilo zpracovat</string>
+
     <string name="theme_pink_enabled">Růžové téma povoleno</string>
     <string name="theme_pink_disabled">Růžové téma zakázáno</string>
     <string name="theme_code_red_enabled">Code red téma povoleno</string>

@@ -3,6 +3,7 @@ package cz.johnyapps.jecnakvkapse.Dialogs;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 
 import cz.johnyapps.jecnakvkapse.R;
@@ -19,6 +20,10 @@ public class DialogError {
      */
     public DialogError(Context context) {
         this.context = context;
+    }
+
+    public AlertDialog get(@StringRes int message) {
+        return get(context.getResources().getString(message));
     }
 
     /**

@@ -278,9 +278,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         transaction.replace(R.id.Main_fragment, fragment);
         transaction.addToBackStack(null);
-        transaction.commit();
-        fragment_selected = id;
-        onResume();
+
+        try {
+            transaction.commit();
+            fragment_selected = id;
+            onResume();
+        } catch (IllegalStateException e) {
+            Logger.w(TAG, "switchFragments: transaction failed", e);
+        }
     }
 
     /**

@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import cz.johnyapps.jecnakvkapse.Adapters.ScoreRecyclerAdapter;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogChangePeriod;
+import cz.johnyapps.jecnakvkapse.Dialogs.DialogError;
 import cz.johnyapps.jecnakvkapse.HttpConnection.ResultErrorProcess;
 import cz.johnyapps.jecnakvkapse.HttpConnection.StahniData;
 import cz.johnyapps.jecnakvkapse.R;
@@ -155,16 +156,9 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
 
                     if (error.process(result)) {
                         zobrazovaneObdobi = obdobi;
-
                         Logger.v(TAG, "Známky staženy");
-                        ScoreConvertor scoreConvertor = new ScoreConvertor();
-                        Score score = scoreConvertor.convert(result);
-
-                        user.setScore(score);
-
+                        convertScore(result);
                         swipeLayout.setRefreshing(false);
-
-                        displayMarks();
                     } else {
                         Logger.w(TAG, "Chyba při stahování: " + result);
                     }
@@ -173,6 +167,39 @@ public class ZnamkyFragment extends Fragment implements View.OnClickListener, Sw
 
             swipeLayout.setRefreshing(true);
             stahniScore.stahni(obdobi);
+        }
+    }
+
+    private void convertScore(String result) {
+        ScoreConvertor scoreConvertor = new ScoreConvertor();
+        scoreConvertor.setOnCompleteListener(new ScoreConvertor.OnCompleteListener() {
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSuccess(Score score) {
+                user.setScore(score);
+                displayMarks();
+            }
+
+            @Override
+            public void onFailure(String message) {
+                showConvertFailMessage(message);
+            }
+        });
+        scoreConvertor.convert(result);
+    }
+
+    private void showConvertFailMessage(String message) {
+        Logger.e(TAG, "showConvertFailMessage: " + message);
+        DialogError dialogError = new DialogError(context);
+
+        if (message.equals(ScoreConvertor.ERROR_TABLE_NOT_FOUND)) {
+            dialogError.get(R.string.error_no_score_table).show();
+        } else {
+            dialogError.get(R.string.error_score_convert);
         }
     }
 
