@@ -94,14 +94,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             dialogEnableCrashlytics.setOnCompleteListener(new DialogEnableCrashlytics.OnCompleteListener() {
                 @Override
                 public void onComplete(boolean enabled) {
-                    Logger.getInstance().initialize(enabled);
+                    if (enabled) {
+                        Logger.getInstance().enableCrashlytics();
+                    } else {
+                        Logger.getInstance().disableCrashlytics();
+                    }
+
                     reportCrashlyticsStatus(enabled);
                 }
             });
             dialogEnableCrashlytics.show();
         } else {
             boolean enabled = prefs.getBoolean(PrefsNames.CRASHLYTICS_ENABLED, false);
-            Logger.getInstance().initialize(enabled);
+
+            if (enabled) {
+                Logger.getInstance().enableCrashlytics();
+            } else {
+                Logger.getInstance().disableCrashlytics();
+            }
+
             reportCrashlyticsStatus(enabled);
         }
     }
