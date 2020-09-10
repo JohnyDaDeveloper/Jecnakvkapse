@@ -8,8 +8,8 @@ android {
         applicationId "cz.johnyapps.jecnakvkapse"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 38
-        versionName "1.26"
+        versionCode 40
+        versionName "1.28"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
