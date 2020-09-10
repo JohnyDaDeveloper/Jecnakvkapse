@@ -159,7 +159,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/build/baseline_build_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/error/baseline_error_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -169,7 +169,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="build" />
+                            <entry key="outputName" value="nahlasit_problem" />
                             <entry key="sourceFile" value="C:\Users\Johny\AndroidStudioProjects\Jecnakvkapse\Jecnak icon foreground.svg" />
                           </map>
                         </option>

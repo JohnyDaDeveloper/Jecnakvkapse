@@ -1,12 +1,15 @@
 package cz.johnyapps.jecnakvkapse.Activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +24,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import cz.johnyapps.jecnakvkapse.Actions.BaseAction;
 import cz.johnyapps.jecnakvkapse.Actions.Prihlaseni;
 import cz.johnyapps.jecnakvkapse.AnalyticsNames;
+import cz.johnyapps.jecnakvkapse.BuildConfig;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogEnableCrashlytics;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogLogin;
 import cz.johnyapps.jecnakvkapse.Dialogs.DialogOdhlasit;
@@ -213,6 +217,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
 
+            case R.id.MenuMain_NahlasitProblem: {
+                nahlasitProblem();
+                break;
+            }
+
             default: {
                 if (item.getItemId() != fragment_selected) {
                     switchFragments(item.getItemId());
@@ -223,6 +232,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return true;
+    }
+
+    private void nahlasitProblem() {
+        String predmet = context.getResources().getString(R.string.problem_predmet);
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"johnydadeveloper@gmail.cz"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, predmet + " " + BuildConfig.VERSION_NAME);
+
+        try {
+            context.startActivity(Intent.createChooser(intent, context.getString(R.string.vyber_mailoveho_klienta)));
+        } catch (ActivityNotFoundException activityNotFoundException) {
+            Toast.makeText(context, R.string.zadna_app_na_mail, Toast.LENGTH_LONG).show();
+        }
     }
 
     public void showLoginDialog() {

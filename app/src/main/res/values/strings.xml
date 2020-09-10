@@ -20,8 +20,13 @@
     <string name="menu_prichody">Příchody</string>
     <string name="menu_omluvenky">Omluvenky</string>
     <string name="menu_suplovani">Suplování</string>
+    <string name="menu_nahlasit_problem">Nahlásit problém</string>
     <string name="menu_nastaveni">Nastavení</string>
     <string name="menu_o_aplikaci">O aplikaci</string>
+
+    <string name="vyber_mailoveho_klienta">Výběr mailového klienta</string>
+    <string name="zadna_app_na_mail">Nenalezena žádná aplikace na posílání emailů</string>
+    <string name="problem_predmet">Problém v aplikaci Ječňák v kapse</string>
 
     <string name="error_no_score_table">Tabulka známek nenalezena</string>
     <string name="error_score_convert">Známky se nepodařilo zpracovat</string>

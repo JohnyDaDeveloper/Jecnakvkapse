@@ -29,6 +29,10 @@
         android:title="@string/menu_suplovani"
         android:icon="@drawable/suplarch"/>
 
+    <item android:id="@+id/MenuMain_NahlasitProblem"
+        android:title="@string/menu_nahlasit_problem"
+        android:icon="@drawable/nahlasit_problem" />
+
     <item android:id="@+id/MenuMain_Nastaveni"
         android:title="@string/menu_nastaveni"
         android:icon="@drawable/settings"/>
